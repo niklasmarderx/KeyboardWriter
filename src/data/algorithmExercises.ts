@@ -622,13 +622,13 @@ export const ALL_ALGORITHM_SNIPPETS: CodeSnippet[] = [
 // Categories for UI display
 export const ALGORITHM_CATEGORIES = [
   { id: 'sorting', name: 'Sortierung', icon: '↕️', snippets: SORTING_ALGORITHMS },
-  { id: 'search', name: 'Suche', icon: '🔍', snippets: SEARCH_ALGORITHMS },
-  { id: 'data-structures', name: 'Datenstrukturen', icon: '📦', snippets: DATA_STRUCTURES },
+  { id: 'search', name: 'Suche', icon: 'search', snippets: SEARCH_ALGORITHMS },
+  { id: 'data-structures', name: 'Datenstrukturen', icon: 'box', snippets: DATA_STRUCTURES },
   {
     id: 'dynamic-programming',
     name: 'Dynamic Programming',
-    icon: '🧮',
+    icon: 'calc',
     snippets: DYNAMIC_PROGRAMMING,
   },
-  { id: 'leetcode', name: 'LeetCode', icon: '💻', snippets: LEETCODE_PROBLEMS },
+  { id: 'leetcode', name: 'LeetCode', icon: 'code', snippets: LEETCODE_PROBLEMS },
 ];

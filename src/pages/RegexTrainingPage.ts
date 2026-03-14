@@ -3,6 +3,7 @@
  * Practice regular expressions with interactive examples
  */
 
+import { EventBus } from '../core';
 import { REGEX_PATTERNS, RegexPattern } from '../data/programmingExercises';
 
 export class RegexTrainingPage {
@@ -17,6 +18,7 @@ export class RegexTrainingPage {
   private errors = 0;
   private testInput = '';
   private showMatches = false;
+  private boundHandleKeyDown: ((e: KeyboardEvent) => void) | null = null;
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -592,8 +594,11 @@ export class RegexTrainingPage {
   }
 
   private attachEventListeners(): void {
-    // Keyboard input
-    document.addEventListener('keydown', this.handleKeyDown.bind(this));
+    // Keyboard input - only add if not already added
+    if (!this.boundHandleKeyDown) {
+      this.boundHandleKeyDown = this.handleKeyDown.bind(this);
+      document.addEventListener('keydown', this.boundHandleKeyDown);
+    }
 
     // Toggle test
     const toggleBtn = this.container.querySelector('#toggle-test');
@@ -744,7 +749,10 @@ export class RegexTrainingPage {
   private completeCurrentItem(): void {
     this.currentIndex++;
     if (this.currentIndex >= this.currentPatterns.length) {
-      alert('Alle Regex-Muster abgeschlossen!');
+      EventBus.emit('ui:toast', {
+        message: 'Alle Regex-Muster abgeschlossen!',
+        type: 'success',
+      });
       this.currentIndex = 0;
     }
 
@@ -766,6 +774,9 @@ export class RegexTrainingPage {
   }
 
   destroy(): void {
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this));
+    if (this.boundHandleKeyDown) {
+      document.removeEventListener('keydown', this.boundHandleKeyDown);
+      this.boundHandleKeyDown = null;
+    }
   }
 }

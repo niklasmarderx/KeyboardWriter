@@ -4,7 +4,7 @@
  */
 
 import { VirtualKeyboard } from '../components/keyboard/VirtualKeyboard';
-import { t } from '../core';
+import { EventBus, t } from '../core';
 import { GIT_COMMANDS, GIT_WORKFLOWS, GitCommand, GitWorkflow } from '../data/programmingExercises';
 
 type GitCategory = 'basic' | 'branching' | 'remote' | 'advanced' | 'github' | 'workflows';
@@ -23,6 +23,7 @@ export class GitTrainingPage {
   private correctChars = 0;
   private totalChars = 0;
   private errors = 0;
+  private boundHandleKeyDown: ((e: KeyboardEvent) => void) | null = null;
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -659,8 +660,9 @@ export class GitTrainingPage {
       });
     }
 
-    // Keyboard input
-    document.addEventListener('keydown', this.handleKeyDown.bind(this));
+    // Keyboard input - store bound reference for proper removal
+    this.boundHandleKeyDown = this.handleKeyDown.bind(this);
+    document.addEventListener('keydown', this.boundHandleKeyDown);
   }
 
   private handleKeyDown(e: KeyboardEvent): void {
@@ -790,15 +792,22 @@ export class GitTrainingPage {
     if (this.currentCategory === 'workflows' && this.currentWorkflow) {
       this.currentWorkflowStep++;
       if (this.currentWorkflowStep >= this.currentWorkflow.steps.length) {
-        // Workflow complete
-        alert(t('git.workflowComplete'));
+        // Workflow complete - show toast instead of blocking alert
+        EventBus.emit('ui:toast', {
+          message: t('git.workflowComplete'),
+          type: 'success',
+        });
         this.currentWorkflow = null;
         this.currentWorkflowStep = 0;
       }
     } else {
       this.currentIndex++;
       if (this.currentIndex >= this.currentCommands.length) {
-        alert(t('git.allComplete'));
+        // All commands complete - show toast instead of blocking alert
+        EventBus.emit('ui:toast', {
+          message: t('git.allComplete'),
+          type: 'success',
+        });
         this.currentIndex = 0;
       }
     }
@@ -852,7 +861,10 @@ export class GitTrainingPage {
   }
 
   destroy(): void {
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this));
+    if (this.boundHandleKeyDown) {
+      document.removeEventListener('keydown', this.boundHandleKeyDown);
+      this.boundHandleKeyDown = null;
+    }
     if (this.keyboard) {
       this.keyboard.destroy();
     }

@@ -2174,15 +2174,15 @@ export class CodePlaygroundPage {
         this.userCode = textarea.value;
       });
 
-      // Tab support
+      // Tab support - insert 3 spaces
       textarea.addEventListener('keydown', e => {
         if (e.key === 'Tab') {
           e.preventDefault();
           const start = textarea.selectionStart;
           const end = textarea.selectionEnd;
           textarea.value =
-            textarea.value.substring(0, start) + '  ' + textarea.value.substring(end);
-          textarea.selectionStart = textarea.selectionEnd = start + 2;
+            textarea.value.substring(0, start) + '   ' + textarea.value.substring(end);
+          textarea.selectionStart = textarea.selectionEnd = start + 3;
           this.userCode = textarea.value;
         }
       });

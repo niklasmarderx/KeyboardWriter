@@ -4,10 +4,14 @@
  */
 
 import { EventBus } from '../core';
+import { i18n } from '../core/i18n';
 import {
   ALL_SHORTCUT_COLLECTIONS,
   getCategories,
   getShortcutCollection,
+  getTranslatedCategory,
+  getTranslatedCollectionInfo,
+  getTranslatedDescription,
   Shortcut,
   ShortcutCollection,
 } from '../data/shortcuts';
@@ -32,19 +36,55 @@ export class ShortcutsPage {
   }
 
   /**
+   * Get current language
+   */
+  private get lang(): 'en' | 'de' {
+    return i18n.getLanguage();
+  }
+
+  /**
+   * Get translated text based on language
+   */
+  private t(de: string, en: string): string {
+    return this.lang === 'de' ? de : en;
+  }
+
+  /**
+   * Get translated shortcut description
+   */
+  private getShortcutDescription(shortcut: Shortcut): string {
+    return getTranslatedDescription(shortcut.description, this.lang);
+  }
+
+  /**
+   * Get translated category
+   */
+  private getCategoryTranslated(category: string): string {
+    return getTranslatedCategory(category, this.lang);
+  }
+
+  /**
+   * Get translated collection name
+   */
+  private getCollectionName(collection: ShortcutCollection): string {
+    const info = getTranslatedCollectionInfo(collection.id, this.lang);
+    return info?.name || collection.name;
+  }
+
+  /**
    * Render the shortcuts page
    */
   render(): string {
     return `
       <div class="typing-container">
         <div class="shortcuts-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
-          <h1> Tastenkürzel</h1>
+          <h1> ${this.t('Tastenkürzel', 'Keyboard Shortcuts')}</h1>
           <div class="view-mode-toggle" style="display: flex; gap: var(--space-2);">
             <button id="mode-browse" class="btn ${this.viewMode === 'browse' ? 'btn-primary' : 'btn-secondary'}">
-               Durchsuchen
+               ${this.t('Durchsuchen', 'Browse')}
             </button>
             <button id="mode-practice" class="btn ${this.viewMode === 'practice' ? 'btn-primary' : 'btn-secondary'}">
-               Üben
+               ${this.t('Üben', 'Practice')}
             </button>
           </div>
         </div>
@@ -55,7 +95,7 @@ export class ShortcutsPage {
             col => `
             <button class="collection-tab btn ${col.id === this.selectedCollection.id ? 'btn-primary' : 'btn-secondary'}" 
                     data-collection="${col.id}">
-              ${col.icon} ${col.name}
+              ${col.icon} ${this.getCollectionName(col)}
             </button>
           `
           ).join('')}
@@ -80,16 +120,16 @@ export class ShortcutsPage {
           <input type="text" 
                  id="shortcut-search" 
                  class="btn btn-secondary" 
-                 placeholder=" Suchen..." 
+                 placeholder=" ${this.t('Suchen...', 'Search...')}" 
                  value="${this.searchQuery}"
                  style="flex: 1; min-width: 200px; padding: var(--space-3);">
           
           <select id="category-filter" class="btn btn-secondary" style="min-width: 150px;">
-            <option value="">Alle Kategorien</option>
+            <option value="">${this.t('Alle Kategorien', 'All Categories')}</option>
             ${categories
               .map(
                 cat => `
-              <option value="${cat}" ${this.selectedCategory === cat ? 'selected' : ''}>${cat}</option>
+              <option value="${cat}" ${this.selectedCategory === cat ? 'selected' : ''}>${this.getCategoryTranslated(cat)}</option>
             `
               )
               .join('')}
@@ -97,13 +137,13 @@ export class ShortcutsPage {
         </div>
 
         <!-- Shortcuts Grid -->
-        <div class="shortcuts-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: var(--space-4);">
+        <div class="shortcuts-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-2);">
           ${
             filteredShortcuts.length > 0
               ? filteredShortcuts.map(shortcut => this.renderShortcutCard(shortcut)).join('')
               : `
             <div class="card" style="grid-column: 1 / -1; text-align: center; padding: var(--space-8);">
-              <p style="color: var(--text-muted);">Keine Shortcuts gefunden.</p>
+              <p style="color: var(--text-muted);">${this.t('Keine Shortcuts gefunden.', 'No shortcuts found.')}</p>
             </div>
           `
           }
@@ -121,7 +161,7 @@ export class ShortcutsPage {
             <div style="font-size: var(--font-size-2xl); font-weight: bold; color: var(--accent-primary);">
               ${categories.length}
             </div>
-            <div style="font-size: var(--font-size-sm); color: var(--text-muted);">Kategorien</div>
+            <div style="font-size: var(--font-size-sm); color: var(--text-muted);">${this.t('Kategorien', 'Categories')}</div>
           </div>
         </div>
       </div>
@@ -133,8 +173,8 @@ export class ShortcutsPage {
    */
   private renderShortcutCard(shortcut: Shortcut): string {
     return `
-      <div class="shortcut-card card" style="padding: var(--space-4); display: flex; align-items: center; gap: var(--space-4);">
-        <div class="shortcut-keys" style="display: flex; gap: 4px; flex-shrink: 0;">
+      <div class="shortcut-card card" style="padding: var(--space-2) var(--space-3); display: flex; align-items: center; gap: var(--space-2);">
+        <div class="shortcut-keys" style="display: flex; gap: 2px; flex-shrink: 0;">
           ${shortcut.keys
             .map(
               key => `
@@ -142,23 +182,22 @@ export class ShortcutsPage {
               display: inline-flex;
               align-items: center;
               justify-content: center;
-              min-width: 32px;
-              height: 32px;
-              padding: 0 8px;
+              min-width: 24px;
+              height: 24px;
+              padding: 0 5px;
               background: var(--bg-tertiary);
               border: 1px solid var(--border-primary);
-              border-radius: 6px;
+              border-radius: 4px;
               font-family: var(--font-mono);
-              font-size: 14px;
+              font-size: 11px;
               font-weight: 500;
             ">${key}</span>
           `
             )
             .join('')}
         </div>
-        <div class="shortcut-info" style="flex: 1; min-width: 0;">
-          <div style="font-weight: 500; color: var(--text-primary);">${shortcut.description}</div>
-          <div style="font-size: 12px; color: var(--text-muted);">${shortcut.category}</div>
+        <div class="shortcut-info" style="flex: 1; min-width: 0; overflow: hidden;">
+          <div style="font-weight: 500; color: var(--text-primary); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${this.getShortcutDescription(shortcut)}</div>
         </div>
       </div>
     `;
@@ -180,7 +219,7 @@ export class ShortcutsPage {
         <!-- Progress -->
         <div class="practice-progress" style="margin-bottom: var(--space-6);">
           <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
-            <span style="color: var(--text-muted);">Fortschritt</span>
+            <span style="color: var(--text-muted);">${this.t('Fortschritt', 'Progress')}</span>
             <span style="color: var(--text-primary);">${this.currentPracticeIndex + 1} / ${this.practiceShortcuts.length}</span>
           </div>
           <div class="progress-bar">
@@ -192,30 +231,30 @@ export class ShortcutsPage {
         <div class="stats-panel" style="margin-bottom: var(--space-6);">
           <div class="stat-card">
             <span class="stat-card-value" style="color: var(--accent-success);">${this.practiceScore}</span>
-            <span class="stat-card-label">Richtig</span>
+            <span class="stat-card-label">${this.t('Richtig', 'Correct')}</span>
           </div>
           <div class="stat-card">
             <span class="stat-card-value" style="color: var(--accent-error);">${this.practiceErrors}</span>
-            <span class="stat-card-label">Fehler</span>
+            <span class="stat-card-label">${this.t('Fehler', 'Errors')}</span>
           </div>
           <div class="stat-card">
             <span class="stat-card-value">${Math.round((this.practiceScore / Math.max(1, this.practiceScore + this.practiceErrors)) * 100)}%</span>
-            <span class="stat-card-label">Genauigkeit</span>
+            <span class="stat-card-label">${this.t('Genauigkeit', 'Accuracy')}</span>
           </div>
         </div>
 
         <!-- Current Shortcut -->
         <div class="practice-card card" style="text-align: center; padding: var(--space-8);">
           <div style="font-size: 12px; color: var(--text-muted); margin-bottom: var(--space-2);">
-            ${currentShortcut.category}
+            ${this.getCategoryTranslated(currentShortcut.category)}
           </div>
           <div style="font-size: var(--font-size-2xl); font-weight: bold; margin-bottom: var(--space-6);">
-            ${currentShortcut.description}
+            ${this.getShortcutDescription(currentShortcut)}
           </div>
           
           <div id="practice-feedback" style="min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <div style="color: var(--text-muted); margin-bottom: var(--space-4);">
-              Drücke die richtige Tastenkombination
+              ${this.t('Drücke die richtige Tastenkombination', 'Press the correct key combination')}
             </div>
             <div id="pressed-keys" style="display: flex; gap: 8px; min-height: 40px;">
               ${Array.from(this.pressedKeys)
@@ -243,10 +282,10 @@ export class ShortcutsPage {
 
           <div style="margin-top: var(--space-6);">
             <button id="btn-show-answer" class="btn btn-secondary">
-               Lösung anzeigen
+               ${this.t('Lösung anzeigen', 'Show Solution')}
             </button>
             <button id="btn-skip" class="btn btn-ghost" style="margin-left: var(--space-2);">
-              Überspringen →
+              ${this.t('Überspringen', 'Skip')} →
             </button>
           </div>
         </div>
@@ -254,7 +293,7 @@ export class ShortcutsPage {
         <!-- Solution (hidden) -->
         <div id="solution-display" style="display: none; margin-top: var(--space-4);">
           <div class="card" style="text-align: center; padding: var(--space-4); background: var(--bg-tertiary);">
-            <div style="color: var(--text-muted); font-size: 12px; margin-bottom: var(--space-2);">Lösung:</div>
+            <div style="color: var(--text-muted); font-size: 12px; margin-bottom: var(--space-2);">${this.t('Lösung:', 'Solution:')}</div>
             <div style="display: flex; gap: 8px; justify-content: center;">
               ${currentShortcut.keys
                 .map(
@@ -283,7 +322,7 @@ export class ShortcutsPage {
         <!-- End Practice Button -->
         <div style="text-align: center; margin-top: var(--space-6);">
           <button id="btn-end-practice" class="btn btn-ghost">
-             Übung beenden
+             ${this.t('Übung beenden', 'End Practice')}
           </button>
         </div>
       </div>
@@ -298,14 +337,14 @@ export class ShortcutsPage {
 
     return `
       <div class="practice-setup card" style="text-align: center; padding: var(--space-8);">
-        <h2 style="margin-bottom: var(--space-4);"> Shortcut-Übung</h2>
+        <h2 style="margin-bottom: var(--space-4);"> ${this.t('Shortcut-Übung', 'Shortcut Practice')}</h2>
         <p style="color: var(--text-muted); margin-bottom: var(--space-6);">
-          Wähle die Kategorien, die du üben möchtest:
+          ${this.t('Wähle die Kategorien, die du üben möchtest:', 'Choose the categories you want to practice:')}
         </p>
 
         <div class="category-selection" style="display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center; margin-bottom: var(--space-6);">
           <button class="category-btn btn btn-primary" data-category="all">
-            Alle (${this.selectedCollection.shortcuts.length})
+            ${this.t('Alle', 'All')} (${this.selectedCollection.shortcuts.length})
           </button>
           ${categories
             .map(cat => {
@@ -314,7 +353,7 @@ export class ShortcutsPage {
               ).length;
               return `
               <button class="category-btn btn btn-secondary" data-category="${cat}">
-                ${cat} (${count})
+                ${this.getCategoryTranslated(cat)} (${count})
               </button>
             `;
             })
@@ -322,7 +361,7 @@ export class ShortcutsPage {
         </div>
 
         <div style="color: var(--text-muted); font-size: 14px;">
-          <p>Drücke die angezeigte Tastenkombination so schnell wie möglich!</p>
+          <p>${this.t('Drücke die angezeigte Tastenkombination so schnell wie möglich!', 'Press the displayed key combination as fast as possible!')}</p>
         </div>
       </div>
     `;
@@ -343,7 +382,9 @@ export class ShortcutsPage {
       shortcuts = shortcuts.filter(
         s =>
           s.description.toLowerCase().includes(query) ||
+          this.getShortcutDescription(s).toLowerCase().includes(query) ||
           s.category.toLowerCase().includes(query) ||
+          this.getCategoryTranslated(s.category).toLowerCase().includes(query) ||
           s.keys.some(k => k.toLowerCase().includes(query))
       );
     }
@@ -580,7 +621,7 @@ export class ShortcutsPage {
     const feedback = document.getElementById('practice-feedback');
     if (feedback) {
       const color = correct ? 'var(--accent-success)' : 'var(--accent-error)';
-      const text = correct ? '✓ Richtig!' : '✗ Falsch!';
+      const text = correct ? this.t('✓ Richtig!', '✓ Correct!') : this.t('✗ Falsch!', '✗ Wrong!');
 
       feedback.innerHTML = `
         <div style="font-size: var(--font-size-xl); color: ${color}; font-weight: bold;">
@@ -612,8 +653,13 @@ export class ShortcutsPage {
       (this.practiceScore / (this.practiceScore + this.practiceErrors)) * 100
     );
 
+    const message =
+      this.lang === 'de'
+        ? `Übung beendet! ${this.practiceScore} richtig, ${accuracy}% Genauigkeit`
+        : `Practice complete! ${this.practiceScore} correct, ${accuracy}% accuracy`;
+
     EventBus.emit('ui:toast', {
-      message: `Übung beendet! ${this.practiceScore} richtig, ${accuracy}% Genauigkeit`,
+      message,
       type: 'success',
     });
 

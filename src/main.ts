@@ -152,7 +152,7 @@ function shutdownServer(): void {
           color: var(--text-primary);
           font-family: var(--font-sans);
         ">
-          <h1 style="margin-bottom: 16px;">Auf Wiedersehen! 👋</h1>
+          <h1 style="margin-bottom: 16px;">Auf Wiedersehen!</h1>
           <p style="color: var(--text-secondary); margin-bottom: 24px;">
             KeyboardWriter wird beendet...
           </p>

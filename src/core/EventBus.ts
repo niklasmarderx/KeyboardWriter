@@ -16,6 +16,7 @@ export interface AppEvents {
   'typing:start': { lessonId: string; exerciseId: string };
   'typing:keystroke': { key: string; isCorrect: boolean; position: number };
   'typing:complete': { wpm: number; accuracy: number; time: number };
+  'typing:backspace': { position: number };
   'typing:pause': void;
   'typing:resume': void;
   'typing:reset': void;

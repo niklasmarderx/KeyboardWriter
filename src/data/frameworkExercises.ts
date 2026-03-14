@@ -835,9 +835,14 @@ export const ALL_FRAMEWORK_SNIPPETS: CodeSnippet[] = [
 
 // Categories for UI display
 export const FRAMEWORK_CATEGORIES = [
-  { id: 'react-hooks', name: 'React Hooks', icon: '⚛️', snippets: REACT_HOOKS },
-  { id: 'react-components', name: 'React Components', icon: '🧩', snippets: REACT_COMPONENTS },
-  { id: 'custom-hooks', name: 'Custom Hooks', icon: '🪝', snippets: CUSTOM_HOOKS },
-  { id: 'typescript', name: 'TypeScript Patterns', icon: '📘', snippets: TYPESCRIPT_PATTERNS },
-  { id: 'testing', name: 'Testing', icon: '🧪', snippets: TESTING_PATTERNS },
+  { id: 'react-hooks', name: 'React Hooks', icon: 'react', snippets: REACT_HOOKS },
+  {
+    id: 'react-components',
+    name: 'React Components',
+    icon: 'component',
+    snippets: REACT_COMPONENTS,
+  },
+  { id: 'custom-hooks', name: 'Custom Hooks', icon: 'hook', snippets: CUSTOM_HOOKS },
+  { id: 'typescript', name: 'TypeScript Patterns', icon: 'ts', snippets: TYPESCRIPT_PATTERNS },
+  { id: 'testing', name: 'Testing', icon: 'test', snippets: TESTING_PATTERNS },
 ];

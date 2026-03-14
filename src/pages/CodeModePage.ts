@@ -35,6 +35,9 @@ export class CodeModePage {
   private startTime: number = 0;
   private errors: number = 0;
 
+  // Bound event handler
+  private readonly boundKeyboardInput = (e: KeyboardEvent): void => this.handleKeyboardInput(e);
+
   // Syntax highlighting patterns for different languages
   private readonly syntaxPatterns: Record<
     ProgrammingLanguage,
@@ -1172,7 +1175,7 @@ export class CodeModePage {
     }
 
     // Keyboard input
-    document.addEventListener('keydown', this.handleKeyboardInput.bind(this));
+    document.addEventListener('keydown', this.boundKeyboardInput);
   }
 
   /**
@@ -1206,6 +1209,6 @@ export class CodeModePage {
       this.keyboard.destroy();
       this.keyboard = null;
     }
-    document.removeEventListener('keydown', this.handleKeyboardInput.bind(this));
+    document.removeEventListener('keydown', this.boundKeyboardInput);
   }
 }

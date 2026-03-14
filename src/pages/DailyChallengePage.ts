@@ -288,7 +288,7 @@ export class DailyChallengePage {
 
     return `
       <div class="card" style="padding: var(--space-6);">
-        <h3 style="margin-bottom: var(--space-4);">💰 XP Belohnungen</h3>
+        <h3 style="margin-bottom: var(--space-4);">XP Belohnungen</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-3);">
           ${rewards
             .map(

@@ -295,7 +295,7 @@ export class TerminalTrainingPage {
              ${t('terminal.showHint')}
           </button>
           <button id="btn-show-solution" class="btn btn-secondary">
-            👁️ ${t('terminal.showSolution')}
+            ${t('terminal.showSolution')}
           </button>
           <button id="btn-skip" class="btn btn-ghost">
             ${t('terminal.skip')} →

@@ -43,6 +43,45 @@ class TypingEngineServiceImpl {
   }
 
   /**
+   * Handle backspace - remove last character and allow correction
+   * Returns the new position or null if at start
+   */
+  handleBackspace(): { newPosition: number; removedKeystroke: Keystroke | null } | null {
+    if (!this.session || this.session.isComplete || this.session.isPaused) {
+      return null;
+    }
+
+    // Can't go back if at the start
+    if (this.session.currentPosition === 0) {
+      return null;
+    }
+
+    // Move position back
+    this.session.currentPosition--;
+    const newPosition = this.session.currentPosition;
+
+    // Remove the last keystroke
+    const removedKeystroke = this.session.keystrokes.pop() ?? null;
+
+    // Remove corresponding error if it exists at this position
+    const errorIndex = this.session.errors.findIndex(e => e.position === newPosition);
+    if (errorIndex !== -1) {
+      this.session.errors.splice(errorIndex, 1);
+    }
+
+    // Update store
+    Store.setCurrentSession({ ...this.session });
+
+    // Update live stats
+    this.updateLiveStats();
+
+    // Emit event
+    EventBus.emit('typing:backspace', { position: newPosition });
+
+    return { newPosition, removedKeystroke };
+  }
+
+  /**
    * Process a keystroke
    */
   processKeystroke(

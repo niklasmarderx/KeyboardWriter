@@ -523,8 +523,15 @@ export class PracticePage {
       return;
     }
 
+    // Handle Backspace key - allow correction
+    if (event.key === 'Backspace') {
+      event.preventDefault();
+      this.handleBackspace();
+      return;
+    }
+
     // Only process single character keys (letters, numbers, symbols) and space
-    // Ignore keys like Backspace, Tab, Enter, Escape, Arrow keys, etc.
+    // Ignore keys like Tab, Enter, Escape, Arrow keys, etc.
     if (event.key.length !== 1 && event.key !== ' ') {
       return;
     }
@@ -554,6 +561,56 @@ export class PracticePage {
       if (nextChar) {
         this.keyboard?.highlightNextKey(nextChar);
       }
+    }
+  }
+
+  /**
+   * Handle backspace - allow correction of mistakes
+   */
+  private handleBackspace(): void {
+    const result = TypingEngineService.handleBackspace();
+
+    if (result) {
+      const { newPosition } = result;
+      this.currentPosition = newPosition;
+
+      // Update typing display - restore previous character state
+      const display = document.getElementById('typing-display');
+      if (display) {
+        const charElements = display.querySelectorAll('.typing-char');
+
+        // Remove current class from current position + 1 (if exists)
+        if (newPosition + 1 < charElements.length) {
+          charElements[newPosition + 1].classList.remove('current');
+          charElements[newPosition + 1].classList.add('upcoming');
+        }
+
+        // Reset the character at newPosition
+        const charEl = charElements[newPosition];
+        if (charEl) {
+          charEl.classList.remove('correct', 'incorrect', 'upcoming');
+          charEl.classList.add('current');
+        }
+      }
+
+      // Update progress bar
+      const progress = (this.currentPosition / this.currentText.length) * 100;
+      const progressBar = document.getElementById('progress-fill');
+      if (progressBar) {
+        progressBar.style.width = `${progress}%`;
+      }
+
+      // Update stats display
+      this.updateStatsDisplay();
+
+      // Highlight the current expected key
+      const nextChar = TypingEngineService.getCurrentExpectedChar();
+      if (nextChar) {
+        this.keyboard?.highlightNextKey(nextChar);
+      }
+
+      // Clear keyboard states
+      this.keyboard?.clearAllStates();
     }
   }
 

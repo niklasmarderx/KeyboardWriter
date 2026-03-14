@@ -5,7 +5,7 @@
 
 import { VirtualKeyboard } from '../components/keyboard/VirtualKeyboard';
 import { TypingArea } from '../components/typing-area/TypingArea';
-import { EventBus } from '../core';
+import { EventBus, t } from '../core';
 import { SQL_CATEGORIES, SQL_EXERCISES, SQLExercise } from '../data/sqlExercises';
 import { ConfettiService, SoundService } from '../services';
 import { gamificationService } from '../services/GamificationService';
@@ -18,6 +18,7 @@ export class SQLTrainingPage {
   private completedExercises: Set<string> = new Set();
   private isCompleted: boolean = false;
   private eventSubscription: { unsubscribe: () => void } | null = null;
+  private boundHandleKeyDown: ((e: KeyboardEvent) => void) | null = null;
 
   constructor() {
     this.loadProgress();
@@ -85,15 +86,14 @@ export class SQLTrainingPage {
       <div class="sql-header">
         <div class="header-title">
           <h1>
-            <span class="icon">🗃️</span>
-            SQL Training
+            ${t('sql.title')}
           </h1>
-          <p>Lerne SQL durch Tippen echter Queries</p>
+          <p>${t('sql.subtitle')}</p>
         </div>
         <div class="header-stats">
           <div class="stat-item">
             <span class="stat-value">${completed}/${total}</span>
-            <span class="stat-label">Übungen</span>
+            <span class="stat-label">${t('sql.exercises')}</span>
           </div>
           <div class="stat-item">
             <div class="progress-circle" style="--progress: ${progress}%">
@@ -138,7 +138,7 @@ export class SQLTrainingPage {
 
     return `
       <div class="exercise-list">
-        <h3>Übungen</h3>
+        <h3>${t('sql.exercises')}</h3>
         <div class="exercise-items">
           ${exercises
             .map(ex => {
@@ -153,7 +153,7 @@ export class SQLTrainingPage {
               return `
               <button class="exercise-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}" data-exercise="${ex.id}">
                 <div class="ex-status">
-                  ${isCompleted ? '✅' : `<span class="diff-dot" style="background: ${diffColors[ex.difficulty]}"></span>`}
+                  ${isCompleted ? '✓' : `<span class="diff-dot" style="background: ${diffColors[ex.difficulty]}"></span>`}
                 </div>
                 <div class="ex-info">
                   <span class="ex-title">${ex.title}</span>
@@ -176,9 +176,9 @@ export class SQLTrainingPage {
       return `
         <div class="exercise-area empty">
           <div class="empty-state">
-            <span class="empty-icon">🗃️</span>
-            <h3>Wähle eine Übung</h3>
-            <p>Klicke links auf eine SQL-Übung um zu starten</p>
+            <span class="empty-icon"></span>
+            <h3>${t('sql.selectExercise')}</h3>
+            <p>${t('sql.selectExerciseDesc')}</p>
           </div>
         </div>
       `;
@@ -186,9 +186,9 @@ export class SQLTrainingPage {
 
     const ex = this.currentExercise;
     const diffLabels: Record<string, string> = {
-      beginner: 'Anfänger',
-      intermediate: 'Fortgeschritten',
-      advanced: 'Experte',
+      beginner: t('sql.difficulty.beginner'),
+      intermediate: t('sql.difficulty.intermediate'),
+      advanced: t('sql.difficulty.advanced'),
     };
     const diffColors: Record<string, string> = {
       beginner: 'var(--accent-success)',
@@ -210,7 +210,7 @@ export class SQLTrainingPage {
         <div class="query-preview">
           <div class="query-header">
             <span>SQL Query</span>
-            <button class="copy-btn" id="copy-query" title="Query kopieren">📋</button>
+            <button class="copy-btn" id="copy-query" title="Query kopieren">Copy</button>
           </div>
           <pre class="query-code">${this.highlightSQL(ex.query)}</pre>
         </div>
@@ -222,19 +222,19 @@ export class SQLTrainingPage {
         </div>
 
         <div class="explanation-box ${this.isCompleted ? 'visible' : ''}">
-          <h4>💡 Erklärung</h4>
+          <h4>${t('sql.explanation')}</h4>
           <p>${ex.explanation}</p>
         </div>
 
         <div class="exercise-actions">
           <button class="btn btn-secondary" id="btn-skip">
-            Überspringen →
+            ${t('sql.skipBtn')}
           </button>
           ${
             this.isCompleted
               ? `
             <button class="btn btn-primary" id="btn-next">
-              Nächste Übung →
+              ${t('sql.nextBtn')}
             </button>
           `
               : ''
@@ -745,6 +745,12 @@ export class SQLTrainingPage {
     // Setup event listeners
     this.setupEventListeners();
 
+    // Setup keyboard input handler - only add if not already added
+    if (!this.boundHandleKeyDown) {
+      this.boundHandleKeyDown = this.handleKeyDown.bind(this);
+      document.addEventListener('keydown', this.boundHandleKeyDown);
+    }
+
     // If an exercise is selected, init typing area
     if (this.currentExercise) {
       this.initTypingArea();
@@ -781,6 +787,42 @@ export class SQLTrainingPage {
   }
 
   /**
+   * Handle keyboard input
+   */
+  private handleKeyDown(e: KeyboardEvent): void {
+    // Only process if we have an active typing area and exercise
+    if (!this.typingArea || !this.currentExercise || this.isCompleted) {
+      return;
+    }
+
+    // Don't capture if target is an input/textarea
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+      return;
+    }
+
+    // Handle Tab to skip
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      this.nextExercise();
+      return;
+    }
+
+    // Handle Backspace - allow correction
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      this.typingArea.handleBackspace();
+      return;
+    }
+
+    // Only process single characters
+    if (e.key.length === 1) {
+      e.preventDefault();
+      this.typingArea.processKeystroke(e.key, e.code);
+    }
+  }
+
+  /**
    * Setup event listeners
    */
   private setupEventListeners(): void {
@@ -807,7 +849,7 @@ export class SQLTrainingPage {
     copyBtn?.addEventListener('click', () => {
       if (this.currentExercise) {
         void navigator.clipboard.writeText(this.currentExercise.query);
-        EventBus.emit('ui:toast', { message: '📋 Query kopiert!', type: 'success' });
+        EventBus.emit('ui:toast', { message: t('sql.queryCopied'), type: 'success' });
       }
     });
 
@@ -860,7 +902,7 @@ export class SQLTrainingPage {
       SoundService.playSuccess();
 
       EventBus.emit('ui:toast', {
-        message: `✅ Geschafft! +${this.currentExercise.xp} XP`,
+        message: t('sql.completed', { xp: this.currentExercise.xp }),
         type: 'success',
       });
     }
@@ -904,6 +946,11 @@ export class SQLTrainingPage {
    * Destroy the page
    */
   destroy(): void {
+    // Remove keyboard event listener
+    if (this.boundHandleKeyDown) {
+      document.removeEventListener('keydown', this.boundHandleKeyDown);
+      this.boundHandleKeyDown = null;
+    }
     if (this.keyboard) {
       this.keyboard.destroy();
       this.keyboard = null;

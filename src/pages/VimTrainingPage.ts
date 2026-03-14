@@ -3,7 +3,7 @@
  * Practice Vim commands and key combinations
  */
 
-import { t } from '../core';
+import { EventBus, t } from '../core';
 import { VIM_COMMANDS, VimCommand } from '../data/programmingExercises';
 
 type VimCategory = 'movement' | 'editing' | 'visual' | 'search' | 'files' | 'advanced';
@@ -20,6 +20,7 @@ export class VimTrainingPage {
   private totalChars = 0;
   private errors = 0;
   private readonly vimMode: 'normal' | 'insert' | 'visual' | 'command' = 'normal';
+  private boundHandleKeyDown: ((e: KeyboardEvent) => void) | null = null;
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -555,11 +556,21 @@ export class VimTrainingPage {
       });
     });
 
-    // Keyboard input
-    document.addEventListener('keydown', this.handleKeyDown.bind(this));
+    // Keyboard input - only add if not already added
+    if (!this.boundHandleKeyDown) {
+      this.boundHandleKeyDown = this.handleKeyDown.bind(this);
+      document.addEventListener('keydown', this.boundHandleKeyDown);
+    }
   }
 
   private handleKeyDown(e: KeyboardEvent): void {
+    const currentCommand = this.currentCommands[this.currentIndex];
+    if (!currentCommand) {
+      return;
+    }
+
+    const target = currentCommand.keys;
+
     // Prevent default for Escape
     if (e.key === 'Escape') {
       e.preventDefault();
@@ -574,6 +585,7 @@ export class VimTrainingPage {
       return;
     }
 
+    // Backspace - allow deleting to correct errors
     if (e.key === 'Backspace') {
       e.preventDefault();
       if (this.currentInput.length > 0) {
@@ -583,46 +595,74 @@ export class VimTrainingPage {
       return;
     }
 
-    if (!this.isActive && e.key.length === 1) {
+    // Start timer on first meaningful input
+    if (!this.isActive) {
       this.isActive = true;
       this.startTime = Date.now();
     }
 
-    const currentCommand = this.currentCommands[this.currentIndex];
-    if (!currentCommand) {
+    // Build the expected sequence to match against
+    // Vim commands can be like: "dd", "yy", "Ctrl+d", "Ctrl+u", "/pattern", ":w", etc.
+
+    // Determine what the user typed
+    let typedSequence = '';
+
+    if (e.ctrlKey && e.key !== 'Control') {
+      // Ctrl+key combination - normalize the key to lowercase
+      typedSequence = `Ctrl+${e.key.toLowerCase()}`;
+      e.preventDefault(); // Prevent browser shortcuts
+    } else if (e.key === 'Control' || e.key === 'Shift' || e.key === 'Alt' || e.key === 'Meta') {
+      // Modifier key alone - ignore
+      return;
+    } else if (e.key.length === 1) {
+      // Regular character
+      typedSequence = e.key;
+    } else {
+      // Other special keys (Enter, etc.) - ignore for now
       return;
     }
 
-    const target = currentCommand.keys;
+    // Check what we expect at the current position
+    const remainingTarget = target.slice(this.currentInput.length);
 
-    // Handle special keys
-    let keyChar = e.key;
-    if (e.key === 'Control') {
-      keyChar = 'Ctrl+';
-    } else if (e.ctrlKey && e.key.length === 1) {
-      keyChar = `Ctrl+${e.key}`;
-    }
+    // Check if we're expecting a Ctrl+ combination
+    const ctrlMatch = remainingTarget.match(/^Ctrl\+([a-zA-Z])/);
 
-    // For simplicity, just compare the typed character
-    if (e.key.length === 1 || e.key === 'Escape') {
-      const expectedChar = target[this.currentInput.length];
+    if (ctrlMatch) {
+      // We expect a Ctrl+key combination
+      const expectedCtrlCombo = `Ctrl+${ctrlMatch[1].toLowerCase()}`;
       this.totalChars++;
 
-      if (keyChar === expectedChar || e.key === expectedChar) {
+      if (typedSequence.toLowerCase() === expectedCtrlCombo.toLowerCase()) {
         this.correctChars++;
-        this.currentInput += e.key;
+        // Add the full "Ctrl+x" to the input
+        this.currentInput += ctrlMatch[0];
       } else {
         this.errors++;
-        // Don't add wrong character - user must type correct character
+        // On error, add what they typed (for visual feedback) but mark as error
+        this.currentInput += typedSequence;
       }
+    } else {
+      // Regular character expected
+      const expectedChar = remainingTarget[0];
+      this.totalChars++;
 
-      this.updateDisplay();
-      this.updateStats();
-
-      // Check if complete
-      if (this.currentInput.length >= target.length) {
-        setTimeout(() => this.completeCurrentItem(), 300);
+      if (typedSequence === expectedChar) {
+        this.correctChars++;
+        this.currentInput += typedSequence;
+      } else {
+        this.errors++;
+        // Add the wrong character so it shows as red
+        this.currentInput += typedSequence;
       }
+    }
+
+    this.updateDisplay();
+    this.updateStats();
+
+    // Check if complete and all correct
+    if (this.currentInput === target) {
+      setTimeout(() => this.completeCurrentItem(), 300);
     }
   }
 
@@ -698,12 +738,13 @@ export class VimTrainingPage {
     if (this.currentIndex >= this.currentCommands.length) {
       // Only show completion message if there were commands
       if (this.currentCommands.length > 0) {
-        alert(
-          t('vim.allComplete', {
+        EventBus.emit('ui:toast', {
+          message: t('vim.allComplete', {
             count: this.currentCommands.length,
             category: this.getCategoryTitle(this.currentCategory),
-          })
-        );
+          }),
+          type: 'success',
+        });
       }
       this.currentIndex = 0;
     }
@@ -727,6 +768,9 @@ export class VimTrainingPage {
   }
 
   destroy(): void {
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this));
+    if (this.boundHandleKeyDown) {
+      document.removeEventListener('keydown', this.boundHandleKeyDown);
+      this.boundHandleKeyDown = null;
+    }
   }
 }

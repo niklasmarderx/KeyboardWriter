@@ -138,7 +138,7 @@ export class SocialPage {
               (entry, index) => `
             <div class="leaderboard-row ${entry.isCurrentUser ? 'current-user' : ''} ${index < 3 ? 'top-' + (index + 1) : ''}">
               <span class="col-rank">
-                ${index === 0 ? '' : index === 1 ? '' : index === 2 ? '' : index + 1}
+                ${index + 1}
               </span>
               <span class="col-user">
                 <span class="user-avatar">${entry.avatar}</span>

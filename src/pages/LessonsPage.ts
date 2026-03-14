@@ -90,6 +90,14 @@ export class LessonsPage {
     const lessons = LessonService.getLessonsInCategory(id);
     const completedInCategory = lessons.filter(l => LessonService.isLessonCompleted(l.id)).length;
 
+    // Get translated name and description
+    const translatedName =
+      t(`lessons.category.${id}`) !== `lessons.category.${id}` ? t(`lessons.category.${id}`) : name;
+    const translatedDesc =
+      t(`lessons.category.${id}.desc`) !== `lessons.category.${id}.desc`
+        ? t(`lessons.category.${id}.desc`)
+        : description;
+
     const icons: Record<string, string> = {
       keyboard:
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6" y2="8"></line><line x1="10" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="14" y2="8"></line><line x1="18" y1="8" x2="18" y2="8"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>',
@@ -106,11 +114,11 @@ export class LessonsPage {
           <div style="width: 32px; height: 32px; border-radius: var(--radius-md); background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
             <span style="width: 18px; height: 18px; color: var(--accent-primary);">${icons[icon] ?? icons.book}</span>
           </div>
-          <h3 style="margin: 0; font-size: 14px; flex: 1;">${name}</h3>
+          <h3 style="margin: 0; font-size: 14px; flex: 1;">${translatedName}</h3>
         </div>
-        <p style="color: var(--text-secondary); font-size: 12px; margin: 0 0 var(--space-2) 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${description}</p>
+        <p style="color: var(--text-secondary); font-size: 12px; margin: 0 0 var(--space-2) 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${translatedDesc}</p>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 10px; color: var(--text-muted);">${completedInCategory}/${lessons.length} abgeschlossen</span>
+          <span style="font-size: 10px; color: var(--text-muted);">${t('lessons.completedCount', { count: completedInCategory })}/${lessons.length}</span>
           <div class="progress-bar" style="width: 60px; height: 4px;">
             <div class="progress-bar-fill" style="width: ${lessons.length > 0 ? (completedInCategory / lessons.length) * 100 : 0}%;"></div>
           </div>
@@ -130,6 +138,19 @@ export class LessonsPage {
     const category = LESSON_CATEGORIES.find(c => c.id === this.selectedCategory);
     const lessons = LessonService.getLessonsInCategory(this.selectedCategory);
 
+    // Get translated category name and description
+    const categoryName = category
+      ? t(`lessons.category.${category.id}`) !== `lessons.category.${category.id}`
+        ? t(`lessons.category.${category.id}`)
+        : category.name
+      : t('lessons.title');
+
+    const categoryDesc = category
+      ? t(`lessons.category.${category.id}.desc`) !== `lessons.category.${category.id}.desc`
+        ? t(`lessons.category.${category.id}.desc`)
+        : category.description
+      : '';
+
     return `
       <div class="typing-container">
         <div class="lessons-header" style="margin-bottom: var(--space-6);">
@@ -139,8 +160,8 @@ export class LessonsPage {
             </svg>
             ${t('lessons.back')}
           </button>
-          <h1>${category?.name ?? 'Lektionen'}</h1>
-          <p style="color: var(--text-secondary); margin-top: var(--space-2);">${category?.description ?? ''}</p>
+          <h1>${categoryName}</h1>
+          <p style="color: var(--text-secondary); margin-top: var(--space-2);">${categoryDesc}</p>
         </div>
 
         <div class="lessons-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3);">
@@ -155,8 +176,14 @@ export class LessonsPage {
    */
   private renderLessonCard(lesson: Lesson, index: number): string {
     const isCompleted = LessonService.isLessonCompleted(lesson.id);
-    const difficultyLabel = LessonService.getLessonDifficultyLabel(lesson.level);
+    const difficultyLabel = this.getTranslatedDifficultyLabel(lesson.level);
     const exerciseCount = lesson.exercises.length;
+
+    // Get translated title and description
+    const titleKey = `lessons.${lesson.id}.title`;
+    const descKey = `lessons.${lesson.id}.desc`;
+    const translatedTitle = t(titleKey) !== titleKey ? t(titleKey) : lesson.title;
+    const translatedDesc = t(descKey) !== descKey ? t(descKey) : lesson.description;
 
     const statusIcon = isCompleted
       ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><polyline points="20,6 9,17 4,12"></polyline></svg>'
@@ -169,15 +196,34 @@ export class LessonsPage {
           <div style="width: 28px; height: 28px; border-radius: 50%; background: ${isCompleted ? 'var(--success-bg)' : 'var(--bg-tertiary)'}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
             ${statusIcon}
           </div>
-          <h4 style="margin: 0; font-size: 14px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${lesson.title}</h4>
+          <h4 style="margin: 0; font-size: 14px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${translatedTitle}</h4>
         </div>
-        <p style="margin: 0; font-size: 12px; color: var(--text-secondary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${lesson.description}</p>
+        <p style="margin: 0; font-size: 12px; color: var(--text-secondary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">${translatedDesc}</p>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
           <span class="badge" style="background: var(--bg-tertiary); color: var(--text-secondary); padding: 2px 6px; border-radius: var(--radius-sm); font-size: 10px;">${difficultyLabel}</span>
-          <span style="font-size: 10px; color: var(--text-muted);">${exerciseCount} Übungen</span>
+          <span style="font-size: 10px; color: var(--text-muted);">${t('lessons.exercisesCount', { count: exerciseCount })}</span>
         </div>
       </div>
     `;
+  }
+
+  /**
+   * Get translated difficulty label based on level
+   */
+  private getTranslatedDifficultyLabel(level: number): string {
+    if (level <= 1) {
+      return t('lessons.difficulty.beginner');
+    }
+    if (level <= 2) {
+      return t('lessons.difficulty.easy');
+    }
+    if (level <= 3) {
+      return t('lessons.difficulty.medium');
+    }
+    if (level <= 5) {
+      return t('lessons.difficulty.hard');
+    }
+    return t('lessons.difficulty.expert');
   }
 
   /**
@@ -193,6 +239,10 @@ export class LessonsPage {
       return this.renderCategoriesView();
     }
 
+    // Get translated lesson title
+    const titleKey = `lessons.${lesson.id}.title`;
+    const translatedTitle = t(titleKey) !== titleKey ? t(titleKey) : lesson.title;
+
     return `
       <div class="typing-container">
         <div class="exercise-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
@@ -204,7 +254,7 @@ export class LessonsPage {
               </svg>
               ${t('lessons.quit')}
             </button>
-            <h2 style="margin: 0;">${lesson.title}</h2>
+            <h2 style="margin: 0;">${translatedTitle}</h2>
             <p style="color: var(--text-secondary); margin: var(--space-1) 0 0 0;">${t('lessons.exerciseOf', { current: currentIndex + 1, total: totalExercises })}</p>
           </div>
           <div style="display: flex; gap: var(--space-2);">
@@ -467,13 +517,36 @@ export class LessonsPage {
         return;
       }
 
-      // Ignore modifier keys and non-character keys (Backspace, Tab, Enter, Arrows, etc.)
+      // Ignore modifier keys
       if (['Shift', 'Control', 'Alt', 'Meta', 'CapsLock'].includes(event.key)) {
         return;
       }
 
+      // Handle Backspace key - allow correction
+      if (event.key === 'Backspace') {
+        event.preventDefault();
+        if (sessionStarted) {
+          const result = TypingEngineService.handleBackspace();
+          if (result) {
+            currentPosition = result.newPosition;
+            this.handleBackspaceDisplay(currentPosition, exercise.text.length);
+            this.updateStatsDisplay();
+
+            // Highlight the current expected key
+            const nextChar = TypingEngineService.getCurrentExpectedChar();
+            if (nextChar) {
+              this.keyboard?.highlightNextKey(nextChar);
+            }
+
+            // Clear keyboard states
+            this.keyboard?.clearAllStates();
+          }
+        }
+        return;
+      }
+
       // Only process single character keys (letters, numbers, symbols) and space
-      // Ignore keys like Backspace, Tab, Enter, Escape, Arrow keys, etc.
+      // Ignore keys like Tab, Enter, Escape, Arrow keys, etc.
       if (event.key.length !== 1 && event.key !== ' ') {
         return;
       }
@@ -518,6 +591,41 @@ export class LessonsPage {
     };
 
     document.addEventListener('keydown', this.boundKeydownHandler);
+  }
+
+  /**
+   * Handle backspace display update
+   */
+  private handleBackspaceDisplay(newPosition: number, textLength: number): void {
+    const display = document.getElementById('typing-display');
+    if (!display) {
+      return;
+    }
+
+    const charElements = display.querySelectorAll('.typing-char');
+
+    // Remove current class from current position + 1 (if exists)
+    if (newPosition + 1 < charElements.length) {
+      charElements[newPosition + 1].classList.remove('current');
+      charElements[newPosition + 1].classList.add('upcoming');
+    }
+
+    // Reset the character at newPosition
+    const charEl = charElements[newPosition];
+    if (charEl) {
+      charEl.classList.remove('correct', 'incorrect', 'upcoming');
+      charEl.classList.add('current');
+    }
+
+    // Update progress bar
+    const progressBar = document.getElementById('lesson-progress-fill');
+    if (progressBar) {
+      const baseProgress =
+        (LessonService.getCurrentExerciseIndex() / LessonService.getTotalExercisesCount()) * 100;
+      const exerciseProgress =
+        ((newPosition / textLength) * 100) / LessonService.getTotalExercisesCount();
+      progressBar.style.width = `${baseProgress + exerciseProgress}%`;
+    }
   }
 
   /**

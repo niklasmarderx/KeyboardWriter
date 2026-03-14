@@ -47,6 +47,40 @@ export class TypingArea {
   }
 
   /**
+   * Handle backspace - allow correction of mistakes
+   * Returns true if backspace was processed, false if at start
+   */
+  handleBackspace(): boolean {
+    if (this.currentPosition === 0) {
+      return false;
+    }
+
+    // Move position back
+    this.currentPosition--;
+
+    // Reset the character at the current position
+    const charEl = this.charElements[this.currentPosition];
+    if (charEl) {
+      charEl.classList.remove('correct', 'incorrect', 'upcoming');
+      charEl.classList.add('current');
+    }
+
+    // Reset the next character to upcoming (if exists)
+    if (this.currentPosition + 1 < this.charElements.length) {
+      const nextCharEl = this.charElements[this.currentPosition + 1];
+      if (nextCharEl) {
+        nextCharEl.classList.remove('current');
+        nextCharEl.classList.add('upcoming');
+      }
+    }
+
+    // Emit backspace event
+    EventBus.emit('typing:backspace', { position: this.currentPosition });
+
+    return true;
+  }
+
+  /**
    * Process a keystroke
    */
   processKeystroke(key: string, _code: string): { isCorrect: boolean; isComplete: boolean } {

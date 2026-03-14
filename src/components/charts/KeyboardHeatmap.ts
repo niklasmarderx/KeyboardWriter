@@ -235,7 +235,7 @@ export class KeyboardHeatmap {
       ">
         <div>
           <h4 style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">
-            🔴 Verbesserungsbedarf
+            Verbesserungsbedarf
           </h4>
           ${worstKeys
             .map(
@@ -263,7 +263,7 @@ export class KeyboardHeatmap {
         </div>
         <div>
           <h4 style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">
-            🟢 Starke Tasten
+            Starke Tasten
           </h4>
           ${bestKeys
             .map(
