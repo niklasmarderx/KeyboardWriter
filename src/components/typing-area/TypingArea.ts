@@ -35,14 +35,32 @@ export class TypingArea {
     this.container.innerHTML = '';
     this.charElements = [];
 
+    // Render characters with proper wrapping support
     for (let i = 0; i < this.targetText.length; i++) {
       const char = this.targetText[i];
       const span = document.createElement('span');
       span.className = 'typing-char upcoming';
-      span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space for visibility
       span.dataset.index = String(i);
-      this.container.appendChild(span);
-      this.charElements.push(span);
+
+      if (char === ' ') {
+        // For spaces, use a regular space that allows wrapping
+        span.textContent = ' ';
+        span.style.whiteSpace = 'pre';
+        this.container.appendChild(span);
+        this.charElements.push(span);
+      } else if (char === '\n') {
+        // For newlines, add a line break
+        span.textContent = '';
+        this.container.appendChild(span);
+        this.charElements.push(span);
+        const br = document.createElement('br');
+        this.container.appendChild(br);
+      } else {
+        // Regular character
+        span.textContent = char;
+        this.container.appendChild(span);
+        this.charElements.push(span);
+      }
     }
   }
 

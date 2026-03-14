@@ -19,6 +19,12 @@
   font-size: var(--font-size-2xl);
   line-height: var(--line-height-relaxed);
   min-height: 200px;
+  /* Enable word wrapping for long text */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .typing-char {
