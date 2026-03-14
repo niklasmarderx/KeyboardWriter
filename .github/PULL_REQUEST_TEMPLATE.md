@@ -1,54 +1,43 @@
-## 📝 Beschreibung
+## Description
 
-Beschreibe deine Änderungen kurz und prägnant.
+Describe your changes briefly. What does this PR do?
 
-## 🔗 Related Issue
+## Type of Change
+
+- [ ] Bug fix (non-breaking change that fixes an issue)
+- [ ] New feature (non-breaking change that adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Documentation update
+- [ ] Code refactoring
+- [ ] Performance improvement
+
+## Related Issues
 
 Fixes #(issue number)
 
-## 🎯 Art der Änderung
+## How Has This Been Tested?
 
-- [ ] 🐛 Bug Fix (non-breaking change, löst ein Problem)
-- [ ] ✨ Neues Feature (non-breaking change, fügt Funktionalität hinzu)
-- [ ] 💥 Breaking Change (Fix oder Feature das bestehende Funktionalität ändert)
-- [ ] 📚 Dokumentation
-- [ ] 🎨 Style/UI
-- [ ] ♻️ Refactoring
-- [ ] ⚡ Performance
-- [ ] 🧪 Tests
+Describe the tests you ran to verify your changes.
 
-## 📸 Screenshots
+- [ ] Unit tests
+- [ ] Manual testing
+- [ ] Browser testing
 
-Falls zutreffend, füge Screenshots der Änderungen hinzu.
+## Checklist
 
-| Vorher     | Nachher    |
-| ---------- | ---------- |
-| Screenshot | Screenshot |
+- [ ] My code follows the project style guidelines
+- [ ] I have performed a self-review of my code
+- [ ] I have commented my code where necessary
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] Any dependent changes have been merged and published
 
-## ✅ Checklist
+## Screenshots (if applicable)
 
-- [ ] Mein Code folgt dem Style Guide des Projekts
-- [ ] Ich habe meinen Code selbst reviewed
-- [ ] Ich habe Kommentare hinzugefügt (bei komplexem Code)
-- [ ] Meine Änderungen generieren keine neuen Warnings
-- [ ] Ich habe Tests hinzugefügt (die beweisen dass mein Fix/Feature funktioniert)
-- [ ] Alle Tests passen lokal
-- [ ] Type-Check (`npm run type-check`) hat keine Fehler
-- [ ] Lint-Check (`npm run lint`) hat keine Fehler
+Add screenshots to show the visual changes.
 
-## 🧪 Wie wurde getestet?
+## Additional Notes
 
-Beschreibe wie du getestet hast:
-
-- [ ] Manuell im Browser
-- [ ] Unit Tests
-- [ ] Andere:
-
-**Test Konfiguration**:
-
-- Browser:
-- OS:
-
-## 📋 Weitere Infos
-
-Weitere Informationen die für den Review wichtig sein könnten.
+Any other information that reviewers should know.

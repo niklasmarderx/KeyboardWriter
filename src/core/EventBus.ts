@@ -2,6 +2,10 @@
  * Type-safe EventBus implementation using Observer Pattern
  */
 
+import { Logger } from './Logger';
+
+const logger = Logger.scope('EventBus');
+
 type EventCallback<T = unknown> = (data: T) => void;
 
 interface EventSubscription {
@@ -112,7 +116,7 @@ class EventBusImpl {
     event: K,
     callback: EventCallback<AppEvents[K]>
   ): EventSubscription {
-    const subscription = this.on(event, data => {
+    const subscription = this.on(event, (data): void => {
       subscription.unsubscribe();
       callback(data);
     });
@@ -124,12 +128,12 @@ class EventBusImpl {
    */
   emit<K extends keyof AppEvents>(event: K, data: AppEvents[K]): void {
     const callbacks = this.listeners.get(event);
-    if (callbacks) {
+    if (callbacks !== undefined) {
       callbacks.forEach(callback => {
         try {
           callback(data);
         } catch (error) {
-          console.error(`Error in event handler for "${event}":`, error);
+          logger.error(`Error in event handler for "${event}":`, error);
         }
       });
     }

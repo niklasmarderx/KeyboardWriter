@@ -93,7 +93,7 @@ const localProgrammingQuotes: Quote[] = [
   },
 ];
 
-// Deutsche Sprichwörter und Zitate
+// German proverbs and quotes
 const localGermanQuotes: Quote[] = [
   { text: 'Übung macht den Meister.', author: 'Deutsches Sprichwort', source: 'local' },
   { text: 'Der Weg ist das Ziel.', author: 'Konfuzius', source: 'local' },

@@ -17,9 +17,9 @@ import { gamificationService } from './GamificationService';
 // ============================================================================
 
 export type QuizType =
-  | 'shortcut-multiple-choice' // Multiple Choice für Shortcuts
+  | 'shortcut-multiple-choice' // Multiple choice for shortcuts
   | 'command-type' // Tippe den Befehl
-  | 'code-completion' // Code-Vervollständigung
+  | 'code-completion' // Code completion
   | 'timed-challenge' // Zeit-Challenge
   | 'reverse-lookup'; // Was macht dieser Shortcut?
 
@@ -28,12 +28,12 @@ export interface QuizQuestion {
   type: QuizType;
   question: string;
   correctAnswer: string;
-  options?: string[]; // Für Multiple Choice
+  options?: string[]; // For multiple choice
   hint?: string;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   category: string;
   points: number;
-  timeLimit?: number; // Sekunden für timed challenges
+  timeLimit?: number; // Seconds for timed challenges
 }
 
 export interface QuizResult {

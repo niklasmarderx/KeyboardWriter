@@ -3,6 +3,10 @@
  * Manages user preferences and settings
  */
 
+import { Logger } from './Logger';
+
+const logger = Logger.scope('SettingsService');
+
 export interface Settings {
   // Display
   theme: 'dark' | 'light' | 'auto';
@@ -68,12 +72,12 @@ class SettingsServiceClass {
   private loadSettings(): Settings {
     try {
       const stored = localStorage.getItem(SETTINGS_KEY);
-      if (stored) {
+      if (stored !== null && stored !== '') {
         const parsed = JSON.parse(stored) as Partial<Settings>;
         return { ...DEFAULT_SETTINGS, ...parsed };
       }
     } catch (error) {
-      console.error('Failed to load settings:', error);
+      logger.error('Failed to load settings:', error);
     }
     return { ...DEFAULT_SETTINGS };
   }
@@ -85,7 +89,7 @@ class SettingsServiceClass {
     try {
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.settings));
     } catch (error) {
-      console.error('Failed to save settings:', error);
+      logger.error('Failed to save settings:', error);
     }
   }
 
@@ -184,7 +188,7 @@ class SettingsServiceClass {
       success: this.settings.successSound,
     }[type];
 
-    if (!shouldPlay) {
+    if (shouldPlay !== true) {
       return;
     }
 

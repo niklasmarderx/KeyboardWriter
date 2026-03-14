@@ -1,0 +1,200 @@
+/**
+ * Onboarding Modal Styles
+ */
+
+/* Overlay */
+.onboarding-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal Container */
+.onboarding-modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 16px;
+  padding: 48px;
+  max-width: 480px;
+  width: 90%;
+  position: relative;
+  animation: slideUp 0.4s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Skip Button */
+.onboarding-skip {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.onboarding-skip:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Content */
+.onboarding-content {
+  text-align: center;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icon */
+.onboarding-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  animation: bounceIn 0.5s ease;
+}
+
+/* Title */
+.onboarding-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+/* Description */
+.onboarding-description {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 380px;
+}
+
+/* Action Button */
+.onboarding-action {
+  margin-top: 8px;
+}
+
+/* Progress Dots */
+.onboarding-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 32px 0 24px;
+}
+
+.onboarding-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.onboarding-dot:hover {
+  background: var(--accent-secondary);
+  transform: scale(1.2);
+}
+
+.onboarding-dot.active {
+  background: var(--accent-primary);
+  width: 24px;
+  border-radius: 5px;
+}
+
+/* Actions */
+.onboarding-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.onboarding-actions .btn {
+  flex: 1;
+}
+
+.onboarding-prev:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .onboarding-modal {
+    padding: 32px 24px;
+    margin: 16px;
+  }
+
+  .onboarding-icon {
+    font-size: 48px;
+  }
+
+  .onboarding-title {
+    font-size: 20px;
+  }
+
+  .onboarding-description {
+    font-size: 14px;
+  }
+
+  .onboarding-actions {
+    flex-direction: column;
+  }
+}

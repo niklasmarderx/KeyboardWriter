@@ -28,7 +28,11 @@ type MigrationFn = (data: Record<string, unknown>) => Record<string, unknown>;
 const migrations: Record<number, MigrationFn> = {
   // Migration from v1 to v2: Add settings.hapticFeedback field
   2: (data: Record<string, unknown>) => {
-    if (data.settings && typeof data.settings === 'object') {
+    if (
+      data.settings !== null &&
+      data.settings !== undefined &&
+      typeof data.settings === 'object'
+    ) {
       const settings = data.settings as Record<string, unknown>;
       if (!('hapticFeedback' in settings)) {
         settings.hapticFeedback = false;
@@ -39,17 +43,29 @@ const migrations: Record<number, MigrationFn> = {
   // Migration from v2 to v3: Fix completedLessons and completedExercises serialization
   // These were stored as empty objects {} instead of arrays [] due to Set serialization bug
   3: (data: Record<string, unknown>) => {
-    if (data.statistics && typeof data.statistics === 'object') {
+    if (
+      data.statistics !== null &&
+      data.statistics !== undefined &&
+      typeof data.statistics === 'object'
+    ) {
       const stats = data.statistics as Record<string, unknown>;
 
       // Fix completedLessons - convert from object to array if needed
-      if (stats.completedLessons && !Array.isArray(stats.completedLessons)) {
+      if (
+        stats.completedLessons !== null &&
+        stats.completedLessons !== undefined &&
+        !Array.isArray(stats.completedLessons)
+      ) {
         // If it's an object (from failed Set serialization), convert to empty array
         stats.completedLessons = [];
       }
 
       // Fix completedExercises - convert from object to array if needed
-      if (stats.completedExercises && !Array.isArray(stats.completedExercises)) {
+      if (
+        stats.completedExercises !== null &&
+        stats.completedExercises !== undefined &&
+        !Array.isArray(stats.completedExercises)
+      ) {
         // If it's an object (from failed Set serialization), convert to empty array
         stats.completedExercises = [];
       }

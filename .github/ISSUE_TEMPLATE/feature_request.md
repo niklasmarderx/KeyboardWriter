@@ -1,51 +1,32 @@
 ---
-name: 💡 Feature Request
-about: Schlage eine neue Idee für das Projekt vor
+name: Feature Request
+about: Suggest a new feature or improvement
 title: '[FEATURE] '
 labels: enhancement
 assignees: ''
 ---
 
-## 💡 Feature Beschreibung
+## Problem / Motivation
 
-Eine klare und präzise Beschreibung des gewünschten Features.
+Describe the problem or motivation for this feature.
+Example: "I find it frustrating when..."
 
-## 🎯 Problem / Motivation
+## Proposed Solution
 
-Welches Problem löst dieses Feature? Warum ist es nützlich?
+Describe your proposed solution clearly.
 
-**Beispiel**: Ich bin frustriert wenn [...]
+## Alternative Solutions
 
-## 💭 Vorgeschlagene Lösung
+Have you considered alternative approaches? Describe them here.
 
-Beschreibe wie du dir die Umsetzung vorstellst.
+## Additional Context
 
-## 🔄 Alternativen
+Add any other context, mockups, or screenshots about the feature request here.
 
-Hast du alternative Lösungen oder Features in Betracht gezogen?
+## Priority
 
-## 📸 Mockups / Beispiele
+How important is this feature to you?
 
-Falls vorhanden, füge Screenshots, Mockups oder Links zu ähnlichen Features in anderen Apps hinzu.
-
-## ✅ Akzeptanzkriterien
-
-- [ ] Kriterium 1
-- [ ] Kriterium 2
-- [ ] Kriterium 3
-
-## 📋 Zusätzlicher Kontext
-
-Weitere Informationen zum Feature Request.
-
-## 🏷️ Kategorie
-
-- [ ] 🎮 Gamification
-- [ ] 📊 Statistiken
-- [ ] ⌨️ Tipp-Übungen
-- [ ] 💻 Code Training
-- [ ] 🎨 UI/UX
-- [ ] 🔧 Technisch
-- [ ] 📱 Mobile
-- [ ] 🌐 PWA
-- [ ] Sonstiges
+- [ ] Nice to have
+- [ ] Important
+- [ ] Critical

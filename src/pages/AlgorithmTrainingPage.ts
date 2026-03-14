@@ -932,7 +932,7 @@ export class AlgorithmTrainingPage {
     } else if (algo?.category === 'graph') {
       this.graphVisualizer = new GraphVisualizer('algo-visualizer');
 
-      // Wähle den passenden Graphen für den Algorithmus
+      // Select the appropriate graph for the algorithm
       let graphData: {
         nodes: ReturnType<typeof GraphVisualizer.createSampleGraph>['nodes'];
         edges: ReturnType<typeof GraphVisualizer.createSampleGraph>['edges'];

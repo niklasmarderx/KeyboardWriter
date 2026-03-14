@@ -8,7 +8,7 @@ import { Lesson, LessonCategory, ProgrammingLesson, ShortcutLesson } from '../do
  * ============================================================================
  */
 export const BEGINNER_LESSONS: Lesson[] = [
-  // ========== GRUNDPOSITION EINFÜHRUNG ==========
+  // ========== HOME ROW INTRODUCTION ==========
   {
     id: 'beginner-01',
     title: 'Erste Schritte: F und J',
@@ -121,7 +121,7 @@ export const BEGINNER_LESSONS: Lesson[] = [
       { id: 'beg-06-06', text: 'halb glas halb glas halb glas', description: 'Kombinationen' },
     ],
   },
-  // ========== LEERTASTE EINFÜHRUNG ==========
+  // ========== SPACEBAR INTRODUCTION ==========
   {
     id: 'beginner-07',
     title: 'Die Leertaste',
@@ -141,7 +141,7 @@ export const BEGINNER_LESSONS: Lesson[] = [
       { id: 'beg-07-06', text: 'lass das glas halb fall', description: 'Satzteile' },
     ],
   },
-  // ========== KURZE SÄTZE ==========
+  // ========== SHORT SENTENCES ==========
   {
     id: 'beginner-08',
     title: 'Ganz kurze Sätze',
@@ -169,7 +169,7 @@ export const BEGINNER_LESSONS: Lesson[] = [
  * ============================================================================
  */
 export const BASIC_LESSONS: Lesson[] = [
-  // ========== OBERE REIHE EINFÜHRUNG ==========
+  // ========== TOP ROW INTRODUCTION ==========
   {
     id: 'basics-01',
     title: 'Obere Reihe: E und I',
@@ -225,7 +225,7 @@ export const BASIC_LESSONS: Lesson[] = [
       { id: 'bas-03-06', text: 'reis reis weit weit zeit zeit', description: 'Mehr Wörter' },
     ],
   },
-  // ========== UNTERE REIHE EINFÜHRUNG ==========
+  // ========== BOTTOM ROW INTRODUCTION ==========
   {
     id: 'basics-04',
     title: 'Untere Reihe: N und M',
@@ -487,7 +487,7 @@ export const INTERMEDIATE_LESSONS: Lesson[] = [
  * ============================================================================
  */
 export const WORD_LESSONS: Lesson[] = [
-  // ========== HÄUFIGE WÖRTER ==========
+  // ========== COMMON WORDS ==========
   {
     id: 'words-01',
     title: 'Die 100 häufigsten Wörter',
@@ -540,7 +540,7 @@ export const WORD_LESSONS: Lesson[] = [
       { id: 'wrd-03-05', text: 'warm kalt heiß kühl mild', description: 'Temperatur' },
     ],
   },
-  // ========== EINFACHE SÄTZE ==========
+  // ========== SIMPLE SENTENCES ==========
   {
     id: 'words-04',
     title: 'Kurze Sätze',
@@ -580,7 +580,7 @@ export const WORD_LESSONS: Lesson[] = [
       { id: 'wrd-05-05', text: 'Das Auto steht vor dem großen Haus.', description: 'Beschreibung' },
     ],
   },
-  // ========== LÄNGERE TEXTE ==========
+  // ========== LONGER TEXTS ==========
   {
     id: 'words-06',
     title: 'Lange Sätze',

@@ -1,46 +1,46 @@
 ---
-name: 🐛 Bug Report
-about: Melde einen Bug um das Projekt zu verbessern
+name: Bug Report
+about: Report a bug to help us improve
 title: '[BUG] '
 labels: bug
 assignees: ''
 ---
 
-## 🐛 Beschreibung
+## Description
 
-Eine klare und präzise Beschreibung des Bugs.
+A clear and concise description of the bug.
 
-## 📝 Schritte zum Reproduzieren
+## Steps to Reproduce
 
-1. Gehe zu '...'
-2. Klicke auf '...'
-3. Scrolle zu '...'
-4. Sieh den Fehler
+1. Go to '...'
+2. Click on '...'
+3. Scroll to '...'
+4. See the error
 
-## ✅ Erwartetes Verhalten
+## Expected Behavior
 
-Was hättest du erwartet was passiert?
+What did you expect to happen?
 
-## ❌ Tatsächliches Verhalten
+## Actual Behavior
 
-Was ist stattdessen passiert?
+What happened instead?
 
-## 📸 Screenshots
+## Screenshots
 
-Falls zutreffend, füge Screenshots hinzu.
+If applicable, add screenshots to help explain the problem.
 
-## 🖥️ Umgebung
+## Environment
 
-- **Browser**: [z.B. Chrome 120, Firefox 121]
-- **OS**: [z.B. macOS 14, Windows 11, Ubuntu 22.04]
-- **Bildschirmgröße**: [z.B. 1920x1080, mobil]
+- **Browser**: [e.g. Chrome 120, Firefox 121]
+- **OS**: [e.g. macOS 14, Windows 11, Ubuntu 22.04]
+- **Screen Size**: [e.g. 1920x1080, mobile]
 
-## 📋 Zusätzlicher Kontext
+## Additional Context
 
-Weitere Informationen zum Problem.
+Any other information about the problem.
 
-## 🔍 Konsolen-Fehler
+## Console Errors
 
 ```
-Falls vorhanden, füge hier Fehler aus der Browser-Konsole ein (F12 → Console)
+If applicable, paste any errors from the browser console (F12 -> Console)
 ```

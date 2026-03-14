@@ -1,3 +1,4 @@
+import { onboardingModal } from '../components/onboarding/OnboardingModal';
 import { EventBus, i18n, StorageService, Store, t } from '../core';
 import { createUser } from '../domain/models';
 import { AchievementsPage } from '../pages/AchievementsPage';
@@ -80,6 +81,11 @@ export class App {
 
     // Auto-save on state changes
     this.setupAutoSave();
+
+    // Show onboarding for new users
+    if (onboardingModal.shouldShowOnboarding()) {
+      onboardingModal.show();
+    }
   }
 
   /**
@@ -337,8 +343,7 @@ export class App {
     // Settings button - emit event for settings modal
     const settingsBtn = document.getElementById('btn-settings');
     settingsBtn?.addEventListener('click', () => {
-      // Settings modal is handled elsewhere
-      console.log('Settings clicked');
+      EventBus.emit('nav:modal:open', { modalId: 'settings' });
     });
 
     // Shutdown button
@@ -401,7 +406,7 @@ export class App {
    * Get sidebar template
    */
   private getSidebarTemplate(currentPage: string): string {
-    // Gruppierte Navigation für bessere Übersicht
+    // Grouped navigation for better overview
     const navGroups = [
       {
         id: 'core',

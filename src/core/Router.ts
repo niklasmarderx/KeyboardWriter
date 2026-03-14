@@ -70,10 +70,10 @@ class RouterImpl {
       const target = event.target as HTMLElement;
       const navItem = target.closest('[data-page]');
 
-      if (navItem) {
+      if (navItem !== null) {
         event.preventDefault();
         const page = navItem.getAttribute('data-page');
-        if (page) {
+        if (page !== null && page !== '') {
           this.navigate(page);
         }
       }
@@ -86,7 +86,7 @@ class RouterImpl {
   private setupPopStateHandler(): void {
     window.addEventListener('popstate', (event: PopStateEvent) => {
       const state = event.state as PopStateEventState | null;
-      if (state?.page) {
+      if (state !== null && state.page !== undefined && state.page !== '') {
         this.navigateInternal(state.page, false);
       }
     });
@@ -96,7 +96,7 @@ class RouterImpl {
    * Navigate to a page
    */
   navigate(page: string): void {
-    if (!pages[page]) {
+    if (pages[page] === undefined) {
       logger.warn(`Page "${page}" not found, redirecting to home`);
       page = 'home';
     }
@@ -127,13 +127,13 @@ class RouterImpl {
 
     // Update browser history
     if (pushState) {
-      const pageConfig = pages[page];
-      window.history.pushState({ page }, pageConfig?.title || page, `#${page}`);
+      const config = pages[page];
+      window.history.pushState({ page }, config?.title ?? page, `#${page}`);
     }
 
     // Update document title
     const pageConfig = pages[page];
-    if (pageConfig) {
+    if (pageConfig !== undefined) {
       document.title = `${pageConfig.title} - KeyboardWriter`;
     }
 

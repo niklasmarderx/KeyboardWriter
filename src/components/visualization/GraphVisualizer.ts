@@ -144,7 +144,7 @@ export class GraphVisualizer {
 
     const code = `function dijkstra(graph, start) {
   const dist = new Map(); // Distanzen
-  const prev = new Map(); // Vorgänger
+  const prev = new Map(); // predecessor
   const pq = new PriorityQueue();
   
   // Initialisiere alle Distanzen mit ∞
@@ -895,7 +895,7 @@ export class GraphVisualizer {
   const queue = [];
   const result = [];
   
-  // Berechne In-Degree für jeden Knoten
+  // Calculate in-degree for each node
   for (const node of graph.nodes) {
     inDegree.set(node, 0);
   }
@@ -903,7 +903,7 @@ export class GraphVisualizer {
     inDegree.set(edge.to, inDegree.get(edge.to) + 1);
   }
   
-  // Füge Knoten mit In-Degree 0 zur Queue
+  // Add nodes with in-degree 0 to queue
   for (const [node, degree] of inDegree) {
     if (degree === 0) queue.push(node);
   }
@@ -952,7 +952,7 @@ export class GraphVisualizer {
         queue: [],
         stack: [],
         distances: new Map(Array.from(inDegree.entries()).map(([k, v]) => [k, v])),
-        message: `Berechne In-Degree für jeden Knoten (Anzahl eingehender Kanten)`,
+        message: `Calculate in-degree für jeden Knoten (Anzahl eingehender Kanten)`,
       },
       code,
       lineHighlight: 7,
@@ -1204,7 +1204,7 @@ export class GraphVisualizer {
   postorder(node.right); // Rechts
   process(node.value);   // Wurzel ZULETZT
 }
-// Anwendung: Tree löschen, Postfix, du -sh`;
+// Use: Tree deletion, Postfix, du -sh`;
 
     function traverse(node: TreeNode | undefined, path: string[]): void {
       if (!node) {
@@ -1316,7 +1316,7 @@ export class GraphVisualizer {
     }
   }
   
-  // Prüfe auf negative Zyklen
+  // Check for negative cycles
   for (const edge of graph.edges) {
     if (dist.get(edge.from) + edge.weight < dist.get(edge.to)) {
       return "Negativer Zyklus erkannt!";
@@ -1662,7 +1662,7 @@ export class GraphVisualizer {
     if (!node) {
       return;
     }
-    // Reduzierter Spread für bessere Darstellung
+    // Reduced spread for better visualization
     const spread = 120 / Math.pow(2, level);
     positions.set(node.id, { x, y });
 
@@ -1679,7 +1679,7 @@ export class GraphVisualizer {
     }
 
     const positions = new Map<string, { x: number; y: number }>();
-    // Starte in der Mitte mit mehr Platz für Knoten
+    // Start in center with more space for nodes
     this.calculateTreePositions(state.root, 220, 35, 0, positions);
 
     const renderNode = (node: TreeNode | undefined): string => {
