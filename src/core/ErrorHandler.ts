@@ -1,4 +1,5 @@
 /**
+ *
  * Global Error Handler Service
  * Provides centralized error handling and user-friendly error messages
  */
