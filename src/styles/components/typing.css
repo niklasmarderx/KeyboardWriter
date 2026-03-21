@@ -7,7 +7,56 @@
   max-width: var(--content-max-width);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-2);
+}
+
+/* Compact Header Styles */
+.practice-header,
+.lessons-header,
+.exercise-header {
+  margin-bottom: var(--space-2) !important;
+}
+
+.practice-header h1,
+.lessons-header h1,
+.exercise-header h2 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-1);
+}
+
+.practice-header p,
+.lessons-header p,
+.exercise-header p {
+  margin-top: var(--space-1) !important;
+  font-size: var(--font-size-sm);
+}
+
+/* Compact Stats Panel */
+.stats-panel {
+  margin: var(--space-2) 0 !important;
+  gap: var(--space-2);
+}
+
+.stat-card {
+  padding: var(--space-2) var(--space-3);
+}
+
+.stat-card-value {
+  font-size: var(--font-size-lg);
+}
+
+.stat-card-label {
+  font-size: var(--font-size-xs);
+}
+
+/* Compact Progress Container */
+.progress-container {
+  margin-bottom: var(--space-2) !important;
+}
+
+/* Compact Keyboard Container */
+.keyboard-container {
+  margin-top: var(--space-2);
 }
 
 .typing-text-display {

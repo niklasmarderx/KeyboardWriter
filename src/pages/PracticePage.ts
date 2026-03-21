@@ -103,7 +103,7 @@ export class PracticePage {
 
     return `
       <div class="typing-container">
-        <div class="practice-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+        <div class="practice-header" style="display: flex; justify-content: space-between; align-items: center;">
           <h1>${t('practice.title')}</h1>
           <div class="practice-controls" style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
             <!-- Test Mode Toggle -->
@@ -147,7 +147,7 @@ export class PracticePage {
           </p>
         </div>
 
-        <div class="stats-panel" style="margin: var(--space-3) 0;">
+        <div class="stats-panel">
           <div class="stat-card">
             <span class="stat-card-value" id="session-wpm">0</span>
             <span class="stat-card-label">WPM</span>
@@ -170,7 +170,7 @@ export class PracticePage {
           </div>
         </div>
 
-        <div class="progress-container" style="margin-bottom: var(--space-3);">
+        <div class="progress-container">
           <div class="progress-bar">
             <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
           </div>

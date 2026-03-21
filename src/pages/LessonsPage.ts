@@ -74,7 +74,7 @@ export class LessonsPage {
 
     return `
       <div class="typing-container">
-        <div class="lessons-header" style="margin-bottom: var(--space-6);">
+        <div class="lessons-header">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-3);">
             <div>
               <h1>${t('lessons.title')}</h1>
@@ -115,8 +115,8 @@ export class LessonsPage {
   private renderProgressMapView(): string {
     return `
       <div class="typing-container">
-        <div class="lessons-header" style="margin-bottom: var(--space-6);">
-          <button class="btn btn-ghost" id="btn-back-from-map" style="margin-bottom: var(--space-2);">
+        <div class="lessons-header">
+          <button class="btn btn-ghost" id="btn-back-from-map" style="margin-bottom: var(--space-1);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="15,18 9,12 15,6"></polyline>
             </svg>
@@ -205,8 +205,8 @@ export class LessonsPage {
 
     return `
       <div class="typing-container">
-        <div class="lessons-header" style="margin-bottom: var(--space-6);">
-          <button class="btn btn-ghost" id="btn-back-categories" style="margin-bottom: var(--space-2);">
+        <div class="lessons-header">
+          <button class="btn btn-ghost" id="btn-back-categories" style="margin-bottom: var(--space-1);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="15,18 9,12 15,6"></polyline>
             </svg>
@@ -297,7 +297,7 @@ export class LessonsPage {
 
     return `
       <div class="typing-container">
-        <div class="exercise-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+        <div class="exercise-header" style="display: flex; justify-content: space-between; align-items: center;">
           <div>
             <button class="btn btn-ghost" id="btn-quit-lesson" style="margin-bottom: var(--space-2);">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -326,7 +326,7 @@ export class LessonsPage {
           </p>
         </div>
 
-        <div class="stats-panel" style="margin: var(--space-3) 0;">
+        <div class="stats-panel">
           <div class="stat-card">
             <span class="stat-card-value" id="session-wpm">0</span>
             <span class="stat-card-label">${t('common.wpm')}</span>
