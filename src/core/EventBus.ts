@@ -114,6 +114,10 @@ export interface AppEvents {
   'errorCorrection:correct': { position: number };
   'errorCorrection:falsePositive': { position: number };
   'errorCorrection:hint': { position: number; hintsRemaining: number };
+
+  // Race events
+  'race:win': { botName: string; wpm: number };
+  'race:complete': { wpm: number; accuracy: number; time: number };
 }
 
 /**
