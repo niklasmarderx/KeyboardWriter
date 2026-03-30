@@ -106,6 +106,8 @@ export class AchievementsPage {
       'consistency',
       'milestones',
       'special',
+      'languages',
+      'race',
     ];
 
     const categoryLabels: Record<AchievementCategory | 'all', string> = {
@@ -115,6 +117,8 @@ export class AchievementsPage {
       consistency: t('achievements.consistency'),
       milestones: t('achievements.milestones'),
       special: t('achievements.special'),
+      languages: 'Sprachen',
+      race: 'Rennen',
     };
 
     return `

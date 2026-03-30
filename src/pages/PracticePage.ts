@@ -11,6 +11,67 @@ import {
 import { TypingEngineService } from '../services/TypingEngineService';
 
 /**
+ * Practice preset definition
+ */
+interface PracticePreset {
+  id: string;
+  label: string;
+  labelEn: string;
+  description: string;
+  descriptionEn: string;
+  mode: 'text' | 'timed';
+  difficulty: 'beginner' | 'intermediate' | 'advanced' | 'programming';
+  duration?: number; // seconds, for timed mode
+  icon: string;
+}
+
+const PRACTICE_PRESETS: PracticePreset[] = [
+  {
+    id: 'warmup',
+    label: '5min Aufwärmen',
+    labelEn: '5min Warmup',
+    description: 'Lockeres Aufwärmen für die Finger',
+    descriptionEn: 'Easy warmup for your fingers',
+    mode: 'timed',
+    difficulty: 'beginner',
+    duration: 300,
+    icon: '🔥',
+  },
+  {
+    id: 'endurance',
+    label: '10min Ausdauer',
+    labelEn: '10min Endurance',
+    description: 'Kontinuierliches Tippen über 10 Minuten',
+    descriptionEn: 'Continuous typing for 10 minutes',
+    mode: 'timed',
+    difficulty: 'intermediate',
+    duration: 600,
+    icon: '⏱️',
+  },
+  {
+    id: 'sprint',
+    label: '60s Sprint',
+    labelEn: '60s Sprint',
+    description: 'Maximale Geschwindigkeit über 1 Minute',
+    descriptionEn: 'Maximum speed for 1 minute',
+    mode: 'timed',
+    difficulty: 'advanced',
+    duration: 60,
+    icon: '⚡',
+  },
+  {
+    id: 'code',
+    label: 'Code-Session',
+    labelEn: 'Code Session',
+    description: 'Programmierspezifische Texte üben',
+    descriptionEn: 'Practice programming-specific texts',
+    mode: 'text',
+    difficulty: 'programming',
+    icon: '💻',
+  },
+];
+
+/**
  * Get sample texts based on difficulty and language setting
  */
 function getSampleTexts(
@@ -156,6 +217,21 @@ export class PracticePage {
           </p>
         </div>
 
+        <div class="practice-presets" role="group" aria-label="Practice presets">
+          ${PRACTICE_PRESETS.map(
+            p => `
+            <button
+              class="preset-btn"
+              data-preset-id="${p.id}"
+              aria-label="${p.labelEn}: ${p.descriptionEn}"
+              title="${p.description}"
+            >
+              <span class="preset-icon" aria-hidden="true">${p.icon}</span>
+              <span class="preset-label">${p.label}</span>
+            </button>
+          `
+          ).join('')}
+        </div>
         <div class="stats-panel">
           <div class="stat-card">
             <span class="stat-card-value" id="session-wpm">0</span>
@@ -209,6 +285,48 @@ export class PracticePage {
 
     // Load initial text
     this.loadNewText('beginner');
+
+    // Setup preset buttons
+    this.setupPresetButtons();
+  }
+
+  /**
+   * Setup preset button click handlers
+   */
+  private setupPresetButtons(): void {
+    document.querySelectorAll<HTMLButtonElement>('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const presetId = btn.dataset.presetId;
+        const preset = PRACTICE_PRESETS.find(p => p.id === presetId);
+        if (!preset) {
+          return;
+        }
+
+        if (preset.mode === 'timed' && preset.duration !== undefined) {
+          this.setTestMode('timed');
+          this.timedTestDuration = preset.duration;
+          this.loadNewText(preset.difficulty);
+          this.startTimedTest();
+
+          // Sync the selects
+          const select = document.getElementById(
+            'time-duration-select'
+          ) as HTMLSelectElement | null;
+          if (select) {
+            select.value = String(preset.duration);
+          }
+        } else {
+          this.setTestMode('text');
+          this.loadNewText(preset.difficulty);
+        }
+
+        // Visual feedback
+        document
+          .querySelectorAll<HTMLButtonElement>('.preset-btn')
+          .forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
   }
 
   /**
