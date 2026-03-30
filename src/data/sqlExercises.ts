@@ -320,6 +320,126 @@ export const SQL_EXERCISES: SQLExercise[] = [
     explanation: 'Indexes speed up queries but slow down INSERTs.',
     xp: 35,
   },
+  // WINDOW FUNCTIONS
+  {
+    id: 'sql-window-row',
+    title: 'ROW_NUMBER()',
+    description: 'Number each row within a partition',
+    category: 'advanced',
+    difficulty: 'advanced',
+    query:
+      'SELECT name, country, ROW_NUMBER() OVER (PARTITION BY country ORDER BY name) AS rn FROM users;',
+    explanation: 'ROW_NUMBER assigns a unique sequential number to each row in a partition.',
+    xp: 45,
+  },
+  {
+    id: 'sql-window-rank',
+    title: 'RANK() & DENSE_RANK()',
+    description: 'Rank users by order total',
+    category: 'advanced',
+    difficulty: 'advanced',
+    query:
+      'SELECT user_id, total, RANK() OVER (ORDER BY total DESC) AS rnk, DENSE_RANK() OVER (ORDER BY total DESC) AS drnk FROM orders;',
+    explanation: 'RANK skips numbers after ties, DENSE_RANK does not.',
+    xp: 45,
+  },
+  {
+    id: 'sql-window-lag',
+    title: 'LAG() & LEAD()',
+    description: 'Compare current row to previous/next',
+    category: 'advanced',
+    difficulty: 'advanced',
+    query:
+      'SELECT date, revenue, LAG(revenue, 1, 0) OVER (ORDER BY date) AS prev_revenue, revenue - LAG(revenue, 1, 0) OVER (ORDER BY date) AS change FROM sales;',
+    explanation: 'LAG accesses previous row, LEAD accesses next row within a window.',
+    xp: 50,
+  },
+  {
+    id: 'sql-window-sum',
+    title: 'Running Total with SUM()',
+    description: 'Calculate a cumulative running total',
+    category: 'advanced',
+    difficulty: 'advanced',
+    query:
+      'SELECT date, amount, SUM(amount) OVER (ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total FROM payments;',
+    explanation: 'Window function with ROWS frame calculates a running total.',
+    xp: 50,
+  },
+  {
+    id: 'sql-window-ntile',
+    title: 'NTILE()',
+    description: 'Divide rows into equal buckets',
+    category: 'advanced',
+    difficulty: 'advanced',
+    query: 'SELECT name, score, NTILE(4) OVER (ORDER BY score DESC) AS quartile FROM students;',
+    explanation: 'NTILE(n) divides the result set into n roughly equal groups.',
+    xp: 45,
+  },
+  // ADVANCED JOINs
+  {
+    id: 'sql-join-self',
+    title: 'Self JOIN',
+    description: 'Find employees and their managers',
+    category: 'join',
+    difficulty: 'advanced',
+    query:
+      'SELECT e.name AS employee, m.name AS manager FROM employees e LEFT JOIN employees m ON e.manager_id = m.id;',
+    explanation: 'A self join joins a table with itself using aliases.',
+    xp: 40,
+  },
+  {
+    id: 'sql-join-full',
+    title: 'FULL OUTER JOIN',
+    description: 'All rows from both tables',
+    category: 'join',
+    difficulty: 'advanced',
+    query: 'SELECT u.name, o.total FROM users u FULL OUTER JOIN orders o ON u.id = o.user_id;',
+    explanation: 'FULL OUTER JOIN returns all rows from both tables, NULL where no match.',
+    xp: 35,
+  },
+  {
+    id: 'sql-join-cross',
+    title: 'CROSS JOIN',
+    description: 'Cartesian product of two tables',
+    category: 'join',
+    difficulty: 'advanced',
+    query: 'SELECT p.name AS product, c.name AS category FROM products p CROSS JOIN categories c;',
+    explanation: 'CROSS JOIN returns every combination of rows from both tables.',
+    xp: 35,
+  },
+  // SUBQUERY ADVANCED
+  {
+    id: 'sql-sub-exists',
+    title: 'EXISTS Subquery',
+    description: 'Find users who have at least one order',
+    category: 'subquery',
+    difficulty: 'intermediate',
+    query: 'SELECT name FROM users u WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id = u.id);',
+    explanation: 'EXISTS is often faster than IN for correlated subqueries.',
+    xp: 35,
+  },
+  {
+    id: 'sql-sub-cte',
+    title: 'CTE (Common Table Expression)',
+    description: 'Use WITH clause for readable subqueries',
+    category: 'subquery',
+    difficulty: 'advanced',
+    query:
+      'WITH top_customers AS (\n    SELECT user_id, SUM(total) AS lifetime_value\n    FROM orders\n    GROUP BY user_id\n    HAVING SUM(total) > 1000\n)\nSELECT u.name, tc.lifetime_value\nFROM users u\nJOIN top_customers tc ON u.id = tc.user_id\nORDER BY tc.lifetime_value DESC;',
+    explanation: 'CTEs make complex queries readable and reusable within the same query.',
+    xp: 50,
+  },
+  {
+    id: 'sql-sub-recursive',
+    title: 'Recursive CTE',
+    description: 'Traverse a tree structure',
+    category: 'subquery',
+    difficulty: 'advanced',
+    query:
+      'WITH RECURSIVE category_tree AS (\n    SELECT id, name, parent_id, 0 AS depth\n    FROM categories WHERE parent_id IS NULL\n    UNION ALL\n    SELECT c.id, c.name, c.parent_id, ct.depth + 1\n    FROM categories c\n    JOIN category_tree ct ON c.parent_id = ct.id\n)\nSELECT * FROM category_tree ORDER BY depth, name;',
+    explanation: 'Recursive CTEs reference themselves to traverse hierarchical data.',
+    xp: 60,
+  },
 ];
 
 // Categories for the UI
@@ -330,6 +450,6 @@ export const SQL_CATEGORIES = [
   { id: 'insert', name: 'INSERT', icon: 'plus' },
   { id: 'update', name: 'UPDATE', icon: 'edit' },
   { id: 'delete', name: 'DELETE', icon: 'trash' },
-  { id: 'subquery', name: 'Subqueries', icon: 'refresh' },
-  { id: 'advanced', name: 'Advanced', icon: 'rocket' },
+  { id: 'subquery', name: 'Subqueries & CTEs', icon: 'refresh' },
+  { id: 'advanced', name: 'Advanced & Window Fns', icon: 'rocket' },
 ];
