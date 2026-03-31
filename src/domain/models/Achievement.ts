@@ -1,7 +1,14 @@
 /**
  * Achievement categories
  */
-export type AchievementCategory = 'speed' | 'accuracy' | 'consistency' | 'milestones' | 'special';
+export type AchievementCategory =
+  | 'speed'
+  | 'accuracy'
+  | 'consistency'
+  | 'milestones'
+  | 'special'
+  | 'languages'
+  | 'race';
 
 /**
  * Achievement rarity
@@ -36,7 +43,10 @@ export type AchievementRequirement =
   | { type: 'practice_time'; value: number } // in minutes
   | { type: 'perfect_sessions'; value: number }
   | { type: 'code_snippets'; value: number }
-  | { type: 'level'; value: number };
+  | { type: 'level'; value: number }
+  | { type: 'race_wins'; value: number }
+  | { type: 'race_wpm'; value: number }
+  | { type: 'language_snippets'; value: number; language: string };
 
 /**
  * User's achievement progress
@@ -487,6 +497,113 @@ export const ACHIEVEMENTS: Achievement[] = [
     xpReward: 500,
     requirement: { type: 'level', value: 25 },
   },
+
+  // Race Achievements
+  {
+    id: 'race_first_win',
+    name: 'Erster Sieg',
+    description: 'Gewinne dein erstes Rennen gegen die KI',
+    category: 'race',
+    rarity: 'common',
+    icon: 'speedometer',
+    xpReward: 50,
+    requirement: { type: 'race_wins', value: 1 },
+  },
+  {
+    id: 'race_10_wins',
+    name: 'Rennfahrer',
+    description: 'Gewinne 10 Rennen',
+    category: 'race',
+    rarity: 'uncommon',
+    icon: 'speedometer',
+    xpReward: 100,
+    requirement: { type: 'race_wins', value: 10 },
+  },
+  {
+    id: 'race_speed_demon',
+    name: 'Geschwindigkeitsteufel',
+    description: 'Erreiche 80 WPM in einem Rennen',
+    category: 'race',
+    rarity: 'rare',
+    icon: 'flame',
+    xpReward: 150,
+    requirement: { type: 'race_wpm', value: 80 },
+  },
+  {
+    id: 'race_100wpm',
+    name: 'Unaufhaltbar',
+    description: 'Erreiche 100 WPM in einem Rennen',
+    category: 'race',
+    rarity: 'epic',
+    icon: 'flame',
+    xpReward: 300,
+    requirement: { type: 'race_wpm', value: 100 },
+  },
+
+  // Language Achievements
+  {
+    id: 'lang_rust',
+    name: 'Rust-Enthusiast',
+    description: 'Schreibe 5 Rust-Snippets',
+    category: 'languages',
+    rarity: 'uncommon',
+    icon: 'code',
+    xpReward: 75,
+    requirement: { type: 'language_snippets', value: 5, language: 'rust' },
+  },
+  {
+    id: 'lang_go',
+    name: 'Gopher',
+    description: 'Schreibe 5 Go-Snippets',
+    category: 'languages',
+    rarity: 'uncommon',
+    icon: 'code',
+    xpReward: 75,
+    requirement: { type: 'language_snippets', value: 5, language: 'go' },
+  },
+  {
+    id: 'lang_python',
+    name: 'Pythonista',
+    description: 'Schreibe 5 Python-Snippets',
+    category: 'languages',
+    rarity: 'uncommon',
+    icon: 'code',
+    xpReward: 75,
+    requirement: { type: 'language_snippets', value: 5, language: 'python' },
+  },
+  {
+    id: 'lang_polyglot',
+    name: 'Polyglott',
+    description: 'Schreibe Snippets in 5 verschiedenen Sprachen',
+    category: 'languages',
+    rarity: 'epic',
+    icon: 'code',
+    xpReward: 250,
+    requirement: { type: 'code_snippets', value: 25 },
+  },
+  {
+    id: 'lang_sql_expert',
+    name: 'Datenbankprofi',
+    description: 'Schreibe 10 SQL-Queries',
+    category: 'languages',
+    rarity: 'rare',
+    icon: 'code',
+    xpReward: 120,
+    requirement: { type: 'language_snippets', value: 10, language: 'sql' },
+  },
+
+  // Speed milestones
+  {
+    id: 'speed_120',
+    name: 'Schallmauer',
+    description: 'Erreiche 120 WPM',
+    category: 'speed',
+    rarity: 'legendary',
+    icon: 'speedometer',
+    xpReward: 1000,
+    requirement: { type: 'wpm', value: 120 },
+    hidden: true,
+  },
 ];
 
 /**
@@ -541,6 +658,8 @@ export function getCategoryLabel(category: AchievementCategory): string {
     consistency: 'Beständigkeit',
     milestones: 'Meilensteine',
     special: 'Spezial',
+    languages: 'Sprachen',
+    race: 'Rennen',
   };
   return labels[category];
 }

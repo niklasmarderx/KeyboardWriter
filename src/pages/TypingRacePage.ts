@@ -49,6 +49,95 @@ const RACE_TEXTS = [
     text: 'The best way to predict the future is to invent it. Start typing, start creating.',
     difficulty: 'easy',
   },
+  {
+    id: 'race-9',
+    text: 'async function fetchUser(id: string): Promise<User> { const res = await fetch(`/api/users/${id}`); if (!res.ok) throw new Error("Not found"); return res.json(); }',
+    difficulty: 'hard',
+  },
+  {
+    id: 'race-10',
+    text: 'SELECT u.name, COUNT(o.id) AS orders FROM users u LEFT JOIN orders o ON u.id = o.user_id GROUP BY u.id HAVING COUNT(o.id) > 5;',
+    difficulty: 'hard',
+  },
+  {
+    id: 'race-11',
+    text: 'Clean code is not written by following a set of rules. You do not become a software craftsman by learning a list of heuristics.',
+    difficulty: 'medium',
+  },
+  {
+    id: 'race-12',
+    text: 'git commit -m "feat: add user authentication with JWT tokens and refresh rotation"',
+    difficulty: 'medium',
+  },
+];
+
+/**
+ * AI bot definitions with distinct personalities
+ */
+interface AIBot {
+  id: string;
+  name: string;
+  emoji: string;
+  description: string;
+  baseWPM: number;
+  /** Variance factor: higher = more inconsistent (human-like) */
+  variance: number;
+  /** Ramp-up: 0 = instant, 1 = slow start */
+  rampUp: number;
+  color: string;
+}
+
+const AI_BOTS: AIBot[] = [
+  {
+    id: 'rookie',
+    name: 'Rookie Rita',
+    emoji: '🐢',
+    description: 'Langsam aber stetig – ideal für Anfänger',
+    baseWPM: 25,
+    variance: 0.3,
+    rampUp: 0.5,
+    color: '#10B981',
+  },
+  {
+    id: 'average',
+    name: 'Average Andy',
+    emoji: '🚶',
+    description: 'Ein typischer Büro-Tipper',
+    baseWPM: 45,
+    variance: 0.2,
+    rampUp: 0.3,
+    color: '#3B82F6',
+  },
+  {
+    id: 'speedster',
+    name: 'Speedy Sam',
+    emoji: '🚀',
+    description: 'Schnell und fokussiert',
+    baseWPM: 70,
+    variance: 0.1,
+    rampUp: 0.2,
+    color: '#8B5CF6',
+  },
+  {
+    id: 'hacker',
+    name: 'Hacker Hans',
+    emoji: '💻',
+    description: 'Blitzschnell bei Code-Texten',
+    baseWPM: 90,
+    variance: 0.15,
+    rampUp: 0.1,
+    color: '#F59E0B',
+  },
+  {
+    id: 'legend',
+    name: 'Legend Lisa',
+    emoji: '⚡',
+    description: 'Die ultimative Herausforderung',
+    baseWPM: 120,
+    variance: 0.05,
+    rampUp: 0.05,
+    color: '#EF4444',
+  },
 ];
 
 // Ghost replay data
@@ -84,13 +173,15 @@ export class TypingRacePage {
   private ghostPosition: number = 0;
   private ghostInterval: ReturnType<typeof setInterval> | null = null;
   private aiPosition: number = 0;
-  private aiSpeed: number = 50; // WPM
+  private selectedBot: AIBot = AI_BOTS[1]; // default: Average Andy
   private aiInterval: ReturnType<typeof setInterval> | null = null;
   private records: RaceRecord[] = [];
   private keydownHandler: ((e: KeyboardEvent) => void) | null = null;
+  private raceWins: number = 0;
 
   constructor() {
     this.loadRecords();
+    this.raceWins = parseInt(localStorage.getItem('keyboardwriter_race_wins') ?? '0', 10);
   }
 
   /**
@@ -235,12 +326,24 @@ export class TypingRacePage {
    */
   private renderAISpeedSelector(): string {
     return `
-      <div class="ai-speed-selector">
-        <label>KI Geschwindigkeit: <strong>${this.aiSpeed} WPM</strong></label>
-        <input type="range" id="ai-speed" min="20" max="120" step="10" value="${this.aiSpeed}">
-        <div class="speed-labels">
-          <span>Anfänger</span>
-          <span>Profi</span>
+      <div class="ai-bot-selector">
+        <label>KI-Gegner wählen:</label>
+        <div class="bot-grid">
+          ${AI_BOTS.map(
+            bot => `
+            <button
+              class="bot-card ${this.selectedBot.id === bot.id ? 'selected' : ''}"
+              data-bot-id="${bot.id}"
+              aria-label="${bot.name}: ${bot.description}"
+              aria-pressed="${this.selectedBot.id === bot.id}"
+            >
+              <span class="bot-emoji" aria-hidden="true">${bot.emoji}</span>
+              <span class="bot-name">${bot.name}</span>
+              <span class="bot-wpm">${bot.baseWPM} WPM</span>
+              <span class="bot-desc">${bot.description}</span>
+            </button>
+          `
+          ).join('')}
         </div>
       </div>
     `;
@@ -348,7 +451,7 @@ export class TypingRacePage {
               this.raceMode === 'ai'
                 ? `
               <div class="track ai-track">
-                <span class="track-label"> KI (${this.aiSpeed} WPM)</span>
+                <span class="track-label">${this.selectedBot.emoji} ${this.selectedBot.name}</span>
                 <div class="track-bar ai">
                   <div class="track-progress" style="width: ${aiProgress}%">
                     <span class="racer"></span>
@@ -477,8 +580,8 @@ export class TypingRacePage {
             ${
               this.typedText.length >= (this.currentText?.text.length ?? 0) &&
               this.aiPosition < (this.currentText?.text.length ?? 0)
-                ? ' Du hast die KI geschlagen!'
-                : ' Die KI war schneller!'
+                ? ` Du hast ${this.selectedBot.name} geschlagen!`
+                : ` ${this.selectedBot.name} war schneller!`
             }
           </div>
         `
@@ -651,6 +754,67 @@ export class TypingRacePage {
           justify-content: space-between;
           font-size: var(--font-size-xs);
           color: var(--text-muted);
+        }
+
+        /* Bot Selector */
+        .ai-bot-selector {
+          margin-top: var(--space-4);
+        }
+
+        .ai-bot-selector > label {
+          display: block;
+          margin-bottom: var(--space-3);
+          font-weight: 600;
+        }
+
+        .bot-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+          gap: var(--space-2);
+        }
+
+        .bot-card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: var(--space-1);
+          padding: var(--space-3);
+          background: var(--bg-secondary);
+          border: 2px solid var(--border-primary);
+          border-radius: var(--radius-md);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          text-align: center;
+        }
+
+        .bot-card:hover {
+          border-color: var(--accent-primary);
+        }
+
+        .bot-card.selected {
+          border-color: var(--accent-primary);
+          background: rgba(99, 102, 241, 0.1);
+        }
+
+        .bot-emoji {
+          font-size: 1.8rem;
+        }
+
+        .bot-name {
+          font-weight: 600;
+          font-size: var(--font-size-sm);
+        }
+
+        .bot-wpm {
+          font-size: var(--font-size-xs);
+          color: var(--accent-primary);
+          font-weight: 600;
+        }
+
+        .bot-desc {
+          font-size: var(--font-size-xs);
+          color: var(--text-muted);
+          line-height: 1.3;
         }
 
         /* Text Grid */
@@ -976,14 +1140,19 @@ export class TypingRacePage {
       });
     });
 
-    // AI speed slider
-    const aiSpeedInput = document.getElementById('ai-speed') as HTMLInputElement;
-    aiSpeedInput?.addEventListener('input', () => {
-      this.aiSpeed = parseInt(aiSpeedInput.value);
-      const label = aiSpeedInput.previousElementSibling;
-      if (label) {
-        label.innerHTML = `KI Geschwindigkeit: <strong>${this.aiSpeed} WPM</strong>`;
-      }
+    // Bot selector
+    document.querySelectorAll<HTMLButtonElement>('.bot-card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const botId = btn.dataset.botId;
+        const bot = AI_BOTS.find(b => b.id === botId);
+        if (bot) {
+          this.selectedBot = bot;
+          document.querySelectorAll<HTMLButtonElement>('.bot-card').forEach(b => {
+            b.classList.toggle('selected', b.dataset.botId === botId);
+            b.setAttribute('aria-pressed', String(b.dataset.botId === botId));
+          });
+        }
+      });
     });
 
     // Start race buttons
@@ -1173,25 +1342,30 @@ export class TypingRacePage {
   }
 
   /**
-   * Start AI opponent
+   * Start AI opponent with personality-based behavior
    */
   private startAI(): void {
-    const charsPerMs = (this.aiSpeed * 5) / 60000; // chars per millisecond
+    const bot = this.selectedBot;
+    const charsPerMs = (bot.baseWPM * 5) / 60000;
 
     this.aiInterval = setInterval(() => {
       if (!this.currentText) {
         return;
       }
+
+      // Ramp-up: bot starts slower and accelerates
+      const elapsed = this.currentTime;
+      const rampFactor = bot.rampUp > 0 ? Math.min(1, elapsed / (3000 * bot.rampUp + 500)) : 1;
+
+      // Variance: simulate human inconsistency
+      const noise = 1 + (Math.random() - 0.5) * bot.variance;
+      const effectiveRate = charsPerMs * rampFactor * noise;
+
       this.aiPosition = Math.min(
-        Math.floor(this.currentTime * charsPerMs),
+        Math.floor(this.currentTime * effectiveRate),
         this.currentText.text.length
       );
       this.updateAIPosition();
-
-      // Check if AI finished
-      if (this.aiPosition >= this.currentText.text.length && this.raceState === 'racing') {
-        // AI won - player loses unless they've already finished
-      }
     }, 50);
   }
 
@@ -1234,6 +1408,14 @@ export class TypingRacePage {
 
       const bestRecord = this.getBestRecord(this.currentText.id);
       const isNewRecord = !bestRecord || this.currentTime < bestRecord.time;
+
+      // Track race win vs AI
+      const playerWon = this.raceMode === 'ai' && this.aiPosition < this.currentText.text.length;
+      if (playerWon) {
+        this.raceWins++;
+        localStorage.setItem('keyboardwriter_race_wins', String(this.raceWins));
+        EventBus.emit('race:win', { botName: this.selectedBot.name, wpm });
+      }
 
       this.records.push(newRecord);
       this.saveRecords();

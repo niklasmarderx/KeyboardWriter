@@ -100,6 +100,187 @@ fn read_file(path: &str) -> Result<String, std::io::Error> {
 }`,
     difficulty: 'advanced',
   },
+  {
+    id: 'rust-trait',
+    language: 'rust',
+    title: 'Traits',
+    code: `trait Greet {
+    fn greet(&self) -> String;
+    fn default_greeting(&self) -> String {
+        format!("Hello from {}", self.greet())
+    }
+}
+
+struct Person { name: String }
+
+impl Greet for Person {
+    fn greet(&self) -> String {
+        self.name.clone()
+    }
+}`,
+    difficulty: 'intermediate',
+    description: 'Define and implement traits',
+  },
+  {
+    id: 'rust-option',
+    language: 'rust',
+    title: 'Option & Unwrap',
+    code: `fn find_user(id: u32) -> Option<String> {
+    if id == 1 {
+        Some(String::from("Alice"))
+    } else {
+        None
+    }
+}
+
+fn main() {
+    let user = find_user(1).unwrap_or_else(|| String::from("Guest"));
+    println!("Hello, {}!", user);
+}`,
+    difficulty: 'intermediate',
+    description: 'Option type for nullable values',
+  },
+  {
+    id: 'rust-iter',
+    language: 'rust',
+    title: 'Iterators & Closures',
+    code: `fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+
+    let sum: i32 = numbers.iter()
+        .filter(|&&x| x % 2 == 0)
+        .map(|&x| x * x)
+        .sum();
+
+    println!("Sum of even squares: {}", sum);
+}`,
+    difficulty: 'intermediate',
+    description: 'Functional-style iteration',
+  },
+  {
+    id: 'rust-closure',
+    language: 'rust',
+    title: 'Closures',
+    code: `fn apply<F: Fn(i32) -> i32>(f: F, x: i32) -> i32 {
+    f(x)
+}
+
+fn main() {
+    let double = |x| x * 2;
+    let add_ten = |x| x + 10;
+
+    println!("{}", apply(double, 5));
+    println!("{}", apply(add_ten, 5));
+}`,
+    difficulty: 'intermediate',
+    description: 'First-class closures',
+  },
+  {
+    id: 'rust-thread',
+    language: 'rust',
+    title: 'Threads & Mutex',
+    code: `use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let c = Arc::clone(&counter);
+        handles.push(thread::spawn(move || {
+            let mut num = c.lock().unwrap();
+            *num += 1;
+        }));
+    }
+
+    for h in handles { h.join().unwrap(); }
+    println!("Counter: {}", *counter.lock().unwrap());
+}`,
+    difficulty: 'advanced',
+    description: 'Shared state with Arc<Mutex<T>>',
+  },
+  {
+    id: 'rust-generic',
+    language: 'rust',
+    title: 'Generics',
+    code: `fn largest<T: PartialOrd>(list: &[T]) -> &T {
+    let mut largest = &list[0];
+    for item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
+}
+
+fn main() {
+    let numbers = vec![34, 50, 25, 100, 65];
+    println!("Largest: {}", largest(&numbers));
+}`,
+    difficulty: 'intermediate',
+    description: 'Generic functions with trait bounds',
+  },
+  {
+    id: 'rust-async',
+    language: 'rust',
+    title: 'Async/Await',
+    code: `use tokio::time::{sleep, Duration};
+
+async fn fetch_data(id: u32) -> String {
+    sleep(Duration::from_millis(100)).await;
+    format!("Data for id {}", id)
+}
+
+#[tokio::main]
+async fn main() {
+    let result = fetch_data(42).await;
+    println!("{}", result);
+}`,
+    difficulty: 'advanced',
+    description: 'Async programming with tokio',
+  },
+  {
+    id: 'rust-derive',
+    language: 'rust',
+    title: 'Derive Macros',
+    code: `#[derive(Debug, Clone, PartialEq)]
+struct Point {
+    x: f64,
+    y: f64,
+}
+
+impl Point {
+    fn distance(&self, other: &Point) -> f64 {
+        ((self.x - other.x).powi(2) + (self.y - other.y).powi(2)).sqrt()
+    }
+}`,
+    difficulty: 'beginner',
+    description: 'Auto-derive common traits',
+  },
+  {
+    id: 'rust-error-custom',
+    language: 'rust',
+    title: 'Custom Error Types',
+    code: `use std::fmt;
+
+#[derive(Debug)]
+enum AppError {
+    NotFound(String),
+    ParseError(String),
+}
+
+impl fmt::Display for AppError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            AppError::NotFound(msg) => write!(f, "Not found: {}", msg),
+            AppError::ParseError(msg) => write!(f, "Parse error: {}", msg),
+        }
+    }
+}`,
+    difficulty: 'advanced',
+    description: 'Custom error types with Display',
+  },
 ];
 
 // Go Code Snippets
@@ -194,6 +375,202 @@ func (c Circle) Perimeter() float64 {
     return 2 * math.Pi * c.Radius
 }`,
     difficulty: 'intermediate',
+  },
+  {
+    id: 'go-error',
+    language: 'go',
+    title: 'Error Handling',
+    code: `import (
+    "errors"
+    "fmt"
+)
+
+var ErrNotFound = errors.New("not found")
+
+func getUser(id int) (string, error) {
+    if id <= 0 {
+        return "", fmt.Errorf("invalid id %d: %w", id, ErrNotFound)
+    }
+    return "Alice", nil
+}
+
+func main() {
+    user, err := getUser(-1)
+    if errors.Is(err, ErrNotFound) {
+        fmt.Println("User not found")
+    } else if err != nil {
+        fmt.Println("Error:", err)
+    } else {
+        fmt.Println(user)
+    }
+}`,
+    difficulty: 'intermediate',
+    description: 'Idiomatic Go error handling',
+  },
+  {
+    id: 'go-map',
+    language: 'go',
+    title: 'Maps & Slices',
+    code: `func wordCount(s string) map[string]int {
+    counts := make(map[string]int)
+    words := strings.Fields(s)
+    for _, w := range words {
+        counts[w]++
+    }
+    return counts
+}
+
+func main() {
+    counts := wordCount("hello world hello go")
+    for word, n := range counts {
+        fmt.Printf("%s: %d\n", word, n)
+    }
+}`,
+    difficulty: 'beginner',
+    description: 'Working with maps and slices',
+  },
+  {
+    id: 'go-defer',
+    language: 'go',
+    title: 'Defer & Panic/Recover',
+    code: `func safeDiv(a, b int) (result int, err error) {
+    defer func() {
+        if r := recover(); r != nil {
+            err = fmt.Errorf("recovered panic: %v", r)
+        }
+    }()
+    if b == 0 {
+        panic("division by zero")
+    }
+    return a / b, nil
+}`,
+    difficulty: 'intermediate',
+    description: 'Deferred calls and panic recovery',
+  },
+  {
+    id: 'go-channel-select',
+    language: 'go',
+    title: 'Select Statement',
+    code: `func main() {
+    ch1 := make(chan string)
+    ch2 := make(chan string)
+
+    go func() { ch1 <- "one" }()
+    go func() { ch2 <- "two" }()
+
+    for i := 0; i < 2; i++ {
+        select {
+        case msg1 := <-ch1:
+            fmt.Println("Received from ch1:", msg1)
+        case msg2 := <-ch2:
+            fmt.Println("Received from ch2:", msg2)
+        }
+    }
+}`,
+    difficulty: 'advanced',
+    description: 'Multiplexing channels with select',
+  },
+  {
+    id: 'go-http',
+    language: 'go',
+    title: 'HTTP Handler',
+    code: `package main
+
+import (
+    "encoding/json"
+    "net/http"
+)
+
+type Response struct {
+    Message string \`json:"message"\`
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(Response{Message: "Hello, Go!"})
+}
+
+func main() {
+    http.HandleFunc("/", handler)
+    http.ListenAndServe(":8080", nil)
+}`,
+    difficulty: 'intermediate',
+    description: 'Simple HTTP server with JSON',
+  },
+  {
+    id: 'go-context',
+    language: 'go',
+    title: 'Context',
+    code: `func fetchWithTimeout(url string) ([]byte, error) {
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+    if err != nil {
+        return nil, err
+    }
+
+    resp, err := http.DefaultClient.Do(req)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Body.Close()
+    return io.ReadAll(resp.Body)
+}`,
+    difficulty: 'advanced',
+    description: 'Cancellation with context',
+  },
+  {
+    id: 'go-test',
+    language: 'go',
+    title: 'Table-Driven Tests',
+    code: `func TestAdd(t *testing.T) {
+    tests := []struct {
+        a, b, want int
+    }{
+        {1, 2, 3},
+        {0, 0, 0},
+        {-1, 1, 0},
+    }
+
+    for _, tt := range tests {
+        got := Add(tt.a, tt.b)
+        if got != tt.want {
+            t.Errorf("Add(%d, %d) = %d; want %d", tt.a, tt.b, got, tt.want)
+        }
+    }
+}`,
+    difficulty: 'intermediate',
+    description: 'Go testing with table-driven tests',
+  },
+  {
+    id: 'go-embed',
+    language: 'go',
+    title: 'Embedding & Composition',
+    code: `type Animal struct {
+    Name string
+}
+
+func (a Animal) Speak() string {
+    return a.Name + " makes a sound"
+}
+
+type Dog struct {
+    Animal
+    Breed string
+}
+
+func (d Dog) Speak() string {
+    return d.Name + " barks!"
+}
+
+func main() {
+    d := Dog{Animal: Animal{Name: "Rex"}, Breed: "Labrador"}
+    fmt.Println(d.Speak())
+    fmt.Println(d.Animal.Speak())
+}`,
+    difficulty: 'intermediate',
+    description: 'Struct embedding for composition',
   },
 ];
 
@@ -360,6 +737,223 @@ void example() {
   },
 ];
 
+// Python Snippets (including advanced: decorators, generators, context managers)
+export const PYTHON_SNIPPETS: CodeSnippet[] = [
+  {
+    id: 'python-hello',
+    language: 'python',
+    title: 'Hello World',
+    code: `def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+if __name__ == "__main__":
+    print(greet("World"))`,
+    difficulty: 'beginner',
+    description: 'Basic function with type hints',
+  },
+  {
+    id: 'python-list-comp',
+    language: 'python',
+    title: 'List Comprehensions',
+    code: `numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+evens = [n for n in numbers if n % 2 == 0]
+squares = [n ** 2 for n in numbers]
+matrix = [[i * j for j in range(1, 4)] for i in range(1, 4)]`,
+    difficulty: 'beginner',
+    description: 'Pythonic list comprehensions',
+  },
+  {
+    id: 'python-decorator',
+    language: 'python',
+    title: 'Decorators',
+    code: `import functools
+import time
+
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        end = time.perf_counter()
+        print(f"{func.__name__} took {end - start:.4f}s")
+        return result
+    return wrapper
+
+@timer
+def slow_operation():
+    time.sleep(0.1)
+    return "done"`,
+    difficulty: 'intermediate',
+    description: 'Function decorators with functools.wraps',
+  },
+  {
+    id: 'python-decorator-args',
+    language: 'python',
+    title: 'Parametrized Decorators',
+    code: `def retry(max_attempts: int = 3, delay: float = 1.0):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            for attempt in range(max_attempts):
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    if attempt == max_attempts - 1:
+                        raise
+                    time.sleep(delay)
+        return wrapper
+    return decorator
+
+@retry(max_attempts=3, delay=0.5)
+def fetch_data(url: str) -> dict:
+    ...`,
+    difficulty: 'advanced',
+    description: 'Decorator factory with arguments',
+  },
+  {
+    id: 'python-generator',
+    language: 'python',
+    title: 'Generators',
+    code: `def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+def take(n, iterable):
+    for i, item in enumerate(iterable):
+        if i >= n:
+            break
+        yield item
+
+first_ten = list(take(10, fibonacci()))`,
+    difficulty: 'intermediate',
+    description: 'Generator functions with yield',
+  },
+  {
+    id: 'python-generator-expr',
+    language: 'python',
+    title: 'Generator Expressions',
+    code: `# Memory-efficient processing of large datasets
+def process_large_file(filename: str):
+    with open(filename) as f:
+        lines = (line.strip() for line in f)
+        non_empty = (line for line in lines if line)
+        parsed = (line.split(",") for line in non_empty)
+        return sum(float(row[1]) for row in parsed)`,
+    difficulty: 'intermediate',
+    description: 'Lazy evaluation with generator expressions',
+  },
+  {
+    id: 'python-context-manager',
+    language: 'python',
+    title: 'Context Managers',
+    code: `from contextlib import contextmanager
+import sqlite3
+
+@contextmanager
+def db_transaction(path: str):
+    conn = sqlite3.connect(path)
+    try:
+        yield conn
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+with db_transaction("app.db") as conn:
+    conn.execute("INSERT INTO logs VALUES (?)", ("event",))`,
+    difficulty: 'intermediate',
+    description: 'Context manager with contextlib',
+  },
+  {
+    id: 'python-context-class',
+    language: 'python',
+    title: 'Class-based Context Manager',
+    code: `class Timer:
+    def __enter__(self):
+        self.start = time.perf_counter()
+        return self
+
+    def __exit__(self, *args):
+        self.elapsed = time.perf_counter() - self.start
+        return False  # do not suppress exceptions
+
+with Timer() as t:
+    time.sleep(0.1)
+
+print(f"Elapsed: {t.elapsed:.3f}s")`,
+    difficulty: 'intermediate',
+    description: '__enter__ and __exit__ protocol',
+  },
+  {
+    id: 'python-dataclass',
+    language: 'python',
+    title: 'Dataclasses',
+    code: `from dataclasses import dataclass, field
+from typing import List
+
+@dataclass(frozen=True)
+class Point:
+    x: float
+    y: float
+
+    def distance_to(self, other: "Point") -> float:
+        return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
+
+@dataclass
+class Polygon:
+    vertices: List[Point] = field(default_factory=list)
+
+    def perimeter(self) -> float:
+        if len(self.vertices) < 2:
+            return 0.0
+        pairs = zip(self.vertices, self.vertices[1:] + [self.vertices[0]])
+        return sum(a.distance_to(b) for a, b in pairs)`,
+    difficulty: 'intermediate',
+    description: 'Python dataclasses with frozen and field',
+  },
+  {
+    id: 'python-async',
+    language: 'python',
+    title: 'Async/Await',
+    code: `import asyncio
+import aiohttp
+
+async def fetch(session: aiohttp.ClientSession, url: str) -> dict:
+    async with session.get(url) as response:
+        return await response.json()
+
+async def fetch_all(urls: list[str]) -> list[dict]:
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch(session, url) for url in urls]
+        return await asyncio.gather(*tasks)`,
+    difficulty: 'advanced',
+    description: 'Concurrent HTTP with asyncio and aiohttp',
+  },
+  {
+    id: 'python-protocol',
+    language: 'python',
+    title: 'Protocols (Structural Typing)',
+    code: `from typing import Protocol, runtime_checkable
+
+@runtime_checkable
+class Serializable(Protocol):
+    def to_dict(self) -> dict: ...
+    def to_json(self) -> str: ...
+
+def save(obj: Serializable, path: str) -> None:
+    import json
+    with open(path, "w") as f:
+        json.dump(obj.to_dict(), f)`,
+    difficulty: 'advanced',
+    description: 'Structural subtyping with Protocol',
+  },
+];
+
 // Docker/YAML Snippets
 export const DOCKER_SNIPPETS: CodeSnippet[] = [
   {
@@ -419,10 +1013,86 @@ services:
       - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=secret
-      
+
 volumes:
   postgres_data:`,
     difficulty: 'intermediate',
+  },
+  {
+    id: 'docker-compose-full',
+    language: 'yaml',
+    title: 'Docker Compose Full Stack',
+    code: `version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://cache:6379
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_started
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: secret
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  cache:
+    image: redis:7-alpine
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+volumes:
+  pgdata:`,
+    difficulty: 'advanced',
+    description: 'Full-stack Docker Compose with healthchecks',
+  },
+  {
+    id: 'docker-compose-override',
+    language: 'yaml',
+    title: 'Docker Compose Override',
+    code: `# docker-compose.override.yml (dev overrides)
+version: '3.8'
+
+services:
+  api:
+    command: npm run dev
+    environment:
+      - DEBUG=*
+      - LOG_LEVEL=debug
+    ports:
+      - "9229:9229"  # Node.js debugger
+
+  db:
+    ports:
+      - "5432:5432"  # Expose for local tools
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"`,
+    difficulty: 'intermediate',
+    description: 'Environment-specific overrides',
   },
 ];
 
@@ -971,6 +1641,70 @@ spec:
         type: Utilization
         averageUtilization: 80`,
     difficulty: 'advanced',
+  },
+  {
+    id: 'k8s-kubectl-basics',
+    language: 'bash',
+    title: 'kubectl Basic Commands',
+    code: `# Get resources
+kubectl get pods -n production
+kubectl get deployments --all-namespaces
+kubectl describe pod web-app-abc123
+
+# Apply manifests
+kubectl apply -f deployment.yaml
+kubectl apply -f ./k8s/
+
+# Manage deployments
+kubectl rollout status deployment/web-app
+kubectl rollout history deployment/web-app
+kubectl rollout undo deployment/web-app`,
+    difficulty: 'beginner',
+    description: 'Essential kubectl commands',
+  },
+  {
+    id: 'k8s-kubectl-debug',
+    language: 'bash',
+    title: 'kubectl Debugging',
+    code: `# Logs
+kubectl logs web-app-abc123 --follow --tail=100
+kubectl logs -l app=web-app --since=1h
+
+# Exec into pod
+kubectl exec -it web-app-abc123 -- /bin/sh
+
+# Port forwarding
+kubectl port-forward pod/web-app-abc123 8080:3000
+kubectl port-forward svc/web-app-service 8080:80
+
+# Events and resource usage
+kubectl get events --sort-by=.metadata.creationTimestamp
+kubectl top pods -n production
+kubectl top nodes`,
+    difficulty: 'intermediate',
+    description: 'Debugging and troubleshooting with kubectl',
+  },
+  {
+    id: 'k8s-kubectl-advanced',
+    language: 'bash',
+    title: 'kubectl Advanced',
+    code: `# Patch resources
+kubectl patch deployment web-app -p '{"spec":{"replicas":5}}'
+
+# Scale
+kubectl scale deployment web-app --replicas=0
+kubectl scale deployment web-app --replicas=3
+
+# Labels and selectors
+kubectl label pod web-app-abc env=staging
+kubectl get pods -l "app=web-app,env=production"
+
+# Output formats
+kubectl get pods -o wide
+kubectl get pod web-app-abc -o yaml
+kubectl get pods -o jsonpath='{.items[*].metadata.name}'`,
+    difficulty: 'advanced',
+    description: 'Advanced kubectl patterns',
   },
 ];
 
@@ -1954,6 +2688,7 @@ export const API_EXAMPLES: APIExample[] = [
 export const ALL_CODE_SNIPPETS: CodeSnippet[] = [
   ...RUST_SNIPPETS,
   ...GO_SNIPPETS,
+  ...PYTHON_SNIPPETS,
   ...SQL_SNIPPETS,
   ...CPP_SNIPPETS,
   ...DOCKER_SNIPPETS,
@@ -1968,17 +2703,19 @@ export const ALL_CODE_SNIPPETS: CodeSnippet[] = [
 
 // Get snippets by language
 export function getSnippetsByLanguage(language: string): CodeSnippet[] {
-  return ALL_CODE_SNIPPETS.filter((s) => s.language === language);
+  return ALL_CODE_SNIPPETS.filter(s => s.language === language);
 }
 
 // Get snippets by difficulty
-export function getSnippetsByDifficulty(difficulty: 'beginner' | 'intermediate' | 'advanced'): CodeSnippet[] {
-  return ALL_CODE_SNIPPETS.filter((s) => s.difficulty === difficulty);
+export function getSnippetsByDifficulty(
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+): CodeSnippet[] {
+  return ALL_CODE_SNIPPETS.filter(s => s.difficulty === difficulty);
 }
 
 // Get all available languages
 export function getAvailableLanguages(): string[] {
-  return [...new Set(ALL_CODE_SNIPPETS.map((s) => s.language))];
+  return [...new Set(ALL_CODE_SNIPPETS.map(s => s.language))];
 }
 
 // Language configurations for syntax highlighting

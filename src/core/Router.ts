@@ -41,6 +41,8 @@ export const pages: Record<string, PageConfig> = {
   regex: { id: 'regex', title: 'Regex Training' },
   'story-mode': { id: 'story-mode', title: 'Story Mode' },
   'skill-tree': { id: 'skill-tree', title: 'Skill Tree' },
+  sql: { id: 'sql', title: 'SQL Training' },
+  'algorithm-training': { id: 'algorithm-training', title: 'Algorithm Training' },
 };
 
 type RouteChangeListener = (page: string, previousPage: string) => void;
