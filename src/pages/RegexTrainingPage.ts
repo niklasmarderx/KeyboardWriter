@@ -4,7 +4,7 @@
  */
 
 import { EventBus } from '../core';
-import { REGEX_PATTERNS, RegexPattern } from '../data/programmingExercises';
+import { REGEX_PATTERNS, RegexPattern } from '../data/programming';
 
 export class RegexTrainingPage {
   private readonly container: HTMLElement;

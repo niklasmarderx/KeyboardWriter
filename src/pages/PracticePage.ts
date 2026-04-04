@@ -232,13 +232,13 @@ export class PracticePage {
           `
           ).join('')}
         </div>
-        <div class="stats-panel">
+        <div class="stats-panel" role="status" aria-live="polite" aria-label="Typing statistics">
           <div class="stat-card">
-            <span class="stat-card-value" id="session-wpm">0</span>
+            <span class="stat-card-value" id="session-wpm" aria-label="Words per minute">0</span>
             <span class="stat-card-label">WPM</span>
           </div>
           <div class="stat-card">
-            <span class="stat-card-value" id="session-accuracy">100%</span>
+            <span class="stat-card-value" id="session-accuracy" aria-label="Accuracy">100%</span>
             <span class="stat-card-label">${t('common.accuracy')}</span>
           </div>
           <div class="stat-card" id="time-stat-card">
@@ -753,13 +753,6 @@ export class PracticePage {
   loadNewText(difficulty: 'beginner' | 'intermediate' | 'advanced' | 'programming'): void {
     // Get language setting - use the helper method that handles 'both' correctly
     const language = SettingsService.getExerciseLanguage();
-    const settings = SettingsService.getSettings();
-    console.log(
-      '[PracticePage] Loading text - exerciseLanguage setting:',
-      settings.exerciseLanguage,
-      '-> resolved language:',
-      language
-    );
 
     const texts = getSampleTexts(difficulty, language);
     const randomIndex = Math.floor(Math.random() * texts.length);

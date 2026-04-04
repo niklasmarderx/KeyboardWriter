@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="public/icons/icon.svg" alt="KeyboardWriter Logo" width="120" height="120">
+  <img src="public/icons/icon.svg" alt="TypeCraft Logo" width="120" height="120">
   
-  # KeyboardWriter
+  # TypeCraft
   
   **The Ultimate Typing Trainer for Programmers**
   
@@ -10,7 +10,7 @@
   [![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
   
-  [Live Demo](https://niklasmarderx.github.io/KeyboardWriter/) | [Documentation](#features) | [Report Bug](https://github.com/niklasmarderx/KeyboardWriter/issues)
+  [Live Demo](https://niklasmarderx.github.io/TypeCraft/) | [Documentation](#features) | [Report Bug](https://github.com/niklasmarderx/TypeCraft/issues)
 
 </div>
 
@@ -38,9 +38,9 @@ Structured learning path with progress tracking and skill-based lessons.
 
 ---
 
-## What Makes KeyboardWriter Special?
+## What Makes TypeCraft Special?
 
-KeyboardWriter is not just another typing trainer. It is **specifically designed for programmers** and offers unique features:
+TypeCraft is not just another typing trainer. It is **specifically designed for programmers** and offers unique features:
 
 | Feature                | Description                                                                          |
 | ---------------------- | ------------------------------------------------------------------------------------ |
@@ -172,8 +172,8 @@ def fibonacci(n):
 
 ```bash
 # Clone the repository
-git clone https://github.com/niklasmarderx/KeyboardWriter.git
-cd KeyboardWriter
+git clone https://github.com/niklasmarderx/TypeCraft.git
+cd TypeCraft
 
 # Install dependencies
 npm install
@@ -208,7 +208,7 @@ npm run preview
 ### Project Structure
 
 ```
-keyboardwriter/
+typecraft/
 +-- public/              # Static assets & PWA
 +-- src/
 |   +-- app/            # App Entry Point

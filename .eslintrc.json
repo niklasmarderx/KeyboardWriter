@@ -23,7 +23,7 @@
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/prefer-readonly": "error",
     "@typescript-eslint/strict-boolean-expressions": "off",
-    "no-console": "off",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
     "prefer-const": "error",
     "no-var": "error",
     "eqeqeq": ["error", "always"],

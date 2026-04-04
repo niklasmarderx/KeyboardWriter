@@ -74,11 +74,9 @@ class PythonServiceClass {
       }
 
       // Initialize Pyodide
-      console.log('[PythonService] Loading Pyodide...');
       this.pyodide = await window.loadPyodide({
         indexURL: this.CDN_URL,
       });
-      console.log('[PythonService] Pyodide loaded successfully');
 
       // Setup stdout/stderr capture
       await this.pyodide.runPythonAsync(`

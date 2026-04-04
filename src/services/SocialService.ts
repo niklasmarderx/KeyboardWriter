@@ -355,8 +355,8 @@ class SocialServiceClass {
     }
 
     const shareData = {
-      title: 'KeyboardWriter Achievement!',
-      text: `Ich habe "${achievement.name}" in KeyboardWriter freigeschaltet! (+${achievement.xpReward} XP)`,
+      title: 'TypeCraft Achievement!',
+      text: `Ich habe "${achievement.name}" in TypeCraft freigeschaltet! (+${achievement.xpReward} XP)`,
       url: window.location.href,
     };
 
@@ -381,7 +381,7 @@ class SocialServiceClass {
     const user = Store.getState().user;
     const stats = user.statistics;
 
-    const text = `Meine KeyboardWriter Statistiken:
+    const text = `Meine TypeCraft Statistiken:
 ${stats.averageWPM} WPM (Durchschnitt)
 ${stats.averageAccuracy}% Genauigkeit
 ${stats.currentStreak} Tage Streak
@@ -389,7 +389,7 @@ ${stats.totalLessonsCompleted} Lektionen abgeschlossen
 Level ${user.level}`;
 
     const shareData = {
-      title: 'Meine KeyboardWriter Statistiken',
+      title: 'Meine TypeCraft Statistiken',
       text,
       url: window.location.href,
     };
@@ -452,7 +452,7 @@ Level ${user.level}`;
       encodeURIComponent(`
       <svg width="600" height="315" xmlns="http://www.w3.org/2000/svg">
         <rect width="100%" height="100%" fill="#1a1a2e"/>
-        <text x="50%" y="40%" fill="#ffffff" font-size="32" text-anchor="middle" font-family="sans-serif">KeyboardWriter Pro</text>
+        <text x="50%" y="40%" fill="#ffffff" font-size="32" text-anchor="middle" font-family="sans-serif">TypeCraft Pro</text>
         <text x="50%" y="60%" fill="#3b82f6" font-size="24" text-anchor="middle" font-family="sans-serif">Achievement Unlocked!</text>
       </svg>
     `)

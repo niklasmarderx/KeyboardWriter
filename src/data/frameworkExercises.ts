@@ -3,7 +3,7 @@
  * React, Vue, and other modern framework patterns for typing practice
  */
 
-import { CodeSnippet } from './programmingExercises';
+import { CodeSnippet } from './programming';
 
 // React Hooks
 export const REACT_HOOKS: CodeSnippet[] = [
@@ -2134,7 +2134,12 @@ export const ALL_FRAMEWORK_SNIPPETS: CodeSnippet[] = [
 // Categories for UI display
 export const FRAMEWORK_CATEGORIES = [
   { id: 'react-hooks', name: 'React Hooks', icon: 'react', snippets: REACT_HOOKS },
-  { id: 'react-components', name: 'React Components', icon: 'component', snippets: REACT_COMPONENTS },
+  {
+    id: 'react-components',
+    name: 'React Components',
+    icon: 'component',
+    snippets: REACT_COMPONENTS,
+  },
   { id: 'custom-hooks', name: 'Custom Hooks', icon: 'hook', snippets: CUSTOM_HOOKS },
   { id: 'typescript', name: 'TypeScript Patterns', icon: 'ts', snippets: TYPESCRIPT_PATTERNS },
   { id: 'testing', name: 'Testing Basics', icon: 'test', snippets: TESTING_PATTERNS },
@@ -2151,15 +2156,18 @@ export function getSnippetsByCategory(categoryId: string): CodeSnippet[] {
   return category?.snippets || [];
 }
 
-export function getSnippetsByDifficulty(difficulty: 'beginner' | 'intermediate' | 'advanced'): CodeSnippet[] {
+export function getSnippetsByDifficulty(
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+): CodeSnippet[] {
   return ALL_FRAMEWORK_SNIPPETS.filter(s => s.difficulty === difficulty);
 }
 
 export function searchSnippets(query: string): CodeSnippet[] {
   const lowerQuery = query.toLowerCase();
-  return ALL_FRAMEWORK_SNIPPETS.filter(s =>
-    s.title.toLowerCase().includes(lowerQuery) ||
-    s.description?.toLowerCase().includes(lowerQuery) ||
-    s.code.toLowerCase().includes(lowerQuery)
+  return ALL_FRAMEWORK_SNIPPETS.filter(
+    s =>
+      s.title.toLowerCase().includes(lowerQuery) ||
+      s.description?.toLowerCase().includes(lowerQuery) ||
+      s.code.toLowerCase().includes(lowerQuery)
   );
 }

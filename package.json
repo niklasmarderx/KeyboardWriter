@@ -1,5 +1,5 @@
 {
-  "name": "keyboard-writer",
+  "name": "typecraft",
   "version": "1.0.0",
   "description": "The ultimate typing trainer for programmers - with Code Playground, Git/Vim/Regex training, gamification and PWA support",
   "type": "module",
@@ -7,11 +7,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/niklasmarderx/KeyboardWriter.git"
+    "url": "https://github.com/niklasmarderx/TypeCraft.git"
   },
-  "homepage": "https://github.com/niklasmarderx/KeyboardWriter",
+  "homepage": "https://github.com/niklasmarderx/TypeCraft",
   "bugs": {
-    "url": "https://github.com/niklasmarderx/KeyboardWriter/issues"
+    "url": "https://github.com/niklasmarderx/TypeCraft/issues"
   },
   "keywords": [
     "typing",

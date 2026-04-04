@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   // GitHub Pages base path - Repository name
-  base: '/KeyboardWriter/',
+  base: '/TypeCraft/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -39,11 +39,12 @@ export default defineConfig({
               return `page-${pageName.toLowerCase()}`;
             }
           }
-          // Split data files
+          // Split data files (handles subdirectories like data/shortcuts/, data/lessons/)
           if (id.includes('/data/')) {
-            const dataName = id.split('/data/')[1]?.split('.')[0];
-            if (dataName) {
-              return `data-${dataName.toLowerCase()}`;
+            const dataPath = id.split('/data/')[1];
+            const chunkName = dataPath?.split('/')[0]?.split('.')[0];
+            if (chunkName) {
+              return `data-${chunkName.toLowerCase()}`;
             }
           }
           // Split services

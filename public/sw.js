@@ -1,11 +1,11 @@
 /**
- * KeyboardWriter Service Worker
+ * TypeCraft Service Worker
  * Provides offline support and caching for the PWA
  */
 
-const CACHE_NAME = 'keyboardwriter-v1';
-const STATIC_CACHE = 'keyboardwriter-static-v1';
-const DYNAMIC_CACHE = 'keyboardwriter-dynamic-v1';
+const CACHE_NAME = 'typecraft-v1';
+const STATIC_CACHE = 'typecraft-static-v1';
+const DYNAMIC_CACHE = 'typecraft-dynamic-v1';
 
 // Files to cache immediately on install
 const STATIC_ASSETS = [
@@ -281,7 +281,7 @@ self.addEventListener('push', (event) => {
   };
   
   event.waitUntil(
-    self.registration.showNotification(data.title || 'KeyboardWriter', options)
+    self.registration.showNotification(data.title || 'TypeCraft', options)
   );
 });
 

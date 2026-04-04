@@ -1,6 +1,7 @@
 import { VirtualKeyboard } from '../components/keyboard/VirtualKeyboard';
 import { ProgressMap, progressMapStyles } from '../components/progress/ProgressMap';
 import { EventBus, Store, t } from '../core';
+import { escapeHtml } from '../core/escapeHtml';
 import { SettingsService } from '../core/SettingsService';
 import { LESSON_CATEGORIES } from '../data/lessons';
 import { Exercise, Lesson } from '../domain/models';
@@ -478,7 +479,7 @@ export class LessonsPage {
                   font-size: 16px;
                   font-weight: bold;
                   color: var(--bg-primary);
-                ">${key}</span>
+                ">${escapeHtml(key)}</span>
               `
                 )
                 .join('')}
@@ -566,8 +567,8 @@ export class LessonsPage {
       const target = e.target as HTMLElement;
 
       // Find the closest category-card or lesson-card
-      const categoryCard = target.closest('.category-card') as HTMLElement;
-      const lessonCard = target.closest('.lesson-card') as HTMLElement;
+      const categoryCard = target.closest<HTMLElement>('.category-card');
+      const lessonCard = target.closest<HTMLElement>('.lesson-card');
 
       if (categoryCard) {
         const categoryId = categoryCard.getAttribute('data-category');
@@ -596,8 +597,8 @@ export class LessonsPage {
       }
 
       const target = keyEvent.target as HTMLElement;
-      const categoryCard = target.closest('.category-card') as HTMLElement;
-      const lessonCard = target.closest('.lesson-card') as HTMLElement;
+      const categoryCard = target.closest<HTMLElement>('.category-card');
+      const lessonCard = target.closest<HTMLElement>('.lesson-card');
 
       if (categoryCard) {
         const categoryId = categoryCard.getAttribute('data-category');
@@ -634,10 +635,10 @@ export class LessonsPage {
    */
   private setupOtherButtonHandlers(): void {
     // Language toggle buttons
-    document.querySelectorAll('.lang-btn').forEach(btn => {
+    document.querySelectorAll<HTMLElement>('.lang-btn').forEach(btn => {
       btn.addEventListener('click', (e: Event) => {
         e.preventDefault();
-        const lang = (btn as HTMLElement).dataset.lang as 'de' | 'en' | 'both';
+        const lang = btn.dataset.lang as 'de' | 'en' | 'both';
         if (lang) {
           SettingsService.updateSettings({ exerciseLanguage: lang });
           this.rerender();
@@ -900,7 +901,7 @@ export class LessonsPage {
           font-weight: bold;
           color: var(--text-inverse);
           animation: popIn 0.15s ease;
-        ">${key}</span>
+        ">${escapeHtml(key)}</span>
       `
         )
         .join('');
@@ -984,7 +985,7 @@ export class LessonsPage {
     display.innerHTML = text
       .split('')
       .map((char, index) => {
-        const displayChar = char === ' ' ? '&nbsp;' : this.escapeHtml(char);
+        const displayChar = char === ' ' ? '&nbsp;' : escapeHtml(char);
         const className = index === 0 ? 'typing-char current' : 'typing-char upcoming';
         return `<span class="${className}" data-index="${index}">${displayChar}</span>`;
       })
@@ -1352,15 +1353,6 @@ export class LessonsPage {
    */
   private rerender(): void {
     EventBus.emit('nav:change', { page: 'lessons' });
-  }
-
-  /**
-   * Escape HTML characters
-   */
-  private escapeHtml(text: string): string {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
   }
 
   /**

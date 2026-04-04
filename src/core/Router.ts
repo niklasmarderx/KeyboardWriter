@@ -138,7 +138,7 @@ class RouterImpl {
     // Update document title
     const pageConfig = pages[page];
     if (pageConfig !== undefined) {
-      document.title = `${pageConfig.title} - KeyboardWriter`;
+      document.title = `${pageConfig.title} - TypeCraft`;
     }
 
     // Update store

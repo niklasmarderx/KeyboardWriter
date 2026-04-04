@@ -51,7 +51,7 @@ const en: Translations = {
   'header.shutdown': 'Shutdown server',
 
   // Home Page
-  'home.welcome': 'Welcome to KeyboardWriter',
+  'home.welcome': 'Welcome to TypeCraft',
   'home.wpmAverage': 'WPM Average',
   'home.accuracy': 'Accuracy',
   'home.dayStreak': 'Day Streak',
@@ -696,7 +696,7 @@ const de: Translations = {
   'header.shutdown': 'Server beenden',
 
   // Home Page
-  'home.welcome': 'Willkommen bei KeyboardWriter',
+  'home.welcome': 'Willkommen bei TypeCraft',
   'home.wpmAverage': 'WPM Durchschnitt',
   'home.accuracy': 'Genauigkeit',
   'home.dayStreak': 'Tage Streak',

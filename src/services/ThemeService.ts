@@ -72,7 +72,8 @@ class ThemeServiceClass {
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     motionQuery.addEventListener('change', e => {
       if (e.matches && !this.settings.reducedMotion) {
-        console.log('System prefers reduced motion');
+        this.settings.reducedMotion = true;
+        this.applyAccessibilitySettings();
       }
     });
   }

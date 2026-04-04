@@ -24,3 +24,5 @@ export { StorageService } from './StorageService';
 
 export { SettingsService } from './SettingsService';
 export type { Settings } from './SettingsService';
+
+export { escapeHtml } from './escapeHtml';

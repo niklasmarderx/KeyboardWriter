@@ -3,7 +3,7 @@
  * Classic algorithms and data structure implementations for typing practice
  */
 
-import { CodeSnippet } from './programmingExercises';
+import { CodeSnippet } from './programming';
 
 // Sorting Algorithms
 export const SORTING_ALGORITHMS: CodeSnippet[] = [

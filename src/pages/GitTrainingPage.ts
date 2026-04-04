@@ -5,7 +5,7 @@
 
 import { VirtualKeyboard } from '../components/keyboard/VirtualKeyboard';
 import { EventBus, t } from '../core';
-import { GIT_COMMANDS, GIT_WORKFLOWS, GitCommand, GitWorkflow } from '../data/programmingExercises';
+import { GIT_COMMANDS, GIT_WORKFLOWS, GitCommand, GitWorkflow } from '../data/programming';
 
 type GitCategory = 'basic' | 'branching' | 'remote' | 'advanced' | 'github' | 'workflows';
 

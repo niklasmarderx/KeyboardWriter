@@ -134,6 +134,7 @@ class LoggerImpl {
       args.push(entry.data);
     }
 
+    /* eslint-disable no-console */
     switch (entry.level) {
       case LogLevel.DEBUG:
         console.debug(...args);
@@ -148,6 +149,7 @@ class LoggerImpl {
         console.error(...args);
         break;
     }
+    /* eslint-enable no-console */
   }
 
   // Convenience methods

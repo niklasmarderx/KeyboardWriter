@@ -4,6 +4,7 @@
  */
 
 import { EventBus } from '../core';
+import { escapeHtml } from '../core/escapeHtml';
 import { i18n } from '../core/i18n';
 import {
   ALL_SHORTCUT_COLLECTIONS,
@@ -194,7 +195,7 @@ export class ShortcutsPage {
               font-family: var(--font-mono);
               font-size: 11px;
               font-weight: 500;
-            ">${key}</span>
+            ">${escapeHtml(key)}</span>
           `
             )
             .join('')}
@@ -276,7 +277,7 @@ export class ShortcutsPage {
                   font-size: 16px;
                   font-weight: bold;
                   color: var(--text-inverse);
-                ">${key}</span>
+                ">${escapeHtml(key)}</span>
               `
                 )
                 .join('')}
@@ -314,7 +315,7 @@ export class ShortcutsPage {
                   font-size: 16px;
                   font-weight: bold;
                   color: var(--bg-primary);
-                ">${key}</span>
+                ">${escapeHtml(key)}</span>
               `
                 )
                 .join('')}
@@ -615,7 +616,7 @@ export class ShortcutsPage {
           font-weight: bold;
           color: var(--text-inverse);
           animation: popIn 0.15s ease;
-        ">${key}</span>
+        ">${escapeHtml(key)}</span>
       `
         )
         .join('');

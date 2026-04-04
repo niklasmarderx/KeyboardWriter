@@ -3,6 +3,7 @@
  * UI für alle Quiz-Modi: Multiple Choice, Command Type, Code Completion, etc.
  */
 
+import { escapeHtml } from '../core/escapeHtml';
 import {
   QuizQuestion,
   QuizResult,
@@ -187,7 +188,7 @@ export class QuizPage {
           </div>
           
           <div class="question-text">
-            <pre>${this.escapeHtml(question.question)}</pre>
+            <pre>${escapeHtml(question.question)}</pre>
           </div>
 
           ${this.renderAnswerInput(question)}
@@ -207,9 +208,9 @@ export class QuizPage {
           ${question.options
             .map(
               (option, i) => `
-            <button class="answer-option" data-option="${i}" data-value="${this.escapeHtml(option)}">
+            <button class="answer-option" data-option="${i}" data-value="${escapeHtml(option)}">
               <span class="option-letter">${String.fromCharCode(65 + i)}</span>
-              <span class="option-text">${this.escapeHtml(option)}</span>
+              <span class="option-text">${escapeHtml(option)}</span>
             </button>
           `
             )
@@ -262,12 +263,12 @@ export class QuizPage {
                 return `
                 <div class="question-result ${result?.correct ? 'correct' : 'incorrect'}">
                   <span class="result-icon">${result?.correct ? '' : ''}</span>
-                  <span class="result-question">${this.escapeHtml(q.question.substring(0, 50))}...</span>
+                  <span class="result-question">${escapeHtml(q.question.substring(0, 50))}...</span>
                   <span class="result-answer">
                     ${
                       result?.correct
-                        ? q.correctAnswer
-                        : `${result?.userAnswer || '-'} → ${q.correctAnswer}`
+                        ? escapeHtml(q.correctAnswer)
+                        : `${escapeHtml(result?.userAnswer || '-')} → ${escapeHtml(q.correctAnswer)}`
                     }
                   </span>
                 </div>
@@ -296,9 +297,9 @@ export class QuizPage {
       const target = e.target as HTMLElement;
 
       // Difficulty button clicked
-      const diffBtn = target.closest('.diff-btn') as HTMLElement;
+      const diffBtn = target.closest<HTMLElement>('.diff-btn');
       if (diffBtn) {
-        const modeCard = diffBtn.closest('.quiz-mode-card') as HTMLElement;
+        const modeCard = diffBtn.closest<HTMLElement>('.quiz-mode-card');
         const mode = modeCard?.dataset.mode as QuizType;
         const difficulty = diffBtn.dataset.difficulty as 'beginner' | 'intermediate' | 'advanced';
         if (mode && difficulty) {
@@ -308,9 +309,9 @@ export class QuizPage {
       }
 
       // Category button clicked (for code completion)
-      const catBtn = target.closest('.cat-btn') as HTMLElement;
+      const catBtn = target.closest<HTMLElement>('.cat-btn');
       if (catBtn) {
-        const modeCard = catBtn.closest('.quiz-mode-card') as HTMLElement;
+        const modeCard = catBtn.closest<HTMLElement>('.quiz-mode-card');
         const mode = modeCard?.dataset.mode as QuizType;
         const category = catBtn.dataset.category;
         if (mode && category) {
@@ -320,7 +321,7 @@ export class QuizPage {
       }
 
       // Answer option clicked
-      const optionBtn = target.closest('.answer-option') as HTMLElement;
+      const optionBtn = target.closest<HTMLElement>('.answer-option');
       if (optionBtn && !optionBtn.classList.contains('disabled')) {
         const value = optionBtn.dataset.value || '';
         this.submitAnswer(value);
@@ -329,7 +330,7 @@ export class QuizPage {
 
       // Submit button clicked
       if (target.id === 'submit-answer') {
-        const input = document.getElementById('answer-input') as HTMLInputElement;
+        const input = document.querySelector<HTMLInputElement>('#answer-input');
         if (input && input.value.trim()) {
           this.submitAnswer(input.value.trim());
         }
@@ -361,7 +362,7 @@ export class QuizPage {
     // Enter key for text input
     content.addEventListener('keypress', e => {
       if (e.key === 'Enter') {
-        const input = document.getElementById('answer-input') as HTMLInputElement;
+        const input = document.querySelector<HTMLInputElement>('#answer-input');
         if (input && input.value.trim()) {
           this.submitAnswer(input.value.trim());
         }
@@ -382,9 +383,9 @@ export class QuizPage {
 
       const keyIndex = e.key.toUpperCase().charCodeAt(0) - 65;
       if (keyIndex >= 0 && keyIndex < question.options.length) {
-        const options = document.querySelectorAll('.answer-option:not(.disabled)');
+        const options = document.querySelectorAll<HTMLElement>('.answer-option:not(.disabled)');
         if (options[keyIndex]) {
-          const option = options[keyIndex] as HTMLElement;
+          const option = options[keyIndex];
           const value = option.dataset.value || '';
           this.submitAnswer(value);
         }
@@ -462,7 +463,7 @@ export class QuizPage {
 
     // Focus input if exists
     setTimeout(() => {
-      const input = document.getElementById('answer-input') as HTMLInputElement;
+      const input = document.querySelector<HTMLInputElement>('#answer-input');
       if (input) {
         input.focus();
       }
@@ -497,7 +498,7 @@ export class QuizPage {
             ${
               result.correct
                 ? `Richtig! +${result.pointsEarned} Punkte`
-                : `Falsch! Die richtige Antwort war: ${question.correctAnswer}`
+                : `Falsch! Die richtige Antwort war: ${escapeHtml(question.correctAnswer)}`
             }
           </span>
         </div>
@@ -509,9 +510,9 @@ export class QuizPage {
     }
 
     // Disable answer options
-    document.querySelectorAll('.answer-option').forEach(btn => {
+    document.querySelectorAll<HTMLElement>('.answer-option').forEach(btn => {
       btn.classList.add('disabled');
-      const value = (btn as HTMLElement).dataset.value;
+      const value = btn.dataset.value;
       if (value === question.correctAnswer) {
         btn.classList.add('correct-answer');
       } else if (value === result.userAnswer && !result.correct) {
@@ -520,7 +521,7 @@ export class QuizPage {
     });
 
     // Disable text input
-    const input = document.getElementById('answer-input') as HTMLInputElement;
+    const input = document.querySelector<HTMLInputElement>('#answer-input');
     if (input) {
       input.disabled = true;
     }
@@ -641,12 +642,6 @@ export class QuizPage {
       hour: '2-digit',
       minute: '2-digit',
     });
-  }
-
-  private escapeHtml(text: string): string {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
   }
 
   destroy(): void {

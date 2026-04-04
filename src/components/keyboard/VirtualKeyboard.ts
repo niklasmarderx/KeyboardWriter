@@ -47,7 +47,7 @@ export class VirtualKeyboard {
     const layout = QWERTZ_LAYOUT;
 
     this.container.innerHTML = `
-      <div class="keyboard">
+      <div class="keyboard" role="img" aria-label="Virtual keyboard">
         ${layout.rows.map((row, rowIndex) => this.renderRow(row, rowIndex)).join('')}
       </div>
     `;
@@ -77,8 +77,7 @@ export class VirtualKeyboard {
     // Only show secondary text if shiftKey is NOT just the uppercase version of key
     // This prevents duplicate display for letters (e.g., showing both 'Q' and 'Q')
     // but keeps it for numbers/symbols (e.g., showing '!' above '1')
-    const isUppercaseVariant =
-      key.shiftKey && key.shiftKey.toLowerCase() === key.key.toLowerCase();
+    const isUppercaseVariant = key.shiftKey && key.shiftKey.toLowerCase() === key.key.toLowerCase();
     const secondaryText =
       key.shiftKey && !isUppercaseVariant
         ? `<span class="key-secondary">${key.shiftKey}</span>`

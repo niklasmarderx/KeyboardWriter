@@ -3,6 +3,7 @@
  * Visual learning path showing completed, available, and locked lessons
  */
 
+import { escapeHtml } from '../../core/escapeHtml';
 import { LearningPathNode, progressTrackingService } from '../../services';
 
 interface ProgressMapOptions {
@@ -35,7 +36,7 @@ export class ProgressMap {
       height: 600,
       onLessonClick: onLessonClick ?? (() => {}),
     };
-    
+
     // Store initial nodes if provided
     if (initialNodes) {
       this.nodes = initialNodes;
@@ -96,16 +97,16 @@ export class ProgressMap {
     const y = e.clientY - rect.top;
 
     const node = this.getNodeAtPosition(x, y);
-    
+
     if (node !== this.hoveredNode) {
       this.hoveredNode = node;
-      
+
       if (node) {
         this.showTooltip(node, e.clientX, e.clientY);
       } else {
         this.tooltip.style.display = 'none';
       }
-      
+
       this.render();
     }
 
@@ -123,7 +124,7 @@ export class ProgressMap {
     const y = e.clientY - rect.top;
 
     const node = this.getNodeAtPosition(x, y);
-    
+
     if (node && (node.status === 'available' || node.status === 'completed')) {
       this.options.onLessonClick(node.lesson.id);
     }
@@ -131,17 +132,17 @@ export class ProgressMap {
 
   private getNodeAtPosition(x: number, y: number): LearningPathNode | null {
     const nodeRadius = 35;
-    
+
     for (const node of this.nodes) {
       const dx = x - node.position.x;
       const dy = y - node.position.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
-      
+
       if (distance <= nodeRadius) {
         return node;
       }
     }
-    
+
     return null;
   }
 
@@ -152,12 +153,12 @@ export class ProgressMap {
 
     this.tooltip.innerHTML = `
       <div class="tooltip-header">
-        <strong>${node.lesson.title}</strong>
+        <strong>${escapeHtml(node.lesson.title)}</strong>
       </div>
       <div class="tooltip-level">Level ${node.lesson.level}</div>
       <div class="tooltip-status ${statusClass}">${statusText}</div>
       ${node.stars > 0 ? `<div class="tooltip-stars">${starsHtml}</div>` : ''}
-      <div class="tooltip-description">${node.lesson.description || ''}</div>
+      <div class="tooltip-description">${escapeHtml(node.lesson.description || '')}</div>
       ${node.status === 'available' ? '<div class="tooltip-hint">Klicken zum Starten</div>' : ''}
       ${node.status === 'locked' ? '<div class="tooltip-hint">Schliesse vorherige Lektionen ab</div>' : ''}
     `;
@@ -179,10 +180,14 @@ export class ProgressMap {
 
   private getStatusText(status: LearningPathNode['status']): string {
     switch (status) {
-      case 'completed': return 'Abgeschlossen';
-      case 'available': return 'Verfügbar';
-      case 'in-progress': return 'In Bearbeitung';
-      case 'locked': return 'Gesperrt';
+      case 'completed':
+        return 'Abgeschlossen';
+      case 'available':
+        return 'Verfügbar';
+      case 'in-progress':
+        return 'In Bearbeitung';
+      case 'locked':
+        return 'Gesperrt';
     }
   }
 
@@ -193,7 +198,7 @@ export class ProgressMap {
 
   render(): void {
     const { width, height } = this.options;
-    
+
     // Clear canvas
     this.ctx.clearRect(0, 0, width, height);
 
@@ -226,15 +231,18 @@ export class ProgressMap {
         if (targetNode) {
           this.ctx.beginPath();
           this.ctx.moveTo(node.position.x, node.position.y);
-          
+
           // Draw curved connection
           const midY = (node.position.y + targetNode.position.y) / 2;
           this.ctx.bezierCurveTo(
-            node.position.x, midY,
-            targetNode.position.x, midY,
-            targetNode.position.x, targetNode.position.y
+            node.position.x,
+            midY,
+            targetNode.position.x,
+            midY,
+            targetNode.position.x,
+            targetNode.position.y
           );
-          
+
           this.ctx.stroke();
         }
       }
@@ -260,7 +268,7 @@ export class ProgressMap {
     // Draw node background
     this.ctx.beginPath();
     this.ctx.arc(x, y, radius, 0, Math.PI * 2);
-    
+
     const colors = this.getNodeColors(node.status);
     const nodeGradient = this.ctx.createRadialGradient(x - 10, y - 10, 0, x, y, radius);
     nodeGradient.addColorStop(0, colors.light);
@@ -301,7 +309,7 @@ export class ProgressMap {
     this.ctx.fillStyle = isHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.7)';
     this.ctx.font = '11px Inter, sans-serif';
     this.ctx.textAlign = 'center';
-    
+
     const title = this.truncateText(node.lesson.title, 80);
     this.ctx.fillText(title, x, y + radius + (node.stars > 0 ? 35 : 20));
   }
@@ -357,7 +365,7 @@ export class ProgressMap {
     for (let i = 0; i < 3; i++) {
       const starX = startX + i * spacing;
       const filled = i < stars;
-      
+
       this.ctx.fillStyle = filled ? '#fbbf24' : 'rgba(255, 255, 255, 0.3)';
       this.ctx.font = `${starSize}px sans-serif`;
       this.ctx.textAlign = 'center';

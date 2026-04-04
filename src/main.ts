@@ -1,5 +1,5 @@
 /**
- * KeyboardWriter - Main Entry Point
+ * TypeCraft - Main Entry Point
  * Professional Typing Trainer for Developers
  */
 
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = Store.getState();
     if (state.user.statistics.totalSessions === 0) {
       EventBus.emit('ui:toast', {
-        message: 'Willkommen bei KeyboardWriter! Starte dein Training.',
+        message: 'Willkommen bei TypeCraft! Starte dein Training.',
         type: 'info',
       });
     }
@@ -134,7 +134,7 @@ function shutdownServer(): void {
 
   // Show confirmation
   const confirmed = confirm(
-    'KeyboardWriter beenden?\n\nDer Server wird gestoppt und der Browser-Tab geschlossen.'
+    'TypeCraft beenden?\n\nDer Server wird gestoppt und der Browser-Tab geschlossen.'
   );
 
   if (confirmed) {
@@ -154,7 +154,7 @@ function shutdownServer(): void {
         ">
           <h1 style="margin-bottom: 16px;">Auf Wiedersehen!</h1>
           <p style="color: var(--text-secondary); margin-bottom: 24px;">
-            KeyboardWriter wird beendet...
+            TypeCraft wird beendet...
           </p>
           <p style="color: var(--text-muted); font-size: 14px;">
             Du kannst diesen Tab jetzt schließen.

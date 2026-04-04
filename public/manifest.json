@@ -1,7 +1,7 @@
 {
-  "name": "KeyboardWriter - Professionelles Tastatur-Training",
-  "short_name": "KeyboardWriter",
-  "description": "Professionelles Keyboard-Trainer-Tool für das 10-Finger-System mit progressiven Lektionen, Echtzeit-Feedback und Code-Modus für Programmierer.",
+  "name": "TypeCraft - Professionelles Tastatur- und Code-Training",
+  "short_name": "TypeCraft",
+  "description": "Professionelles Tastatur- und Code-Trainer-Tool für das 10-Finger-System mit progressiven Lektionen, Echtzeit-Feedback und Code-Modus für Programmierer.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0D1117",

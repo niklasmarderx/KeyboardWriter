@@ -288,7 +288,7 @@ export class ProgressTrackingService {
     return {
       dailySessions: {},
       weeklyHistory: [],
-      milestones: [...DEFAULT_MILESTONES],
+      milestones: DEFAULT_MILESTONES.map(m => ({ ...m })),
       totalPracticeMinutes: 0,
       currentSessionStart: null,
       lastActivityDate: null,
@@ -351,7 +351,7 @@ export class ProgressTrackingService {
   startSession(): void {
     this.data.currentSessionStart = new Date().toISOString();
     this.saveToStorage();
-    
+
     // Start timer to track session duration
     this.sessionTimer = window.setInterval(() => {
       this.updateSessionDuration();
@@ -416,30 +416,28 @@ export class ProgressTrackingService {
     }
 
     const daily = this.data.dailySessions[today];
-    
+
     // Update daily stats
     daily.totalMinutes += durationMinutes;
     daily.sessionsCount++;
     daily.lessonsCompleted += lessonsCompleted;
-    
+
     // Update running averages
     const totalSessions = daily.sessionsCount;
     if (wpm > 0) {
-      daily.averageWPM = Math.round(
-        ((daily.averageWPM * (totalSessions - 1)) + wpm) / totalSessions
-      );
+      daily.averageWPM = Math.round((daily.averageWPM * (totalSessions - 1) + wpm) / totalSessions);
       daily.peakWPM = Math.max(daily.peakWPM, wpm);
     }
     if (accuracy > 0) {
       daily.averageAccuracy = Math.round(
-        ((daily.averageAccuracy * (totalSessions - 1)) + accuracy) / totalSessions
+        (daily.averageAccuracy * (totalSessions - 1) + accuracy) / totalSessions
       );
     }
 
     // Update global stats
     this.data.totalPracticeMinutes += durationMinutes;
     this.data.lastActivityDate = today;
-    
+
     if (wpm > this.data.bestWPM) {
       this.data.bestWPM = wpm;
     }
@@ -518,19 +516,22 @@ export class ProgressTrackingService {
           achieved = starStats.threeStars >= milestone.requirement.target;
           break;
         case 'wpm':
-          achieved = currentWPM >= milestone.requirement.target || 
-                     this.data.bestWPM >= milestone.requirement.target;
+          achieved =
+            currentWPM >= milestone.requirement.target ||
+            this.data.bestWPM >= milestone.requirement.target;
           break;
         case 'accuracy':
-          achieved = currentAccuracy >= milestone.requirement.target ||
-                     this.data.bestAccuracy >= milestone.requirement.target;
+          achieved =
+            currentAccuracy >= milestone.requirement.target ||
+            this.data.bestAccuracy >= milestone.requirement.target;
           break;
         case 'time':
           achieved = this.data.totalPracticeMinutes >= milestone.requirement.target;
           break;
         case 'streak':
-          achieved = gamificationData.currentStreak >= milestone.requirement.target ||
-                     gamificationData.longestStreak >= milestone.requirement.target;
+          achieved =
+            gamificationData.currentStreak >= milestone.requirement.target ||
+            gamificationData.longestStreak >= milestone.requirement.target;
           break;
       }
 
@@ -550,7 +551,7 @@ export class ProgressTrackingService {
     const weekStart = new Date(today);
     weekStart.setDate(today.getDate() - today.getDay());
     const weekStartStr = weekStart.toISOString().split('T')[0];
-    
+
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 6);
     const weekEndStr = weekEnd.toISOString().split('T')[0];
@@ -583,7 +584,7 @@ export class ProgressTrackingService {
 
     // Find or create this week's summary
     let weeklySummary = this.data.weeklyHistory.find(w => w.weekStart === weekStartStr);
-    
+
     // Get previous week for comparison
     const prevWeekStart = new Date(weekStart);
     prevWeekStart.setDate(prevWeekStart.getDate() - 7);
@@ -610,7 +611,7 @@ export class ProgressTrackingService {
     weeklySummary.lessonsCompleted = lessonsCompleted;
     weeklySummary.averageWPM = avgWPM;
     weeklySummary.averageAccuracy = avgAcc;
-    
+
     if (prevWeek) {
       weeklySummary.improvement = {
         wpm: avgWPM - prevWeek.averageWPM,
@@ -641,7 +642,9 @@ export class ProgressTrackingService {
     }
 
     // Calculate node positions
-    const levels = Object.keys(levelGroups).map(Number).sort((a, b) => a - b);
+    const levels = Object.keys(levelGroups)
+      .map(Number)
+      .sort((a, b) => a - b);
     const levelSpacing = 150;
     const lessonSpacing = 140;
 
@@ -657,7 +660,7 @@ export class ProgressTrackingService {
       for (let lessonIndex = 0; lessonIndex < lessons.length; lessonIndex++) {
         const lesson = lessons[lessonIndex];
         const result = lessonResults[lesson.id];
-        
+
         // Determine status
         let status: LearningPathNode['status'] = 'locked';
         const stars = (result?.stars ?? 0) as 0 | 1 | 2 | 3;
@@ -748,18 +751,28 @@ export class ProgressTrackingService {
 
     // Aggregate current period
     const current = this.aggregateSessions(currentStartStr, todayStr);
-    
+
     // Aggregate previous period
     const previous = this.aggregateSessions(previousStartStr, previousEndStr);
 
     // Calculate changes
     const change = {
       wpm: current.wpm - previous.wpm,
-      wpmPercent: previous.wpm > 0 ? Math.round(((current.wpm - previous.wpm) / previous.wpm) * 100) : 0,
+      wpmPercent:
+        previous.wpm > 0 ? Math.round(((current.wpm - previous.wpm) / previous.wpm) * 100) : 0,
       accuracy: current.accuracy - previous.accuracy,
-      accuracyPercent: previous.accuracy > 0 ? Math.round(((current.accuracy - previous.accuracy) / previous.accuracy) * 100) : 0,
+      accuracyPercent:
+        previous.accuracy > 0
+          ? Math.round(((current.accuracy - previous.accuracy) / previous.accuracy) * 100)
+          : 0,
       practiceMinutes: current.practiceMinutes - previous.practiceMinutes,
-      practicePercent: previous.practiceMinutes > 0 ? Math.round(((current.practiceMinutes - previous.practiceMinutes) / previous.practiceMinutes) * 100) : 0,
+      practicePercent:
+        previous.practiceMinutes > 0
+          ? Math.round(
+              ((current.practiceMinutes - previous.practiceMinutes) / previous.practiceMinutes) *
+                100
+            )
+          : 0,
       lessonsCompleted: current.lessonsCompleted - previous.lessonsCompleted,
     };
 
@@ -769,7 +782,10 @@ export class ProgressTrackingService {
   /**
    * Aggregate sessions for a date range
    */
-  private aggregateSessions(startDate: string, endDate: string): {
+  private aggregateSessions(
+    startDate: string,
+    endDate: string
+  ): {
     wpm: number;
     accuracy: number;
     practiceMinutes: number;
@@ -812,9 +828,14 @@ export class ProgressTrackingService {
       period,
       current: empty,
       previous: empty,
-      change: { 
-        wpm: 0, wpmPercent: 0, accuracy: 0, accuracyPercent: 0, 
-        practiceMinutes: 0, practicePercent: 0, lessonsCompleted: 0 
+      change: {
+        wpm: 0,
+        wpmPercent: 0,
+        accuracy: 0,
+        accuracyPercent: 0,
+        practiceMinutes: 0,
+        practicePercent: 0,
+        lessonsCompleted: 0,
       },
     };
   }
@@ -838,7 +859,7 @@ export class ProgressTrackingService {
       const date = new Date(today);
       date.setDate(today.getDate() - i);
       const dateStr = date.toISOString().split('T')[0];
-      
+
       if (this.data.dailySessions[dateStr]) {
         result.push(this.data.dailySessions[dateStr]);
       } else {
@@ -916,9 +937,8 @@ export class ProgressTrackingService {
       today: todaySession?.totalMinutes ?? 0,
       thisWeek,
       thisMonth,
-      averagePerDay: daysWithPractice > 0 
-        ? Math.round(this.data.totalPracticeMinutes / daysWithPractice)
-        : 0,
+      averagePerDay:
+        daysWithPractice > 0 ? Math.round(this.data.totalPracticeMinutes / daysWithPractice) : 0,
     };
   }
 

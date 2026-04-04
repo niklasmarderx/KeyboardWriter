@@ -4,7 +4,7 @@
  */
 
 import { EventBus, t } from '../core';
-import { VIM_COMMANDS, VimCommand } from '../data/programmingExercises';
+import { VIM_COMMANDS, VimCommand } from '../data/programming';
 
 type VimCategory = 'movement' | 'editing' | 'visual' | 'search' | 'files' | 'advanced';
 

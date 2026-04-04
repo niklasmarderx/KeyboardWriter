@@ -50,7 +50,7 @@ const LEVEL_XP_REQUIREMENTS: number[] = [
   47650, // Level 25
 ];
 
-class StoryModeService {
+export class StoryModeService {
   private storyProgress: StoryProgress;
   private playerStats: PlayerStats;
   private chapters: Chapter[] = [];

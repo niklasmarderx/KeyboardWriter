@@ -1,8 +1,8 @@
-# KeyboardWriter - Improvements & Technical Documentation
+# TypeCraft - Improvements & Technical Documentation
 
 ## Overview
 
-This document tracks completed improvements, open tasks, and future plans for the KeyboardWriter project.
+This document tracks completed improvements, open tasks, and future plans for the TypeCraft project.
 
 ---
 
@@ -10,18 +10,19 @@ This document tracks completed improvements, open tasks, and future plans for th
 
 ### Phase 3: Advanced Learning Features (Current)
 
-| #   | Improvement                      | Status | Files                                            |
-| --- | -------------------------------- | ------ | ------------------------------------------------ |
-| 1   | Bilingual Exercise System        | Done   | `src/data/lessons.ts`, `src/data/practiceTexts.ts` |
-| 2   | Micro-Lessons (Level 0)          | Done   | `src/data/lessons.ts` (single finger drills)     |
-| 3   | Star Rating System               | Done   | `src/services/GamificationService.ts`            |
-| 4   | Adaptive Learning Service        | Done   | `src/services/AdaptiveLearningService.ts`        |
-| 5   | Exercise Mode Service            | Done   | `src/services/ExerciseModeService.ts`            |
-| 6   | Progress Tracking Service        | Done   | `src/services/ProgressTrackingService.ts`        |
-| 7   | Progress Map Component           | Done   | `src/components/progress/ProgressMap.ts`         |
-| 8   | Performance Charts Component     | Done   | `src/components/progress/PerformanceCharts.ts`   |
+| #   | Improvement                  | Status | Files                                              |
+| --- | ---------------------------- | ------ | -------------------------------------------------- |
+| 1   | Bilingual Exercise System    | Done   | `src/data/lessons.ts`, `src/data/practiceTexts.ts` |
+| 2   | Micro-Lessons (Level 0)      | Done   | `src/data/lessons.ts` (single finger drills)       |
+| 3   | Star Rating System           | Done   | `src/services/GamificationService.ts`              |
+| 4   | Adaptive Learning Service    | Done   | `src/services/AdaptiveLearningService.ts`          |
+| 5   | Exercise Mode Service        | Done   | `src/services/ExerciseModeService.ts`              |
+| 6   | Progress Tracking Service    | Done   | `src/services/ProgressTrackingService.ts`          |
+| 7   | Progress Map Component       | Done   | `src/components/progress/ProgressMap.ts`           |
+| 8   | Performance Charts Component | Done   | `src/components/progress/PerformanceCharts.ts`     |
 
 #### New Exercise Categories
+
 - **Dictation Mode**: Audio-based typing exercises
 - **Blind Typing Mode**: Type without seeing input
 - **Time Pressure Mode**: Timed challenges with countdown
@@ -30,12 +31,14 @@ This document tracks completed improvements, open tasks, and future plans for th
 - **Endurance Mode**: Extended typing sessions
 
 #### Personalized Learning Features
+
 - Weakness analysis with digraph/pattern detection
 - Adaptive exercise recommendations
 - Difficulty auto-adjustment based on performance
 - Key-specific error tracking and practice suggestions
 
 #### Progress Tracking Features
+
 - Daily session recording with WPM/accuracy tracking
 - Weekly summaries with improvement metrics
 - 15 achievement milestones (lessons, stars, WPM, accuracy, time, streaks)
@@ -46,17 +49,17 @@ This document tracks completed improvements, open tasks, and future plans for th
 
 ### Phase 2: Content Expansion
 
-| #   | Improvement                     | Status | Files                                          |
-| --- | ------------------------------- | ------ | ---------------------------------------------- |
-| 1   | Expanded Programming Exercises  | Done   | `src/data/programmingExercises.ts`             |
-| 2   | Algorithm Exercises             | Done   | `src/data/algorithmExercises.ts`               |
-| 3   | Framework Exercises             | Done   | `src/data/frameworkExercises.ts`               |
-| 4   | SQL Training                    | Done   | `src/pages/SQLTrainingPage.ts`                 |
-| 5   | Git Training                    | Done   | `src/pages/GitTrainingPage.ts`                 |
-| 6   | Vim Training                    | Done   | `src/pages/VimTrainingPage.ts`                 |
-| 7   | Regex Training                  | Done   | `src/pages/RegexTrainingPage.ts`               |
-| 8   | Terminal Training               | Done   | `src/pages/TerminalTrainingPage.ts`            |
-| 9   | Keyboard Shortcuts              | Done   | `src/pages/ShortcutsPage.ts`                   |
+| #   | Improvement                    | Status | Files                               |
+| --- | ------------------------------ | ------ | ----------------------------------- |
+| 1   | Expanded Programming Exercises | Done   | `src/data/programmingExercises.ts`  |
+| 2   | Algorithm Exercises            | Done   | `src/data/algorithmExercises.ts`    |
+| 3   | Framework Exercises            | Done   | `src/data/frameworkExercises.ts`    |
+| 4   | SQL Training                   | Done   | `src/pages/SQLTrainingPage.ts`      |
+| 5   | Git Training                   | Done   | `src/pages/GitTrainingPage.ts`      |
+| 6   | Vim Training                   | Done   | `src/pages/VimTrainingPage.ts`      |
+| 7   | Regex Training                 | Done   | `src/pages/RegexTrainingPage.ts`    |
+| 8   | Terminal Training              | Done   | `src/pages/TerminalTrainingPage.ts` |
+| 9   | Keyboard Shortcuts             | Done   | `src/pages/ShortcutsPage.ts`        |
 
 ---
 
@@ -285,13 +288,17 @@ npm run preview     # Preview build
 ## New Services Reference
 
 ### AdaptiveLearningService
+
 Provides personalized learning recommendations based on user performance.
+
 - `analyzeWeaknesses()`: Identifies weak keys and patterns
 - `recommendExercises()`: Suggests targeted exercises
 - `adjustDifficulty()`: Auto-adjusts lesson difficulty
 
 ### ExerciseModeService
+
 Manages different exercise modes for varied practice.
+
 - Dictation Mode: Audio-based typing
 - Blind Typing: Hidden input mode
 - Time Pressure: Countdown challenges
@@ -299,7 +306,9 @@ Manages different exercise modes for varied practice.
 - Warmup/Endurance: Session management
 
 ### ProgressTrackingService
+
 Comprehensive progress tracking and analytics.
+
 - Session recording with detailed metrics
 - Weekly/monthly summaries
 - Milestone achievement tracking

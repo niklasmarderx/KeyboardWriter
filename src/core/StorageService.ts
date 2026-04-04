@@ -4,6 +4,13 @@ import { Logger } from './Logger';
 const logger = Logger.scope('StorageService');
 
 /**
+ * Type guard for Record<string, unknown>
+ */
+function isRecord(val: unknown): val is Record<string, unknown> {
+  return val !== null && typeof val === 'object' && !Array.isArray(val);
+}
+
+/**
  * Current storage schema version
  * Increment this when making breaking changes to data structure
  */
@@ -28,14 +35,9 @@ type MigrationFn = (data: Record<string, unknown>) => Record<string, unknown>;
 const migrations: Record<number, MigrationFn> = {
   // Migration from v1 to v2: Add settings.hapticFeedback field
   2: (data: Record<string, unknown>) => {
-    if (
-      data.settings !== null &&
-      data.settings !== undefined &&
-      typeof data.settings === 'object'
-    ) {
-      const settings = data.settings as Record<string, unknown>;
-      if (!('hapticFeedback' in settings)) {
-        settings.hapticFeedback = false;
+    if (isRecord(data.settings)) {
+      if (!('hapticFeedback' in data.settings)) {
+        data.settings.hapticFeedback = false;
       }
     }
     return data;
@@ -43,12 +45,8 @@ const migrations: Record<number, MigrationFn> = {
   // Migration from v2 to v3: Fix completedLessons and completedExercises serialization
   // These were stored as empty objects {} instead of arrays [] due to Set serialization bug
   3: (data: Record<string, unknown>) => {
-    if (
-      data.statistics !== null &&
-      data.statistics !== undefined &&
-      typeof data.statistics === 'object'
-    ) {
-      const stats = data.statistics as Record<string, unknown>;
+    if (isRecord(data.statistics)) {
+      const stats = data.statistics;
 
       // Fix completedLessons - convert from object to array if needed
       if (
@@ -131,7 +129,13 @@ class StorageServiceImpl {
     }
 
     try {
-      let data = JSON.parse(userData) as Record<string, unknown>;
+      const parsed: unknown = JSON.parse(userData);
+      if (!isRecord(parsed)) {
+        logger.error('Stored user data is not an object');
+        this.setVersion(STORAGE_VERSION);
+        return;
+      }
+      let data = parsed;
 
       // Run each migration in sequence
       for (let v = currentVersion + 1; v <= STORAGE_VERSION; v++) {
@@ -178,7 +182,11 @@ class StorageServiceImpl {
         return null;
       }
 
-      const parsed = JSON.parse(data) as Record<string, unknown>;
+      const parsed: unknown = JSON.parse(data);
+      if (!isRecord(parsed)) {
+        logger.error('Stored user data is not an object');
+        return null;
+      }
       return this.deserializeUser(parsed);
     } catch (error) {
       logger.error('Failed to load user data', error);

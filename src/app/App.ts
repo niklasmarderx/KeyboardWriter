@@ -1,26 +1,26 @@
 import { onboardingModal } from '../components/onboarding/OnboardingModal';
 import { EventBus, i18n, StorageService, Store, t } from '../core';
 import { createUser } from '../domain/models';
-import { AchievementsPage } from '../pages/AchievementsPage';
-import { AlgorithmTrainingPage } from '../pages/AlgorithmTrainingPage';
-import { CodeModePage } from '../pages/CodeModePage';
-import { CodePlaygroundPage } from '../pages/CodePlaygroundPage';
-import { DailyChallengePage } from '../pages/DailyChallengePage';
-import { GitTrainingPage } from '../pages/GitTrainingPage';
-import { LessonsPage } from '../pages/LessonsPage';
-import { PracticePage } from '../pages/PracticePage';
-import { QuizPage } from '../pages/QuizPage';
-import { RegexTrainingPage } from '../pages/RegexTrainingPage';
-import { ShortcutsPage } from '../pages/ShortcutsPage';
-import { SkillTreePage } from '../pages/SkillTreePage';
-import { SocialPage } from '../pages/SocialPage';
-import { SQLTrainingPage } from '../pages/SQLTrainingPage';
-import { SRSReviewPage } from '../pages/SRSReviewPage';
-import { StatisticsPage } from '../pages/StatisticsPage';
-import { StoryModePage } from '../pages/StoryModePage';
-import { TerminalTrainingPage } from '../pages/TerminalTrainingPage';
-import { TypingRacePage } from '../pages/TypingRacePage';
-import { VimTrainingPage } from '../pages/VimTrainingPage';
+import type { AchievementsPage } from '../pages/AchievementsPage';
+import type { AlgorithmTrainingPage } from '../pages/AlgorithmTrainingPage';
+import type { CodeModePage } from '../pages/CodeModePage';
+import type { CodePlaygroundPage } from '../pages/CodePlaygroundPage';
+import type { DailyChallengePage } from '../pages/DailyChallengePage';
+import type { GitTrainingPage } from '../pages/GitTrainingPage';
+import type { LessonsPage } from '../pages/LessonsPage';
+import type { PracticePage } from '../pages/PracticePage';
+import type { QuizPage } from '../pages/QuizPage';
+import type { RegexTrainingPage } from '../pages/RegexTrainingPage';
+import type { ShortcutsPage } from '../pages/ShortcutsPage';
+import type { SkillTreePage } from '../pages/SkillTreePage';
+import type { SocialPage } from '../pages/SocialPage';
+import type { SQLTrainingPage } from '../pages/SQLTrainingPage';
+import type { SRSReviewPage } from '../pages/SRSReviewPage';
+import type { StatisticsPage } from '../pages/StatisticsPage';
+import type { StoryModePage } from '../pages/StoryModePage';
+import type { TerminalTrainingPage } from '../pages/TerminalTrainingPage';
+import type { TypingRacePage } from '../pages/TypingRacePage';
+import type { VimTrainingPage } from '../pages/VimTrainingPage';
 
 /**
  * Main Application Class
@@ -208,6 +208,13 @@ export class App {
       // Use requestAnimationFrame to ensure DOM is fully painted
       requestAnimationFrame(() => {
         this.initCurrentPage(page);
+
+        // Move focus to page heading for accessibility
+        const heading = mainContent.querySelector('h1');
+        if (heading) {
+          heading.setAttribute('tabindex', '-1');
+          heading.focus();
+        }
       });
     }
   }
@@ -275,13 +282,14 @@ export class App {
   private getAppTemplate(currentPage: string): string {
     return `
       <div class="app-container">
+        <a href="#main-content" class="skip-link">Skip to main content</a>
         ${this.getHeaderTemplate()}
         ${this.getSidebarTemplate(currentPage)}
-        <main class="app-main">
+        <main class="app-main" id="main-content" role="main">
           ${this.getPageContent(currentPage)}
         </main>
       </div>
-      <div class="toast-container" id="toast-container"></div>
+      <div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
     `;
   }
 
@@ -291,9 +299,9 @@ export class App {
   private getHeaderTemplate(): string {
     const state = Store.getState();
     return `
-      <header class="app-header">
+      <header class="app-header" role="banner">
         <div class="header-logo">
-          <span class="header-logo-text">KeyboardWriter</span>
+          <span class="header-logo-text">TypeCraft</span>
         </div>
         <div class="header-stats">
           <div class="header-stat">
@@ -526,7 +534,7 @@ export class App {
 
     return `
       <aside class="app-sidebar">
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" role="navigation" aria-label="Main navigation">
           ${navGroups
             .map(group => {
               const isGroupActive = group.id === activeGroupId;
@@ -613,6 +621,77 @@ export class App {
       default:
         return this.getHomePageContent();
     }
+  }
+
+  /**
+   * Loading placeholder for lazy-loaded pages
+   */
+  private getLoadingPlaceholder(): string {
+    return `<div class="page-loading" role="status" aria-label="Loading page">
+      <div class="loading-spinner"></div>
+    </div>`;
+  }
+
+  /**
+   * Load a page asynchronously and replace the placeholder
+   */
+  private async loadPageAsync(
+    pageName: string,
+    factory: () => Promise<{ render(): string; init?(): void }>
+  ): Promise<void> {
+    try {
+      const page = await factory();
+      const mainContent = this.appElement.querySelector('.app-main');
+      if (mainContent && Store.getState().currentPage === pageName) {
+        mainContent.innerHTML = page.render();
+        this.setupClickHandlers();
+        requestAnimationFrame(() => {
+          page.init?.();
+          const heading = mainContent.querySelector('h1');
+          if (heading) {
+            heading.setAttribute('tabindex', '-1');
+            heading.focus();
+          }
+        });
+      }
+    } catch (error) {
+      console.error(`Failed to load page: ${pageName}`, error);
+      const mainContent = this.appElement.querySelector('.app-main');
+      if (mainContent && Store.getState().currentPage === pageName) {
+        mainContent.innerHTML = `<div class="error-state" style="padding: 48px; text-align: center;">
+          <h1>Page could not be loaded</h1>
+          <p style="color: var(--text-secondary); margin-top: 12px;">Please try again.</p>
+        </div>`;
+      }
+    }
+  }
+
+  /**
+   * Load a container-based page asynchronously
+   */
+  private loadContainerPageAsync(
+    pageName: string,
+    containerId: string,
+    factory: (container: HTMLElement) => Promise<{ render(): void }>
+  ): void {
+    setTimeout(
+      () =>
+        void (async () => {
+          const container = document.getElementById(containerId);
+          if (container) {
+            try {
+              const page = await factory(container);
+              page.render();
+            } catch (error) {
+              console.error(`Failed to load page: ${pageName}`, error);
+              container.innerHTML = `<div class="error-state" style="padding: 48px; text-align: center;">
+            <h1>Page could not be loaded</h1>
+          </div>`;
+            }
+          }
+        })(),
+      0
+    );
   }
 
   /**
@@ -748,144 +827,139 @@ export class App {
    * Render and initialize practice page
    */
   private renderPracticePage(): string {
-    if (!this.practicePage) {
-      this.practicePage = new PracticePage();
-    }
-    const content = this.practicePage.render();
-    setTimeout(() => {
-      this.practicePage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('practice', async () => {
+      const { PracticePage } = await import('../pages/PracticePage');
+      if (!this.practicePage) {
+        this.practicePage = new PracticePage();
+      }
+      return this.practicePage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize lessons page
    */
   private renderLessonsPage(): string {
-    // Reuse existing instance to preserve state (currentView, selectedCategory)
-    if (!this.lessonsPage) {
-      this.lessonsPage = new LessonsPage();
-    }
-    const content = this.lessonsPage.render();
-    // Schedule init after DOM is updated
-    setTimeout(() => {
-      this.lessonsPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('lessons', async () => {
+      const { LessonsPage } = await import('../pages/LessonsPage');
+      if (!this.lessonsPage) {
+        this.lessonsPage = new LessonsPage();
+      }
+      return this.lessonsPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize statistics page
    */
   private renderStatisticsPage(): string {
-    if (!this.statisticsPage) {
-      this.statisticsPage = new StatisticsPage();
-    }
-    const content = this.statisticsPage.render();
-    setTimeout(() => {
-      this.statisticsPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('statistics', async () => {
+      const { StatisticsPage } = await import('../pages/StatisticsPage');
+      if (!this.statisticsPage) {
+        this.statisticsPage = new StatisticsPage();
+      }
+      return this.statisticsPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize code mode page
    */
   private renderCodeModePage(): string {
-    if (!this.codeModePage) {
-      this.codeModePage = new CodeModePage();
-    }
-    const content = this.codeModePage.render();
-    setTimeout(() => {
-      this.codeModePage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('code', async () => {
+      const { CodeModePage } = await import('../pages/CodeModePage');
+      if (!this.codeModePage) {
+        this.codeModePage = new CodeModePage();
+      }
+      return this.codeModePage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize achievements page
    */
   private renderAchievementsPage(): string {
-    if (!this.achievementsPage) {
-      this.achievementsPage = new AchievementsPage();
-    }
-    const content = this.achievementsPage.render();
-    setTimeout(() => {
-      this.achievementsPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('achievements', async () => {
+      const { AchievementsPage } = await import('../pages/AchievementsPage');
+      if (!this.achievementsPage) {
+        this.achievementsPage = new AchievementsPage();
+      }
+      return this.achievementsPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize shortcuts page
    */
   private renderShortcutsPage(): string {
-    if (!this.shortcutsPage) {
-      this.shortcutsPage = new ShortcutsPage();
-    }
-    const content = this.shortcutsPage.render();
-    setTimeout(() => {
-      this.shortcutsPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('shortcuts', async () => {
+      const { ShortcutsPage } = await import('../pages/ShortcutsPage');
+      if (!this.shortcutsPage) {
+        this.shortcutsPage = new ShortcutsPage();
+      }
+      return this.shortcutsPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize terminal training page
    */
   private renderTerminalPage(): string {
-    if (!this.terminalPage) {
-      this.terminalPage = new TerminalTrainingPage();
-    }
-    const content = this.terminalPage.render();
-    setTimeout(() => {
-      this.terminalPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('terminal', async () => {
+      const { TerminalTrainingPage } = await import('../pages/TerminalTrainingPage');
+      if (!this.terminalPage) {
+        this.terminalPage = new TerminalTrainingPage();
+      }
+      return this.terminalPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize SRS review page
    */
   private renderSRSPage(): string {
-    if (!this.srsPage) {
-      this.srsPage = new SRSReviewPage();
-    }
-    const content = this.srsPage.render();
-    setTimeout(() => {
-      this.srsPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('srs', async () => {
+      const { SRSReviewPage } = await import('../pages/SRSReviewPage');
+      if (!this.srsPage) {
+        this.srsPage = new SRSReviewPage();
+      }
+      return this.srsPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize daily challenge page
    */
   private renderDailyChallengePage(): string {
-    if (!this.dailyChallengePage) {
-      this.dailyChallengePage = new DailyChallengePage();
-    }
-    const content = this.dailyChallengePage.render();
-    setTimeout(() => {
-      this.dailyChallengePage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('challenge', async () => {
+      const { DailyChallengePage } = await import('../pages/DailyChallengePage');
+      if (!this.dailyChallengePage) {
+        this.dailyChallengePage = new DailyChallengePage();
+      }
+      return this.dailyChallengePage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize quiz page
    */
   private renderQuizPage(): string {
-    setTimeout(() => {
-      const pageContainer = document.getElementById('quiz-page-container');
-      if (pageContainer) {
-        if (!this.quizPage) {
-          this.quizPage = new QuizPage(pageContainer);
-        }
-        this.quizPage.render();
+    void this.loadContainerPageAsync('quiz', 'quiz-page-container', async container => {
+      const { QuizPage } = await import('../pages/QuizPage');
+      if (!this.quizPage) {
+        this.quizPage = new QuizPage(container);
       }
-    }, 0);
-
+      return this.quizPage;
+    });
     return '<div id="quiz-page-container" class="quiz-page-wrapper"></div>';
   }
 
@@ -893,58 +967,55 @@ export class App {
    * Render and initialize social page
    */
   private renderSocialPage(): string {
-    if (!this.socialPage) {
-      this.socialPage = new SocialPage();
-    }
-    const content = this.socialPage.render();
-    setTimeout(() => {
-      this.socialPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('social', async () => {
+      const { SocialPage } = await import('../pages/SocialPage');
+      if (!this.socialPage) {
+        this.socialPage = new SocialPage();
+      }
+      return this.socialPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize playground page
    */
   private renderPlaygroundPage(): string {
-    if (!this.playgroundPage) {
-      this.playgroundPage = new CodePlaygroundPage();
-    }
-    const content = this.playgroundPage.render();
-    setTimeout(() => {
-      this.playgroundPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('playground', async () => {
+      const { CodePlaygroundPage } = await import('../pages/CodePlaygroundPage');
+      if (!this.playgroundPage) {
+        this.playgroundPage = new CodePlaygroundPage();
+      }
+      return this.playgroundPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize race page
    */
   private renderRacePage(): string {
-    if (!this.racePage) {
-      this.racePage = new TypingRacePage();
-    }
-    const content = this.racePage.render();
-    setTimeout(() => {
-      this.racePage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('race', async () => {
+      const { TypingRacePage } = await import('../pages/TypingRacePage');
+      if (!this.racePage) {
+        this.racePage = new TypingRacePage();
+      }
+      return this.racePage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize git training page
    */
   private renderGitPage(): string {
-    setTimeout(() => {
-      const pageContainer = document.getElementById('git-page-container');
-      if (pageContainer) {
-        if (!this.gitPage) {
-          this.gitPage = new GitTrainingPage(pageContainer);
-        }
-        this.gitPage.render();
+    void this.loadContainerPageAsync('git', 'git-page-container', async container => {
+      const { GitTrainingPage } = await import('../pages/GitTrainingPage');
+      if (!this.gitPage) {
+        this.gitPage = new GitTrainingPage(container);
       }
-    }, 0);
-
+      return this.gitPage;
+    });
     return '<div id="git-page-container" class="git-page-wrapper"></div>';
   }
 
@@ -952,16 +1023,13 @@ export class App {
    * Render and initialize vim training page
    */
   private renderVimPage(): string {
-    setTimeout(() => {
-      const pageContainer = document.getElementById('vim-page-container');
-      if (pageContainer) {
-        if (!this.vimPage) {
-          this.vimPage = new VimTrainingPage(pageContainer);
-        }
-        this.vimPage.render();
+    void this.loadContainerPageAsync('vim', 'vim-page-container', async container => {
+      const { VimTrainingPage } = await import('../pages/VimTrainingPage');
+      if (!this.vimPage) {
+        this.vimPage = new VimTrainingPage(container);
       }
-    }, 0);
-
+      return this.vimPage;
+    });
     return '<div id="vim-page-container" class="vim-page-wrapper"></div>';
   }
 
@@ -969,16 +1037,13 @@ export class App {
    * Render and initialize regex training page
    */
   private renderRegexPage(): string {
-    setTimeout(() => {
-      const pageContainer = document.getElementById('regex-page-container');
-      if (pageContainer) {
-        if (!this.regexPage) {
-          this.regexPage = new RegexTrainingPage(pageContainer);
-        }
-        this.regexPage.render();
+    void this.loadContainerPageAsync('regex', 'regex-page-container', async container => {
+      const { RegexTrainingPage } = await import('../pages/RegexTrainingPage');
+      if (!this.regexPage) {
+        this.regexPage = new RegexTrainingPage(container);
       }
-    }, 0);
-
+      return this.regexPage;
+    });
     return '<div id="regex-page-container" class="regex-page-wrapper"></div>';
   }
 
@@ -986,56 +1051,56 @@ export class App {
    * Render and initialize algorithm training page
    */
   private renderAlgorithmPage(): string {
-    if (!this.algorithmPage) {
-      this.algorithmPage = new AlgorithmTrainingPage();
-    }
-    const content = this.algorithmPage.render();
-    setTimeout(() => {
-      this.algorithmPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('algorithm-training', async () => {
+      const { AlgorithmTrainingPage } = await import('../pages/AlgorithmTrainingPage');
+      if (!this.algorithmPage) {
+        this.algorithmPage = new AlgorithmTrainingPage();
+      }
+      return this.algorithmPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize SQL training page
    */
   private renderSQLPage(): string {
-    if (!this.sqlPage) {
-      this.sqlPage = new SQLTrainingPage();
-    }
-    const content = this.sqlPage.render();
-    setTimeout(() => {
-      this.sqlPage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('sql', async () => {
+      const { SQLTrainingPage } = await import('../pages/SQLTrainingPage');
+      if (!this.sqlPage) {
+        this.sqlPage = new SQLTrainingPage();
+      }
+      return this.sqlPage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize story mode page
    */
   private renderStoryModePage(): string {
-    if (!this.storyModePage) {
-      this.storyModePage = new StoryModePage();
-    }
-    const content = this.storyModePage.render();
-    setTimeout(() => {
-      this.storyModePage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('story-mode', async () => {
+      const { StoryModePage } = await import('../pages/StoryModePage');
+      if (!this.storyModePage) {
+        this.storyModePage = new StoryModePage();
+      }
+      return this.storyModePage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**
    * Render and initialize skill tree page
    */
   private renderSkillTreePage(): string {
-    if (!this.skillTreePage) {
-      this.skillTreePage = new SkillTreePage();
-    }
-    const content = this.skillTreePage.render();
-    setTimeout(() => {
-      this.skillTreePage?.init();
-    }, 0);
-    return content;
+    void this.loadPageAsync('skill-tree', async () => {
+      const { SkillTreePage } = await import('../pages/SkillTreePage');
+      if (!this.skillTreePage) {
+        this.skillTreePage = new SkillTreePage();
+      }
+      return this.skillTreePage;
+    });
+    return this.getLoadingPlaceholder();
   }
 
   /**

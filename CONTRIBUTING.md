@@ -1,6 +1,6 @@
-# Contributing to KeyboardWriter
+# Contributing to TypeCraft
 
-Thank you for your interest in KeyboardWriter! We welcome all contributions.
+Thank you for your interest in TypeCraft! We welcome all contributions.
 
 ## Table of Contents
 
