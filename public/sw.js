@@ -59,8 +59,9 @@ self.addEventListener('activate', (event) => {
         return Promise.all(
           cacheNames
             .filter((cacheName) => {
-              return cacheName.startsWith('keyboardwriter-') && 
-                     cacheName !== STATIC_CACHE && 
+              return cacheName.startsWith('typecraft-') &&
+                     cacheName !== CACHE_NAME &&
+                     cacheName !== STATIC_CACHE &&
                      cacheName !== DYNAMIC_CACHE;
             })
             .map((cacheName) => {
@@ -154,8 +155,9 @@ async function networkFirst(request) {
     if (request.mode === 'navigate') {
       return caches.match('/offline.html');
     }
-    
-    throw error;
+
+    // Return a generic error response for non-navigation requests
+    return new Response('Network error', { status: 408, statusText: 'Network error' });
   }
 }
 
@@ -203,10 +205,11 @@ async function staleWhileRevalidate(request) {
     })
     .catch((error) => {
       console.log('[ServiceWorker] Background fetch failed:', error);
+      return null;
     });
-  
+
   // Return cached response immediately or wait for network
-  return cachedResponse || fetchPromise;
+  return cachedResponse || (await fetchPromise) || new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
 }
 
 /**

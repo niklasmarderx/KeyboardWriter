@@ -135,9 +135,36 @@ const STORAGE_KEY = 'adaptive_learning_data';
 
 // Common digraphs for pattern analysis
 const COMMON_DIGRAPHS = [
-  'th', 'he', 'in', 'er', 'an', 'en', 'on', 'at', 'es', 'ed',
-  'or', 'ti', 'te', 'ng', 'nd', 'to', 'it', 'is', 'ar', 'al',
-  'de', 'ei', 'ie', 'ch', 'sc', 'st', 'un', 'be', 'ge', 'au',
+  'th',
+  'he',
+  'in',
+  'er',
+  'an',
+  'en',
+  'on',
+  'at',
+  'es',
+  'ed',
+  'or',
+  'ti',
+  'te',
+  'ng',
+  'nd',
+  'to',
+  'it',
+  'is',
+  'ar',
+  'al',
+  'de',
+  'ei',
+  'ie',
+  'ch',
+  'sc',
+  'st',
+  'un',
+  'be',
+  'ge',
+  'au',
 ];
 
 /**
@@ -238,9 +265,6 @@ export class AdaptiveLearningService {
     // Process keystroke data for performance tracking
     this.processKeystrokes(session.keystrokes);
 
-    // Process errors for pattern analysis
-    this.processErrors(session.errors);
-
     // Update skill level based on performance
     this.updateSkillLevel();
 
@@ -257,7 +281,7 @@ export class AdaptiveLearningService {
   private processKeystrokes(keystrokes: KeystrokeData[]): void {
     for (const keystroke of keystrokes) {
       const key = keystroke.expectedKey.toLowerCase();
-      
+
       if (!this.data.keyPerformance[key]) {
         this.data.keyPerformance[key] = {
           key,
@@ -272,14 +296,15 @@ export class AdaptiveLearningService {
 
       const perf = this.data.keyPerformance[key];
       const oldAccuracy = perf.accuracy;
-      
+
       perf.totalAttempts++;
       if (keystroke.correct) {
         perf.correctAttempts++;
       }
       perf.accuracy = (perf.correctAttempts / perf.totalAttempts) * 100;
-      perf.averageResponseTime = 
-        (perf.averageResponseTime * (perf.totalAttempts - 1) + keystroke.responseTime) / perf.totalAttempts;
+      perf.averageResponseTime =
+        (perf.averageResponseTime * (perf.totalAttempts - 1) + keystroke.responseTime) /
+        perf.totalAttempts;
       perf.lastPracticed = new Date().toISOString();
 
       // Determine trend (compare to previous accuracy)
@@ -303,8 +328,14 @@ export class AdaptiveLearningService {
    */
   private updatePatternPerformance(keystrokes: KeystrokeData[]): void {
     // Build the typed text
-    const typedText = keystrokes.map(k => k.key).join('').toLowerCase();
-    const expectedText = keystrokes.map(k => k.expectedKey).join('').toLowerCase();
+    const typedText = keystrokes
+      .map(k => k.key)
+      .join('')
+      .toLowerCase();
+    const expectedText = keystrokes
+      .map(k => k.expectedKey)
+      .join('')
+      .toLowerCase();
 
     // Check digraphs
     for (const digraph of COMMON_DIGRAPHS) {
@@ -329,23 +360,15 @@ export class AdaptiveLearningService {
             category: 'digraph',
           };
         }
-        
+
         const pattern = this.data.patternPerformance[digraph];
         const oldTotal = pattern.totalAttempts;
         const oldCorrect = (pattern.accuracy / 100) * oldTotal;
-        
+
         pattern.totalAttempts += occurrences;
         pattern.accuracy = ((oldCorrect + correct) / pattern.totalAttempts) * 100;
       }
     }
-  }
-
-  /**
-   * Process errors for pattern analysis
-   */
-  private processErrors(_errors: ErrorData[]): void {
-    // Track common error patterns - placeholder for future expansion
-    // Could track: common substitutions, finger confusions, etc.
   }
 
   /**
@@ -357,9 +380,9 @@ export class AdaptiveLearningService {
     }
 
     const recentSessions = this.data.sessions.slice(0, 20); // Last 20 sessions
-    this.data.averageWPM = 
+    this.data.averageWPM =
       recentSessions.reduce((sum, s) => sum + s.wpm, 0) / recentSessions.length;
-    this.data.averageAccuracy = 
+    this.data.averageAccuracy =
       recentSessions.reduce((sum, s) => sum + s.accuracy, 0) / recentSessions.length;
   }
 
@@ -390,10 +413,9 @@ export class AdaptiveLearningService {
    */
   private updateDailyGoals(session: TypingSessionData): void {
     const today = new Date().toISOString().split('T')[0];
-    
+
     // Generate daily goals if needed
-    if (this.data.dailyGoals.length === 0 || 
-        !this.data.dailyGoals[0].id.startsWith(today)) {
+    if (this.data.dailyGoals.length === 0 || !this.data.dailyGoals[0].id.startsWith(today)) {
       this.data.dailyGoals = this.generateDailyGoals();
     }
 
@@ -470,10 +492,14 @@ export class AdaptiveLearningService {
    */
   private getSkillMultiplier(): number {
     switch (this.data.skillLevel) {
-      case 'expert': return 2.0;
-      case 'advanced': return 1.5;
-      case 'intermediate': return 1.2;
-      default: return 1.0;
+      case 'expert':
+        return 2.0;
+      case 'advanced':
+        return 1.5;
+      case 'intermediate':
+        return 1.2;
+      default:
+        return 1.0;
     }
   }
 
@@ -497,7 +523,9 @@ export class AdaptiveLearningService {
     // Determine focus areas
     if (weakKeys.length > 0) {
       recommendedFocus.push('Problematische Tasten gezielt üben');
-      improvementAreas.push(`Tasten mit niedriger Genauigkeit: ${weakKeys.map(k => k.key).join(', ')}`);
+      improvementAreas.push(
+        `Tasten mit niedriger Genauigkeit: ${weakKeys.map(k => k.key).join(', ')}`
+      );
     }
 
     if (this.data.averageAccuracy < 90) {
@@ -517,14 +545,15 @@ export class AdaptiveLearningService {
 
     // Calculate overall strength
     const keyAccuracies = Object.values(this.data.keyPerformance);
-    const avgKeyAccuracy = keyAccuracies.length > 0
-      ? keyAccuracies.reduce((sum, k) => sum + k.accuracy, 0) / keyAccuracies.length
-      : 50;
-    
+    const avgKeyAccuracy =
+      keyAccuracies.length > 0
+        ? keyAccuracies.reduce((sum, k) => sum + k.accuracy, 0) / keyAccuracies.length
+        : 50;
+
     const overallStrength = Math.round(
-      (avgKeyAccuracy * 0.4) + 
-      (this.data.averageAccuracy * 0.3) + 
-      (Math.min(this.data.averageWPM / 60 * 100, 100) * 0.3)
+      avgKeyAccuracy * 0.4 +
+        this.data.averageAccuracy * 0.3 +
+        Math.min((this.data.averageWPM / 60) * 100, 100) * 0.3
     );
 
     this.data.lastAnalysisDate = new Date().toISOString();
@@ -545,7 +574,7 @@ export class AdaptiveLearningService {
   getRecommendedPath(): LearningPathRecommendation {
     const lessonResults = gamificationService.getAllLessonResults();
     const analysis = this.analyzeWeaknesses();
-    
+
     // Find next uncompleted lesson at appropriate level
     const appropriateLevel = this.getAppropriateLevel();
     const levelLessons = getLessonsByLevel(appropriateLevel);
@@ -574,7 +603,10 @@ export class AdaptiveLearningService {
       practiceRecommendations.push({
         type: 'weak_keys',
         title: 'Schwache Tasten üben',
-        description: `Fokus auf: ${analysis.weakKeys.slice(0, 5).map(k => k.key.toUpperCase()).join(', ')}`,
+        description: `Fokus auf: ${analysis.weakKeys
+          .slice(0, 5)
+          .map(k => k.key.toUpperCase())
+          .join(', ')}`,
         priority: 'high',
         targetKeys: analysis.weakKeys.slice(0, 5).map(k => k.key),
         targetAccuracy: 90,
@@ -615,9 +647,10 @@ export class AdaptiveLearningService {
     }
 
     // Calculate estimated time
-    const estimatedTimeMinutes = practiceRecommendations.reduce(
-      (sum, r) => sum + r.estimatedMinutes, 0
-    ) + (nextLesson ? 10 : 0) + (reviewLessons.length * 5);
+    const estimatedTimeMinutes =
+      practiceRecommendations.reduce((sum, r) => sum + r.estimatedMinutes, 0) +
+      (nextLesson ? 10 : 0) +
+      reviewLessons.length * 5;
 
     return {
       nextLesson,
@@ -633,10 +666,14 @@ export class AdaptiveLearningService {
    */
   private getAppropriateLevel(): number {
     switch (this.data.skillLevel) {
-      case 'expert': return 6;
-      case 'advanced': return 5;
-      case 'intermediate': return 3;
-      default: return 1;
+      case 'expert':
+        return 6;
+      case 'advanced':
+        return 5;
+      case 'intermediate':
+        return 3;
+      default:
+        return 1;
     }
   }
 
@@ -656,10 +693,9 @@ export class AdaptiveLearningService {
   getUnpracticedKeys(): string[] {
     const allKeys = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
     const practicedKeys = Object.keys(this.data.keyPerformance);
-    
-    return allKeys.filter(key => 
-      !practicedKeys.includes(key) || 
-      this.data.keyPerformance[key].totalAttempts < 20
+
+    return allKeys.filter(
+      key => !practicedKeys.includes(key) || this.data.keyPerformance[key].totalAttempts < 20
     );
   }
 
@@ -692,7 +728,11 @@ export class AdaptiveLearningService {
 
     // If no specific words found, create simple repetition
     if (practiceWords.length === 0) {
-      return weakKeys.map(k => `${k}${k}${k} `).join('').repeat(5).trim();
+      return weakKeys
+        .map(k => `${k}${k}${k} `)
+        .join('')
+        .repeat(5)
+        .trim();
     }
 
     // Shuffle and join

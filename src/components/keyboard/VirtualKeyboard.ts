@@ -9,6 +9,7 @@ export class VirtualKeyboard {
   private readonly container: HTMLElement;
   private readonly keyElements: Map<string, HTMLElement> = new Map();
   private currentHighlight: string | null = null;
+  private readonly unsubscribers: Array<{ unsubscribe: () => void }> = [];
 
   constructor(containerId: string) {
     const el = document.getElementById(containerId);
@@ -31,13 +32,14 @@ export class VirtualKeyboard {
    * Setup event listeners
    */
   private setupEventListeners(): void {
-    EventBus.on('ui:keyboard:highlight', ({ keyId }) => {
-      this.highlightKey(keyId);
-    });
-
-    EventBus.on('ui:keyboard:clear', () => {
-      this.clearHighlight();
-    });
+    this.unsubscribers.push(
+      EventBus.on('ui:keyboard:highlight', ({ keyId }) => {
+        this.highlightKey(keyId);
+      }),
+      EventBus.on('ui:keyboard:clear', () => {
+        this.clearHighlight();
+      })
+    );
   }
 
   /**
@@ -278,6 +280,8 @@ export class VirtualKeyboard {
    * Destroy the keyboard
    */
   destroy(): void {
+    this.unsubscribers.forEach(sub => sub.unsubscribe());
+    this.unsubscribers.length = 0;
     this.container.innerHTML = '';
     this.keyElements.clear();
   }

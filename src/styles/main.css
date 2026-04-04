@@ -24,10 +24,10 @@
   position: absolute;
   top: -100%;
   left: 16px;
-  z-index: 10000;
+  z-index: var(--z-toast);
   padding: 8px 16px;
   background: var(--accent-primary);
-  color: #fff;
+  color: var(--text-inverse);
   border-radius: 0 0 8px 8px;
   font-size: 14px;
   font-weight: 600;
@@ -530,13 +530,13 @@
   color: var(--accent-success);
 }
 .grade-b {
-  color: #4ade80;
+  color: var(--accent-success);
 }
 .grade-c {
   color: var(--accent-warning);
 }
 .grade-d {
-  color: #fb923c;
+  color: var(--accent-warning);
 }
 .grade-f {
   color: var(--accent-error);

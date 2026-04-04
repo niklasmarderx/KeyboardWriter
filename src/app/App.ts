@@ -29,6 +29,9 @@ import type { VimTrainingPage } from '../pages/VimTrainingPage';
 export class App {
   private readonly appElement: HTMLElement;
   private isInitialized: boolean = false;
+  private readonly eventSubscriptions: Array<{ unsubscribe: () => void }> = [];
+  private readonly boundHandleKeyDown = this.handleKeyDown.bind(this);
+  private readonly boundHandleKeyUp = this.handleKeyUp.bind(this);
   private practicePage: PracticePage | null = null;
   private lessonsPage: LessonsPage | null = null;
   private statisticsPage: StatisticsPage | null = null;
@@ -63,7 +66,6 @@ export class App {
    */
   init(): void {
     if (this.isInitialized) {
-      console.warn('App already initialized');
       return;
     }
 
@@ -111,18 +113,18 @@ export class App {
    */
   private setupEventListeners(): void {
     // Navigation
-    EventBus.on('nav:change', ({ page }) => {
-      this.renderPage(page);
-    });
-
-    // Toast notifications
-    EventBus.on('ui:toast', ({ message, type }) => {
-      this.showToast(message, type);
-    });
+    this.eventSubscriptions.push(
+      EventBus.on('nav:change', ({ page }) => {
+        this.renderPage(page);
+      }),
+      EventBus.on('ui:toast', ({ message, type }) => {
+        this.showToast(message, type);
+      })
+    );
 
     // Keyboard events for typing
-    document.addEventListener('keydown', this.handleKeyDown.bind(this));
-    document.addEventListener('keyup', this.handleKeyUp.bind(this));
+    document.addEventListener('keydown', this.boundHandleKeyDown);
+    document.addEventListener('keyup', this.boundHandleKeyUp);
 
     // Visibility change (pause when tab hidden)
     document.addEventListener('visibilitychange', () => {

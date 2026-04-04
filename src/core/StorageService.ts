@@ -1,4 +1,5 @@
 import type { User } from '../domain/models';
+import { EventBus } from './EventBus';
 import { Logger } from './Logger';
 
 const logger = Logger.scope('StorageService');
@@ -20,12 +21,21 @@ const STORAGE_VERSION = 3;
  * Storage keys
  */
 const STORAGE_KEYS = {
-  USER: 'keyboardwriter_user',
-  SETTINGS: 'keyboardwriter_settings',
-  LESSONS_PROGRESS: 'keyboardwriter_lessons',
-  STATISTICS: 'keyboardwriter_statistics',
-  VERSION: 'keyboardwriter_version',
+  USER: 'typecraft_user',
+  SETTINGS: 'typecraft_settings',
+  LESSONS_PROGRESS: 'typecraft_lessons',
+  STATISTICS: 'typecraft_statistics',
+  VERSION: 'typecraft_version',
 } as const;
+
+/** Legacy keys from before the rename */
+const LEGACY_KEYS: Record<string, string> = {
+  keyboardwriter_user: 'typecraft_user',
+  keyboardwriter_settings: 'typecraft_settings',
+  keyboardwriter_lessons: 'typecraft_lessons',
+  keyboardwriter_statistics: 'typecraft_statistics',
+  keyboardwriter_version: 'typecraft_version',
+};
 
 /**
  * Migration functions for upgrading data between versions
@@ -88,8 +98,23 @@ class StorageServiceImpl {
       return;
     }
 
+    this.migrateLegacyKeys();
     this.runMigrations();
     this.initialized = true;
+  }
+
+  /**
+   * Migrate data from old keyboardwriter_ keys to typecraft_ keys
+   */
+  private migrateLegacyKeys(): void {
+    for (const [oldKey, newKey] of Object.entries(LEGACY_KEYS)) {
+      const value = localStorage.getItem(oldKey);
+      if (value !== null && localStorage.getItem(newKey) === null) {
+        localStorage.setItem(newKey, value);
+        localStorage.removeItem(oldKey);
+        logger.debug(`Migrated storage key: ${oldKey} → ${newKey}`);
+      }
+    }
   }
 
   /**
@@ -165,7 +190,15 @@ class StorageServiceImpl {
       const serializable = this.serializeUser(user);
       localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(serializable));
     } catch (error) {
-      logger.error('Failed to save user data', error);
+      if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+        logger.error('Storage quota exceeded — data not saved');
+        EventBus.emit('ui:toast', {
+          message: 'Storage full. Please export your data or clear old data in Settings.',
+          type: 'error',
+        });
+      } else {
+        logger.error('Failed to save user data', error);
+      }
     }
   }
 
@@ -376,7 +409,11 @@ class StorageServiceImpl {
     try {
       localStorage.setItem(key, JSON.stringify(data));
     } catch (error) {
-      logger.error(`Failed to save ${key}`, error);
+      if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+        logger.error(`Storage quota exceeded saving ${key}`);
+      } else {
+        logger.error(`Failed to save ${key}`, error);
+      }
     }
   }
 
