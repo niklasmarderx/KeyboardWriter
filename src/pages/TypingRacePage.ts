@@ -181,7 +181,7 @@ export class TypingRacePage {
 
   constructor() {
     this.loadRecords();
-    this.raceWins = parseInt(localStorage.getItem('keyboardwriter_race_wins') ?? '0', 10);
+    this.raceWins = parseInt(localStorage.getItem('typecraft_race_wins') ?? '0', 10);
   }
 
   /**
@@ -189,7 +189,7 @@ export class TypingRacePage {
    */
   private loadRecords(): void {
     try {
-      const stored = localStorage.getItem('keyboardwriter_race_records');
+      const stored = localStorage.getItem('typecraft_race_records');
       if (stored) {
         this.records = JSON.parse(stored) as RaceRecord[];
       }
@@ -203,7 +203,7 @@ export class TypingRacePage {
    */
   private saveRecords(): void {
     try {
-      localStorage.setItem('keyboardwriter_race_records', JSON.stringify(this.records));
+      localStorage.setItem('typecraft_race_records', JSON.stringify(this.records));
     } catch {
       // Ignore errors
     }
@@ -1413,7 +1413,7 @@ export class TypingRacePage {
       const playerWon = this.raceMode === 'ai' && this.aiPosition < this.currentText.text.length;
       if (playerWon) {
         this.raceWins++;
-        localStorage.setItem('keyboardwriter_race_wins', String(this.raceWins));
+        localStorage.setItem('typecraft_race_wins', String(this.raceWins));
         EventBus.emit('race:win', { botName: this.selectedBot.name, wpm });
       }
 

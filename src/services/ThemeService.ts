@@ -401,7 +401,7 @@ class ThemeServiceClass {
    */
   private loadSettings(): void {
     try {
-      const stored = localStorage.getItem('keyboardwriter_theme_settings');
+      const stored = localStorage.getItem('typecraft_theme_settings');
       if (stored) {
         const parsed = JSON.parse(stored) as Partial<ThemeSettings>;
         this.settings = { ...this.settings, ...parsed };
@@ -416,7 +416,7 @@ class ThemeServiceClass {
    */
   private saveSettings(): void {
     try {
-      localStorage.setItem('keyboardwriter_theme_settings', JSON.stringify(this.settings));
+      localStorage.setItem('typecraft_theme_settings', JSON.stringify(this.settings));
     } catch (error) {
       console.warn('Error saving theme settings:', error);
     }

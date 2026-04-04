@@ -34,7 +34,7 @@ export class CodePlaygroundPage {
    */
   private loadCompletedChallenges(): void {
     try {
-      const stored = localStorage.getItem('keyboardwriter_completed_challenges');
+      const stored = localStorage.getItem('typecraft_completed_challenges');
       if (stored) {
         this.completedChallenges = new Set(JSON.parse(stored) as string[]);
       }
@@ -49,7 +49,7 @@ export class CodePlaygroundPage {
   private saveCompletedChallenges(): void {
     try {
       localStorage.setItem(
-        'keyboardwriter_completed_challenges',
+        'typecraft_completed_challenges',
         JSON.stringify([...this.completedChallenges])
       );
     } catch {

@@ -5,7 +5,11 @@
 
 import { EventBus } from '../core';
 import { SettingsService } from '../core/SettingsService';
-import { EXERCISE_MODE_CONFIGS, ExerciseMode, ExerciseModeConfig } from '../domain/enums/ExerciseMode';
+import {
+  EXERCISE_MODE_CONFIGS,
+  ExerciseMode,
+  ExerciseModeConfig,
+} from '../domain/enums/ExerciseMode';
 
 // ============================================================================
 // Types and Interfaces
@@ -122,7 +126,7 @@ const WARMUP_EXERCISES: WarmupExercise[] = [
   },
   {
     id: 'warmup-common-words',
-    name: 'Haeufige Woerter',
+    name: 'Häufige Wörter',
     nameEn: 'Common Words',
     text: 'der die das und ist ein eine der die das und ist ein eine',
     textEn: 'the and is a to of in it for the and is a to of in it for',
@@ -197,8 +201,10 @@ class ExerciseModeServiceImpl {
   /**
    * Get modes by difficulty
    */
-  getModesByDifficulty(difficulty: 'beginner' | 'intermediate' | 'advanced' | 'expert'): ExerciseModeConfig[] {
-    return this.getAllModes().filter((config) => config.difficulty === difficulty);
+  getModesByDifficulty(
+    difficulty: 'beginner' | 'intermediate' | 'advanced' | 'expert'
+  ): ExerciseModeConfig[] {
+    return this.getAllModes().filter(config => config.difficulty === difficulty);
   }
 
   /**
@@ -412,7 +418,9 @@ class ExerciseModeServiceImpl {
     }
 
     this.currentSession.dictationState.isTextVisible = false;
-    EventBus.emit('dictation:hide', { index: this.currentSession.dictationState.currentChunkIndex });
+    EventBus.emit('dictation:hide', {
+      index: this.currentSession.dictationState.currentChunkIndex,
+    });
   }
 
   /**
@@ -573,7 +581,10 @@ class ExerciseModeServiceImpl {
   /**
    * Introduce errors into text
    */
-  private introduceErrors(text: string, count: number): { corruptedText: string; errorPositions: number[] } {
+  private introduceErrors(
+    text: string,
+    count: number
+  ): { corruptedText: string; errorPositions: number[] } {
     const words = text.split(' ');
     const errorPositions: number[] = [];
     const errors: Map<number, string> = new Map();
@@ -581,7 +592,7 @@ class ExerciseModeServiceImpl {
     // Select random word positions for errors
     const availablePositions = words
       .map((word, index) => ({ word, index }))
-      .filter((w) => w.word.length >= 3); // Only corrupt words with 3+ characters
+      .filter(w => w.word.length >= 3); // Only corrupt words with 3+ characters
 
     const shuffled = availablePositions.sort(() => Math.random() - 0.5);
     const selectedPositions = shuffled.slice(0, Math.min(count, shuffled.length));
@@ -595,7 +606,9 @@ class ExerciseModeServiceImpl {
     }
 
     // Build corrupted text
-    const corruptedWords = words.map((word, index) => (errors.has(index) ? errors.get(index)! : word));
+    const corruptedWords = words.map((word, index) =>
+      errors.has(index) ? errors.get(index)! : word
+    );
 
     return {
       corruptedText: corruptedWords.join(' '),
@@ -608,7 +621,7 @@ class ExerciseModeServiceImpl {
    */
   private corruptWord(word: string): string {
     // Check if we have a known typo pattern
-    const knownTypo = COMMON_TYPOS.find((t) => t.original.toLowerCase() === word.toLowerCase());
+    const knownTypo = COMMON_TYPOS.find(t => t.original.toLowerCase() === word.toLowerCase());
     if (knownTypo && Math.random() > 0.3) {
       return word[0] === word[0].toUpperCase()
         ? knownTypo.typo.charAt(0).toUpperCase() + knownTypo.typo.slice(1)
@@ -655,7 +668,11 @@ class ExerciseModeServiceImpl {
 
       if (adjacent) {
         const replacement = adjacent[Math.floor(Math.random() * adjacent.length)];
-        return word.slice(0, pos) + (word[pos] === word[pos].toUpperCase() ? replacement.toUpperCase() : replacement) + word.slice(pos + 1);
+        return (
+          word.slice(0, pos) +
+          (word[pos] === word[pos].toUpperCase() ? replacement.toUpperCase() : replacement) +
+          word.slice(pos + 1)
+        );
       }
     }
 
@@ -701,11 +718,14 @@ class ExerciseModeServiceImpl {
     }
 
     // Find first uncorrected error
-    const uncorrected = state.errorPositions.find((pos) => !state.correctedPositions.includes(pos));
+    const uncorrected = state.errorPositions.find(pos => !state.correctedPositions.includes(pos));
 
     if (uncorrected !== undefined) {
       state.hintsUsed++;
-      EventBus.emit('errorCorrection:hint', { position: uncorrected, hintsRemaining: state.maxHints - state.hintsUsed });
+      EventBus.emit('errorCorrection:hint', {
+        position: uncorrected,
+        hintsRemaining: state.maxHints - state.hintsUsed,
+      });
       return uncorrected;
     }
 
@@ -722,9 +742,13 @@ class ExerciseModeServiceImpl {
 
     const state = this.currentSession.errorCorrectionState;
     const totalErrors = state.errorPositions.length;
-    const errorsFound = state.correctedPositions.filter((pos) => state.errorPositions.includes(pos)).length;
+    const errorsFound = state.correctedPositions.filter(pos =>
+      state.errorPositions.includes(pos)
+    ).length;
     const errorsMissed = totalErrors - errorsFound;
-    const falsePositives = state.correctedPositions.filter((pos) => !state.errorPositions.includes(pos)).length;
+    const falsePositives = state.correctedPositions.filter(
+      pos => !state.errorPositions.includes(pos)
+    ).length;
 
     const accuracy = totalErrors > 0 ? (errorsFound / totalErrors) * 100 : 100;
 
@@ -811,12 +835,12 @@ class ExerciseModeServiceImpl {
 
     const deParagraphs = [
       'Das Zehnfingersystem ist eine Methode, bei der alle zehn Finger zum Tippen verwendet werden. Die Finger sind dabei bestimmten Tasten zugeordnet, sodass man ohne Hinschauen tippen kann.',
-      'Durch regelmaessiges Ueben verbessert sich die Tippgeschwindigkeit kontinuierlich. Wichtig ist dabei, die Genauigkeit nicht zu vernachlaessigen, denn Fehler korrigieren kostet Zeit.',
-      'Die Grundstellung der Finger liegt auf der mittleren Buchstabenreihe. Von dort aus werden alle anderen Tasten erreicht, wobei die Finger immer zur Grundstellung zurueckkehren.',
-      'Professionelle Schreibkraefte erreichen Geschwindigkeiten von ueber 400 Anschlaegen pro Minute. Mit ausreichend Uebung kann jeder diese Faehigkeit erlernen.',
-      'Ergonomie spielt beim Tippen eine wichtige Rolle. Eine gute Sitzposition und die richtige Tastaturhoehe beugen Ermuedung und Verletzungen vor.',
-      'Tastaturkuerzel erhoehen die Produktivitaet erheblich. Mit Kombinationen wie Strg+C und Strg+V spart man viel Zeit bei der taeglichen Arbeit.',
-      'Die Geschichte der Tastatur reicht bis ins 19. Jahrhundert zurueck. Das QWERTZ-Layout wurde entwickelt, um mechanische Probleme bei fruehen Schreibmaschinen zu vermeiden.',
+      'Durch regelmäßiges Üben verbessert sich die Tippgeschwindigkeit kontinuierlich. Wichtig ist dabei, die Genauigkeit nicht zu vernachlässigen, denn Fehler korrigieren kostet Zeit.',
+      'Die Grundstellung der Finger liegt auf der mittleren Buchstabenreihe. Von dort aus werden alle anderen Tasten erreicht, wobei die Finger immer zur Grundstellung zurückkehren.',
+      'Professionelle Schreibkräfte erreichen Geschwindigkeiten von über 400 Anschlägen pro Minute. Mit ausreichend Übung kann jeder diese Fähigkeit erlernen.',
+      'Ergonomie spielt beim Tippen eine wichtige Rolle. Eine gute Sitzposition und die richtige Tastaturhöhe beugen Ermüdung und Verletzungen vor.',
+      'Tastaturkürzel erhöhen die Produktivität erheblich. Mit Kombinationen wie Strg+C und Strg+V spart man viel Zeit bei der täglichen Arbeit.',
+      'Die Geschichte der Tastatur reicht bis ins 19. Jahrhundert zurück. Das QWERTZ-Layout wurde entwickelt, um mechanische Probleme bei frühen Schreibmaschinen zu vermeiden.',
       'Moderne Tastaturen bieten viele Features wie Hintergrundbeleuchtung und mechanische Schalter. Manche Nutzer bevorzugen jedoch klassische Membrantastaturen.',
     ];
 

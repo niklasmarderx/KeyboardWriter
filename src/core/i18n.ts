@@ -1308,7 +1308,7 @@ const de: Translations = {
 const translations: Record<Language, Translations> = { en, de };
 
 // Storage key for language preference
-const STORAGE_KEY = 'keyboardwriter_language';
+const STORAGE_KEY = 'typecraft_language';
 
 /**
  * i18n Service class

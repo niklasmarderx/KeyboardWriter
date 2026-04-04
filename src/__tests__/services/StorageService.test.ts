@@ -124,13 +124,13 @@ describe('StorageService', () => {
 
   describe('Version Migration', () => {
     it('should detect version from storage', () => {
-      mockStorage.setItem('keyboardwriter_version', '2');
-      const version = parseInt(localStorage.getItem('keyboardwriter_version') || '1', 10);
+      mockStorage.setItem('typecraft_version', '2');
+      const version = parseInt(localStorage.getItem('typecraft_version') || '1', 10);
       expect(version).toBe(2);
     });
 
     it('should default to version 1 if not set', () => {
-      const version = parseInt(localStorage.getItem('keyboardwriter_version') || '1', 10);
+      const version = parseInt(localStorage.getItem('typecraft_version') || '1', 10);
       expect(version).toBe(1);
     });
 

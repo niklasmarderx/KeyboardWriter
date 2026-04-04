@@ -14,7 +14,7 @@ interface OnboardingStep {
   action?: string;
 }
 
-const ONBOARDING_KEY = 'keyboardwriter_onboarding_complete';
+const ONBOARDING_KEY = 'typecraft_onboarding_complete';
 
 export class OnboardingModal {
   private container: HTMLElement | null = null;

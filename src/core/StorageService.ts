@@ -35,6 +35,17 @@ const LEGACY_KEYS: Record<string, string> = {
   keyboardwriter_lessons: 'typecraft_lessons',
   keyboardwriter_statistics: 'typecraft_statistics',
   keyboardwriter_version: 'typecraft_version',
+  keyboardwriter_sound_settings: 'typecraft_sound_settings',
+  keyboardwriter_theme_settings: 'typecraft_theme_settings',
+  keyboardwriter_story_progress: 'typecraft_story_progress',
+  keyboardwriter_player_stats: 'typecraft_player_stats',
+  keyboardwriter_skill_tree: 'typecraft_skill_tree',
+  keyboardwriter_language: 'typecraft_language',
+  keyboardwriter_onboarding_complete: 'typecraft_onboarding_complete',
+  keyboardwriter_completed_challenges: 'typecraft_completed_challenges',
+  keyboardwriter_sql_progress: 'typecraft_sql_progress',
+  keyboardwriter_race_wins: 'typecraft_race_wins',
+  keyboardwriter_race_records: 'typecraft_race_records',
 };
 
 /**

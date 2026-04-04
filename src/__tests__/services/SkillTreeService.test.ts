@@ -200,7 +200,7 @@ describe('SkillTreeService', () => {
       SkillTreeService.upgradeSkill('home_row_master');
 
       expect(StorageService.save).toHaveBeenCalledWith(
-        'keyboardwriter_skill_tree',
+        'typecraft_skill_tree',
         expect.objectContaining({
           spentSkillPoints: 1,
           unlockedSkills: expect.arrayContaining(['home_row_master']),
@@ -277,7 +277,7 @@ describe('SkillTreeService', () => {
       SkillTreeService.addSkillPoints(5);
 
       expect(StorageService.save).toHaveBeenCalledWith(
-        'keyboardwriter_skill_tree',
+        'typecraft_skill_tree',
         expect.objectContaining({
           totalSkillPoints: 5,
           availableSkillPoints: 5,

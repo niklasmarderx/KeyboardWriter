@@ -17,7 +17,7 @@ import {
   SkillTreeData,
 } from '../domain/models/SkillTree';
 
-const STORAGE_KEY = 'keyboardwriter_skill_tree';
+const STORAGE_KEY = 'typecraft_skill_tree';
 
 interface SerializedSkillProgress {
   totalSkillPoints: number;

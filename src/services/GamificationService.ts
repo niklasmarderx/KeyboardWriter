@@ -3,6 +3,8 @@
  * Manages XP, levels, streaks, daily challenges, and rewards
  */
 
+import { EventBus } from '../core/EventBus';
+
 /**
  * XP rewards for different actions
  */
@@ -250,7 +252,12 @@ export class GamificationService {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
     } catch (error) {
-      console.error('Error saving gamification data:', error);
+      if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+        EventBus.emit('ui:toast', {
+          message: 'Storage full. Please export your data or clear old data in Settings.',
+          type: 'error',
+        });
+      }
     }
   }
 
@@ -344,7 +351,7 @@ export class GamificationService {
 
     if (newLevel > this.data.currentLevel) {
       this.data.currentLevel = newLevel;
-      // Could emit level up event here
+      EventBus.emit('user:levelup', { level: newLevel, xp: this.data.totalXP });
     }
 
     // Calculate XP to next level
@@ -720,8 +727,8 @@ export class GamificationService {
       if (previousResult) {
         this.data.totalStars -= previousResult.stars;
         if (previousResult.stars === 3) {
-        this.data.threeStarLessons--;
-      }
+          this.data.threeStarLessons--;
+        }
       }
       this.data.totalStars += stars;
       if (stars === 3) {

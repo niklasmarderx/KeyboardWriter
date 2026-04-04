@@ -29,7 +29,7 @@ export class SQLTrainingPage {
    */
   private loadProgress(): void {
     try {
-      const saved = localStorage.getItem('keyboardwriter_sql_progress');
+      const saved = localStorage.getItem('typecraft_sql_progress');
       if (saved) {
         this.completedExercises = new Set(JSON.parse(saved) as string[]);
       }
@@ -43,10 +43,7 @@ export class SQLTrainingPage {
    */
   private saveProgress(): void {
     try {
-      localStorage.setItem(
-        'keyboardwriter_sql_progress',
-        JSON.stringify([...this.completedExercises])
-      );
+      localStorage.setItem('typecraft_sql_progress', JSON.stringify([...this.completedExercises]));
     } catch {
       // Ignore errors
     }

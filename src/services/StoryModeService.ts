@@ -17,8 +17,8 @@ import {
 } from '../domain/models/Quest';
 
 const STORAGE_KEYS = {
-  STORY_PROGRESS: 'keyboardwriter_story_progress',
-  PLAYER_STATS: 'keyboardwriter_player_stats',
+  STORY_PROGRESS: 'typecraft_story_progress',
+  PLAYER_STATS: 'typecraft_player_stats',
 };
 
 // Level XP requirements (exponential curve)

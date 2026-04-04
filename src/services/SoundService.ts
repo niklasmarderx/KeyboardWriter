@@ -371,7 +371,7 @@ class SoundServiceClass {
    */
   private loadSettings(): void {
     try {
-      const stored = localStorage.getItem('keyboardwriter_sound_settings');
+      const stored = localStorage.getItem('typecraft_sound_settings');
       if (stored) {
         const parsed = JSON.parse(stored) as Partial<SoundSettings>;
         this.settings = { ...this.settings, ...parsed };
@@ -386,7 +386,7 @@ class SoundServiceClass {
    */
   private saveSettings(): void {
     try {
-      localStorage.setItem('keyboardwriter_sound_settings', JSON.stringify(this.settings));
+      localStorage.setItem('typecraft_sound_settings', JSON.stringify(this.settings));
     } catch (error) {
       console.warn('Error saving sound settings:', error);
     }

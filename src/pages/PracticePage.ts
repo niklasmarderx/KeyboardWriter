@@ -188,7 +188,7 @@ export class PracticePage {
             
             <!-- Text mode controls -->
             <div id="text-mode-controls" style="display: flex; gap: var(--space-2);">
-              <select id="difficulty-select" class="btn btn-secondary" style="padding: var(--space-2) var(--space-4);">
+              <select id="difficulty-select" class="btn btn-secondary" aria-label="Difficulty" style="padding: var(--space-2) var(--space-4);">
                 <option value="beginner">${t('practice.beginner')}</option>
                 <option value="intermediate">${t('practice.intermediate')}</option>
                 <option value="advanced">${t('practice.advanced')}</option>
@@ -199,7 +199,7 @@ export class PracticePage {
             
             <!-- Timed mode controls -->
             <div id="timed-mode-controls" style="display: none; gap: var(--space-2);">
-              <select id="time-duration-select" class="btn btn-secondary" style="padding: var(--space-2) var(--space-4);">
+              <select id="time-duration-select" class="btn btn-secondary" aria-label="Duration" style="padding: var(--space-2) var(--space-4);">
                 <option value="30" ${settings.defaultTestDuration === 30 ? 'selected' : ''}>30 ${t('practice.seconds')}</option>
                 <option value="60" ${settings.defaultTestDuration === 60 ? 'selected' : ''}>60 ${t('practice.seconds')}</option>
                 <option value="120" ${settings.defaultTestDuration === 120 ? 'selected' : ''}>120 ${t('practice.seconds')}</option>
@@ -395,7 +395,10 @@ export class PracticePage {
 
     // Timed test controls
     timeDurationSelect?.addEventListener('change', () => {
-      this.timedTestDuration = parseInt(timeDurationSelect.value, 10);
+      const parsed = parseInt(timeDurationSelect.value, 10);
+      if (!Number.isNaN(parsed) && parsed > 0) {
+        this.timedTestDuration = parsed;
+      }
     });
 
     startTimedBtn?.addEventListener('click', () => {

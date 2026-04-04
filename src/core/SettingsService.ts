@@ -58,7 +58,7 @@ const DEFAULT_SETTINGS: Settings = {
   exerciseLanguage: 'de',
 };
 
-const SETTINGS_KEY = 'keyboardwriter_settings';
+const SETTINGS_KEY = 'typecraft_settings';
 
 class SettingsServiceClass {
   private settings: Settings;
