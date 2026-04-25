@@ -112,3 +112,34 @@ export function searchAll(query: string): { shortcuts: Shortcut[]; commands: Com
 export function getCategories(collection: ShortcutCollection): string[] {
   return getShortcutCategories(collection);
 }
+
+/**
+ * Detect the current operating system.
+ * Returns 'mac' on macOS, 'linux' on Linux, 'windows' on Windows.
+ */
+export function detectOS(): 'mac' | 'linux' | 'windows' {
+  if (typeof navigator === 'undefined') {
+    return 'mac';
+  }
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('win')) {
+    return 'windows';
+  }
+  if (ua.includes('linux')) {
+    return 'linux';
+  }
+  return 'mac';
+}
+
+/**
+ * Return the platform-appropriate keys for a shortcut.
+ * Falls back to macOS keys when no Linux/Windows variant is defined.
+ * Both Linux and Windows use the same Ctrl-based layout for VS Code.
+ */
+export function getShortcutKeys(shortcut: Shortcut, os?: 'mac' | 'linux' | 'windows'): string[] {
+  const platform = os ?? detectOS();
+  if (platform !== 'mac' && shortcut.keysLinux) {
+    return shortcut.keysLinux;
+  }
+  return shortcut.keys;
+}

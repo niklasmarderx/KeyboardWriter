@@ -4,7 +4,8 @@
 
 export interface Shortcut {
   id: string;
-  keys: string[];
+  keys: string[]; // macOS keys (primary)
+  keysLinux?: string[]; // Linux/Windows keys (Ctrl-based)
   description: string;
   descriptionEn?: string;
   category: string;

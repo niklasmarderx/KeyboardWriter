@@ -37,6 +37,8 @@ export {
   getTotalCommandCount,
   searchAll,
   getCategories,
+  getShortcutKeys,
+  detectOS,
 } from './collections';
 
 // Translations

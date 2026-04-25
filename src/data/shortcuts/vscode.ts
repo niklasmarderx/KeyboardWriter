@@ -11,6 +11,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g1',
       keys: ['⌘', 'P'],
+      keysLinux: ['Ctrl', 'P'],
       description: 'Schneller Dateizugriff (Quick Open)',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -18,6 +19,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g2',
       keys: ['⌘', '⇧', 'P'],
+      keysLinux: ['Ctrl', '⇧', 'P'],
       description: 'Befehlspalette öffnen',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -25,6 +27,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g3',
       keys: ['⌘', ','],
+      keysLinux: ['Ctrl', ','],
       description: 'Einstellungen öffnen',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -32,6 +35,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g4',
       keys: ['⌘', 'K', '⌘', 'S'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'S'],
       description: 'Tastaturkürzel anzeigen',
       category: 'Allgemein',
       difficulty: 'intermediate',
@@ -39,6 +43,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g5',
       keys: ['⌘', 'W'],
+      keysLinux: ['Ctrl', 'W'],
       description: 'Aktiven Tab schließen',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -46,6 +51,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g6',
       keys: ['⌘', '⇧', 'W'],
+      keysLinux: ['Ctrl', '⇧', 'W'],
       description: 'Fenster schließen',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -53,6 +59,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g7',
       keys: ['⌘', '⇧', 'N'],
+      keysLinux: ['Ctrl', '⇧', 'N'],
       description: 'Neues Fenster öffnen',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -60,6 +67,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g8',
       keys: ['⌘', 'N'],
+      keysLinux: ['Ctrl', 'N'],
       description: 'Neue Datei erstellen',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -67,6 +75,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g9',
       keys: ['⌘', 'O'],
+      keysLinux: ['Ctrl', 'O'],
       description: 'Datei öffnen',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -74,6 +83,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g10',
       keys: ['⌘', 'S'],
+      keysLinux: ['Ctrl', 'S'],
       description: 'Datei speichern',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -81,6 +91,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g11',
       keys: ['⌘', '⇧', 'S'],
+      keysLinux: ['Ctrl', '⇧', 'S'],
       description: 'Datei speichern unter',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -88,6 +99,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g12',
       keys: ['⌘', 'K', 'S'],
+      keysLinux: ['Ctrl', 'K', 'S'],
       description: 'Alle Dateien speichern',
       category: 'Allgemein',
       difficulty: 'intermediate',
@@ -95,6 +107,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g13',
       keys: ['⌘', 'K', '⌘', 'W'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'W'],
       description: 'Alle Tabs schließen',
       category: 'Allgemein',
       difficulty: 'intermediate',
@@ -102,6 +115,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g14',
       keys: ['⌘', 'K', 'Enter'],
+      keysLinux: ['Ctrl', 'K', 'Enter'],
       description: 'Tab fixieren (Keep Open)',
       category: 'Allgemein',
       difficulty: 'intermediate',
@@ -109,6 +123,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g15',
       keys: ['⌘', 'Q'],
+      keysLinux: ['Ctrl', 'Q'],
       description: 'VS Code beenden',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -116,6 +131,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g16',
       keys: ['⌃', '`'],
+      keysLinux: ['Ctrl', '`'],
       description: 'Integriertes Terminal öffnen',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -123,6 +139,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g17',
       keys: ['⌘', '⇧', 'T'],
+      keysLinux: ['Ctrl', '⇧', 'T'],
       description: 'Zuletzt geschlossenen Tab öffnen',
       category: 'Allgemein',
       difficulty: 'intermediate',
@@ -130,6 +147,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g18',
       keys: ['⌃', 'Tab'],
+      keysLinux: ['Ctrl', 'Tab'],
       description: 'Zwischen offenen Tabs wechseln',
       category: 'Allgemein',
       difficulty: 'beginner',
@@ -137,6 +155,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g19',
       keys: ['⌘', 'K', 'R'],
+      keysLinux: ['Ctrl', 'K', 'R'],
       description: 'Datei im Explorer anzeigen',
       category: 'Allgemein',
       difficulty: 'intermediate',
@@ -144,6 +163,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-g20',
       keys: ['⌘', 'K', 'P'],
+      keysLinux: ['Ctrl', 'K', 'P'],
       description: 'Dateipfad kopieren',
       category: 'Allgemein',
       difficulty: 'intermediate',
@@ -153,6 +173,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e1',
       keys: ['⌘', 'X'],
+      keysLinux: ['Ctrl', 'X'],
       description: 'Zeile ausschneiden (ohne Auswahl)',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -160,6 +181,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e2',
       keys: ['⌘', 'C'],
+      keysLinux: ['Ctrl', 'C'],
       description: 'Zeile kopieren (ohne Auswahl)',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -167,6 +189,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e3',
       keys: ['⌘', 'V'],
+      keysLinux: ['Ctrl', 'V'],
       description: 'Einfügen',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -174,6 +197,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e4',
       keys: ['⌥', '↑'],
+      keysLinux: ['Alt', '↑'],
       description: 'Zeile nach oben verschieben',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -181,6 +205,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e5',
       keys: ['⌥', '↓'],
+      keysLinux: ['Alt', '↓'],
       description: 'Zeile nach unten verschieben',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -188,6 +213,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e6',
       keys: ['⌥', '⇧', '↑'],
+      keysLinux: ['Alt', '⇧', '↑'],
       description: 'Zeile nach oben kopieren',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -195,6 +221,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e7',
       keys: ['⌥', '⇧', '↓'],
+      keysLinux: ['Alt', '⇧', '↓'],
       description: 'Zeile nach unten kopieren',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -202,6 +229,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e8',
       keys: ['⌘', '⇧', 'K'],
+      keysLinux: ['Ctrl', '⇧', 'K'],
       description: 'Zeile löschen',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -209,6 +237,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e9',
       keys: ['⌘', 'Enter'],
+      keysLinux: ['Ctrl', 'Enter'],
       description: 'Neue Zeile darunter einfügen',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -216,6 +245,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e10',
       keys: ['⌘', '⇧', 'Enter'],
+      keysLinux: ['Ctrl', '⇧', 'Enter'],
       description: 'Neue Zeile darüber einfügen',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -223,6 +253,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e11',
       keys: ['⌘', '⇧', '\\'],
+      keysLinux: ['Ctrl', '⇧', '\\'],
       description: 'Zur passenden Klammer springen',
       category: 'Bearbeiten',
       difficulty: 'intermediate',
@@ -237,6 +268,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e13',
       keys: ['⌘', '['],
+      keysLinux: ['Ctrl', '['],
       description: 'Zeile ausrücken',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -244,6 +276,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e14',
       keys: ['⌘', '/'],
+      keysLinux: ['Ctrl', '/'],
       description: 'Zeilen-Kommentar umschalten',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -251,6 +284,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e15',
       keys: ['⌥', '⇧', 'A'],
+      keysLinux: ['Alt', '⇧', 'A'],
       description: 'Block-Kommentar umschalten',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -258,6 +292,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e16',
       keys: ['⌘', 'Z'],
+      keysLinux: ['Ctrl', 'Z'],
       description: 'Rückgängig',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -265,6 +300,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e17',
       keys: ['⌘', '⇧', 'Z'],
+      keysLinux: ['Ctrl', '⇧', 'Z'],
       description: 'Wiederholen',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -272,6 +308,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e18',
       keys: ['⌘', 'U'],
+      keysLinux: ['Ctrl', 'U'],
       description: 'Letzte Cursor-Aktion rückgängig',
       category: 'Bearbeiten',
       difficulty: 'intermediate',
@@ -279,6 +316,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e19',
       keys: ['⌃', 'Space'],
+      keysLinux: ['Ctrl', 'Space'],
       description: 'IntelliSense auslösen',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -286,6 +324,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-e20',
       keys: ['⌘', '.'],
+      keysLinux: ['Ctrl', '.'],
       description: 'Quick Fix / Schnelle Aktionen',
       category: 'Bearbeiten',
       difficulty: 'beginner',
@@ -295,6 +334,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea1',
       keys: ['⌘', 'K', '⌘', 'F'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'F'],
       description: 'Auswahl formatieren',
       category: 'Bearbeiten Erweitert',
       difficulty: 'intermediate',
@@ -302,6 +342,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea2',
       keys: ['⌥', '⇧', 'F'],
+      keysLinux: ['Alt', '⇧', 'F'],
       description: 'Dokument formatieren',
       category: 'Bearbeiten Erweitert',
       difficulty: 'beginner',
@@ -309,6 +350,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea3',
       keys: ['⌘', 'K', '⌘', 'X'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'X'],
       description: 'Trailing Whitespace entfernen',
       category: 'Bearbeiten Erweitert',
       difficulty: 'intermediate',
@@ -316,6 +358,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea4',
       keys: ['⌘', 'K', 'M'],
+      keysLinux: ['Ctrl', 'K', 'M'],
       description: 'Sprache der Datei ändern',
       category: 'Bearbeiten Erweitert',
       difficulty: 'intermediate',
@@ -323,6 +366,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea5',
       keys: ['⌃', 'G'],
+      keysLinux: ['Ctrl', 'G'],
       description: 'Zu Zeile gehen',
       category: 'Bearbeiten Erweitert',
       difficulty: 'beginner',
@@ -330,6 +374,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea6',
       keys: ['⌘', 'K', '⌘', 'C'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'C'],
       description: 'Zeilen-Kommentar hinzufügen',
       category: 'Bearbeiten Erweitert',
       difficulty: 'intermediate',
@@ -337,6 +382,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea7',
       keys: ['⌘', 'K', '⌘', 'U'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'U'],
       description: 'Zeilen-Kommentar entfernen',
       category: 'Bearbeiten Erweitert',
       difficulty: 'intermediate',
@@ -344,6 +390,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea8',
       keys: ['⌃', 'T'],
+      keysLinux: ['Ctrl', 'T'],
       description: 'Zeichen vertauschen',
       category: 'Bearbeiten Erweitert',
       difficulty: 'advanced',
@@ -351,6 +398,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea9',
       keys: ['⌘', 'K', '⌘', 'L'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'L'],
       description: 'Groß-/Kleinschreibung ändern',
       category: 'Bearbeiten Erweitert',
       difficulty: 'intermediate',
@@ -358,6 +406,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ea10',
       keys: ['⌃', 'J'],
+      keysLinux: ['Ctrl', 'J'],
       description: 'Zeilen verbinden',
       category: 'Bearbeiten Erweitert',
       difficulty: 'intermediate',
@@ -367,6 +416,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s1',
       keys: ['⌘', 'D'],
+      keysLinux: ['Ctrl', 'D'],
       description: 'Wort auswählen / Nächstes Vorkommen hinzufügen',
       category: 'Auswahl',
       difficulty: 'beginner',
@@ -374,6 +424,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s2',
       keys: ['⌘', 'K', '⌘', 'D'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'D'],
       description: 'Letztes Vorkommen überspringen',
       category: 'Auswahl',
       difficulty: 'intermediate',
@@ -381,6 +432,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s3',
       keys: ['⌘', '⇧', 'L'],
+      keysLinux: ['Ctrl', '⇧', 'L'],
       description: 'Alle Vorkommen auswählen',
       category: 'Auswahl',
       difficulty: 'intermediate',
@@ -388,6 +440,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s4',
       keys: ['⌘', 'L'],
+      keysLinux: ['Ctrl', 'L'],
       description: 'Aktuelle Zeile auswählen',
       category: 'Auswahl',
       difficulty: 'beginner',
@@ -395,6 +448,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s5',
       keys: ['⌘', 'A'],
+      keysLinux: ['Ctrl', 'A'],
       description: 'Alles auswählen',
       category: 'Auswahl',
       difficulty: 'beginner',
@@ -402,6 +456,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s6',
       keys: ['⌃', '⇧', '⌘', '→'],
+      keysLinux: ['Ctrl', '⇧', 'Ctrl', '→'],
       description: 'Auswahl erweitern',
       category: 'Auswahl',
       difficulty: 'intermediate',
@@ -409,6 +464,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s7',
       keys: ['⌃', '⇧', '⌘', '←'],
+      keysLinux: ['Ctrl', '⇧', 'Ctrl', '←'],
       description: 'Auswahl verkleinern',
       category: 'Auswahl',
       difficulty: 'intermediate',
@@ -416,6 +472,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s8',
       keys: ['⇧', '⌥', '→'],
+      keysLinux: ['⇧', 'Alt', '→'],
       description: 'Auswahl wortweise erweitern',
       category: 'Auswahl',
       difficulty: 'beginner',
@@ -423,6 +480,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s9',
       keys: ['⇧', '⌥', '←'],
+      keysLinux: ['⇧', 'Alt', '←'],
       description: 'Auswahl wortweise verkleinern',
       category: 'Auswahl',
       difficulty: 'beginner',
@@ -430,6 +488,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s10',
       keys: ['⌘', '⇧', '→'],
+      keysLinux: ['Ctrl', '⇧', '→'],
       description: 'Bis zum Zeilenende auswählen',
       category: 'Auswahl',
       difficulty: 'beginner',
@@ -437,6 +496,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s11',
       keys: ['⌘', '⇧', '←'],
+      keysLinux: ['Ctrl', '⇧', '←'],
       description: 'Bis zum Zeilenanfang auswählen',
       category: 'Auswahl',
       difficulty: 'beginner',
@@ -458,6 +518,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-s14',
       keys: ['⌃', '⇧', 'K'],
+      keysLinux: ['Ctrl', '⇧', 'K'],
       description: 'Alle Vorkommen des Wortes löschen',
       category: 'Auswahl',
       difficulty: 'advanced',
@@ -467,6 +528,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc1',
       keys: ['⌥', 'Click'],
+      keysLinux: ['Alt', 'Click'],
       description: 'Cursor an Position hinzufügen',
       category: 'Multi-Cursor',
       difficulty: 'beginner',
@@ -474,6 +536,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc2',
       keys: ['⌘', '⌥', '↑'],
+      keysLinux: ['Ctrl', 'Alt', '↑'],
       description: 'Cursor oberhalb hinzufügen',
       category: 'Multi-Cursor',
       difficulty: 'beginner',
@@ -481,6 +544,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc3',
       keys: ['⌘', '⌥', '↓'],
+      keysLinux: ['Ctrl', 'Alt', '↓'],
       description: 'Cursor unterhalb hinzufügen',
       category: 'Multi-Cursor',
       difficulty: 'beginner',
@@ -488,6 +552,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc4',
       keys: ['⌘', '⇧', 'L'],
+      keysLinux: ['Ctrl', '⇧', 'L'],
       description: 'Cursor bei allen Vorkommen',
       category: 'Multi-Cursor',
       difficulty: 'intermediate',
@@ -495,6 +560,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc5',
       keys: ['⌘', 'F2'],
+      keysLinux: ['Ctrl', 'F2'],
       description: 'Alle Vorkommen ändern',
       category: 'Multi-Cursor',
       difficulty: 'intermediate',
@@ -502,6 +568,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc6',
       keys: ['⌥', '⌘', '⇧', '↑'],
+      keysLinux: ['Alt', 'Ctrl', '⇧', '↑'],
       description: 'Cursor oben einfügen (Column)',
       category: 'Multi-Cursor',
       difficulty: 'advanced',
@@ -509,6 +576,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc7',
       keys: ['⌥', '⌘', '⇧', '↓'],
+      keysLinux: ['Alt', 'Ctrl', '⇧', '↓'],
       description: 'Cursor unten einfügen (Column)',
       category: 'Multi-Cursor',
       difficulty: 'advanced',
@@ -516,6 +584,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc8',
       keys: ['⌥', '⇧', 'I'],
+      keysLinux: ['Alt', '⇧', 'I'],
       description: 'Cursor am Ende jeder Zeile',
       category: 'Multi-Cursor',
       difficulty: 'intermediate',
@@ -530,6 +599,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-mc10',
       keys: ['⌘', 'U'],
+      keysLinux: ['Ctrl', 'U'],
       description: 'Letzten Cursor rückgängig',
       category: 'Multi-Cursor',
       difficulty: 'intermediate',
@@ -539,6 +609,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr1',
       keys: ['⌘', 'F'],
+      keysLinux: ['Ctrl', 'F'],
       description: 'Suchen in Datei',
       category: 'Suchen & Ersetzen',
       difficulty: 'beginner',
@@ -546,6 +617,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr2',
       keys: ['⌘', 'H'],
+      keysLinux: ['Ctrl', 'H'],
       description: 'Ersetzen in Datei',
       category: 'Suchen & Ersetzen',
       difficulty: 'beginner',
@@ -553,6 +625,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr3',
       keys: ['⌘', '⇧', 'F'],
+      keysLinux: ['Ctrl', '⇧', 'F'],
       description: 'In Dateien suchen',
       category: 'Suchen & Ersetzen',
       difficulty: 'beginner',
@@ -560,6 +633,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr4',
       keys: ['⌘', '⇧', 'H'],
+      keysLinux: ['Ctrl', '⇧', 'H'],
       description: 'In Dateien ersetzen',
       category: 'Suchen & Ersetzen',
       difficulty: 'beginner',
@@ -581,6 +655,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr7',
       keys: ['⌘', 'G'],
+      keysLinux: ['Ctrl', 'G'],
       description: 'Nächstes Vorkommen (Alternative)',
       category: 'Suchen & Ersetzen',
       difficulty: 'beginner',
@@ -588,6 +663,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr8',
       keys: ['⌘', '⇧', 'G'],
+      keysLinux: ['Ctrl', '⇧', 'G'],
       description: 'Vorheriges Vorkommen (Alternative)',
       category: 'Suchen & Ersetzen',
       difficulty: 'beginner',
@@ -595,6 +671,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr9',
       keys: ['⌥', 'Enter'],
+      keysLinux: ['Alt', 'Enter'],
       description: 'Alle Treffer auswählen',
       category: 'Suchen & Ersetzen',
       difficulty: 'intermediate',
@@ -602,6 +679,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr10',
       keys: ['⌘', '⌥', 'C'],
+      keysLinux: ['Ctrl', 'Alt', 'C'],
       description: 'Groß-/Kleinschreibung umschalten',
       category: 'Suchen & Ersetzen',
       difficulty: 'intermediate',
@@ -609,6 +687,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr11',
       keys: ['⌘', '⌥', 'W'],
+      keysLinux: ['Ctrl', 'Alt', 'W'],
       description: 'Ganzes Wort umschalten',
       category: 'Suchen & Ersetzen',
       difficulty: 'intermediate',
@@ -616,6 +695,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sr12',
       keys: ['⌘', '⌥', 'R'],
+      keysLinux: ['Ctrl', 'Alt', 'R'],
       description: 'Regex umschalten',
       category: 'Suchen & Ersetzen',
       difficulty: 'intermediate',
@@ -632,6 +712,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n1',
       keys: ['⌘', 'P'],
+      keysLinux: ['Ctrl', 'P'],
       description: 'Zu Datei gehen',
       category: 'Navigation',
       difficulty: 'beginner',
@@ -639,6 +720,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n2',
       keys: ['⌃', 'G'],
+      keysLinux: ['Ctrl', 'G'],
       description: 'Zu Zeile gehen',
       category: 'Navigation',
       difficulty: 'beginner',
@@ -646,6 +728,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n3',
       keys: ['⌘', '⇧', 'O'],
+      keysLinux: ['Ctrl', '⇧', 'O'],
       description: 'Zu Symbol in Datei gehen',
       category: 'Navigation',
       difficulty: 'intermediate',
@@ -653,6 +736,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n4',
       keys: ['⌘', 'T'],
+      keysLinux: ['Ctrl', 'T'],
       description: 'Zu Symbol im Workspace gehen',
       category: 'Navigation',
       difficulty: 'intermediate',
@@ -660,6 +744,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n5',
       keys: ['⌘', '↑'],
+      keysLinux: ['Ctrl', '↑'],
       description: 'Zum Dateianfang',
       category: 'Navigation',
       difficulty: 'beginner',
@@ -667,6 +752,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n6',
       keys: ['⌘', '↓'],
+      keysLinux: ['Ctrl', '↓'],
       description: 'Zum Dateiende',
       category: 'Navigation',
       difficulty: 'beginner',
@@ -674,6 +760,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n7',
       keys: ['⌃', '-'],
+      keysLinux: ['Ctrl', '-'],
       description: 'Zurück navigieren',
       category: 'Navigation',
       difficulty: 'intermediate',
@@ -681,6 +768,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n8',
       keys: ['⌃', '⇧', '-'],
+      keysLinux: ['Ctrl', '⇧', '-'],
       description: 'Vorwärts navigieren',
       category: 'Navigation',
       difficulty: 'intermediate',
@@ -695,6 +783,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n10',
       keys: ['⌥', 'F12'],
+      keysLinux: ['Alt', 'F12'],
       description: 'Definition anzeigen (Peek)',
       category: 'Navigation',
       difficulty: 'intermediate',
@@ -702,6 +791,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n11',
       keys: ['⌘', 'K', 'F12'],
+      keysLinux: ['Ctrl', 'K', 'F12'],
       description: 'Definition zur Seite öffnen',
       category: 'Navigation',
       difficulty: 'advanced',
@@ -723,6 +813,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n14',
       keys: ['⌘', 'K', '⌘', 'I'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'I'],
       description: 'Hover-Info anzeigen',
       category: 'Navigation',
       difficulty: 'intermediate',
@@ -744,6 +835,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n17',
       keys: ['⌘', '←'],
+      keysLinux: ['Ctrl', '←'],
       description: 'Zum Zeilenanfang',
       category: 'Navigation',
       difficulty: 'beginner',
@@ -751,6 +843,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n18',
       keys: ['⌘', '→'],
+      keysLinux: ['Ctrl', '→'],
       description: 'Zum Zeilenende',
       category: 'Navigation',
       difficulty: 'beginner',
@@ -758,6 +851,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n19',
       keys: ['⌥', '←'],
+      keysLinux: ['Alt', '←'],
       description: 'Wort zurück',
       category: 'Navigation',
       difficulty: 'beginner',
@@ -765,6 +859,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-n20',
       keys: ['⌥', '→'],
+      keysLinux: ['Alt', '→'],
       description: 'Wort vor',
       category: 'Navigation',
       difficulty: 'beginner',
@@ -774,6 +869,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-f1',
       keys: ['⌘', '⌥', '['],
+      keysLinux: ['Ctrl', 'Alt', '['],
       description: 'Bereich einklappen',
       category: 'Folding',
       difficulty: 'intermediate',
@@ -788,6 +884,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-f3',
       keys: ['⌘', 'K', '⌘', '['],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', '['],
       description: 'Alle Unterbereiche einklappen',
       category: 'Folding',
       difficulty: 'intermediate',
@@ -802,6 +899,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-f5',
       keys: ['⌘', 'K', '⌘', '0'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', '0'],
       description: 'Alle einklappen',
       category: 'Folding',
       difficulty: 'intermediate',
@@ -809,6 +907,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-f6',
       keys: ['⌘', 'K', '⌘', 'J'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'J'],
       description: 'Alle ausklappen',
       category: 'Folding',
       difficulty: 'intermediate',
@@ -816,6 +915,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-f7',
       keys: ['⌘', 'K', '⌘', '1'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', '1'],
       description: 'Level 1 einklappen',
       category: 'Folding',
       difficulty: 'advanced',
@@ -823,6 +923,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-f8',
       keys: ['⌘', 'K', '⌘', '2'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', '2'],
       description: 'Level 2 einklappen',
       category: 'Folding',
       difficulty: 'advanced',
@@ -830,6 +931,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-f9',
       keys: ['⌘', 'K', '⌘', '3'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', '3'],
       description: 'Level 3 einklappen',
       category: 'Folding',
       difficulty: 'advanced',
@@ -837,6 +939,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-f10',
       keys: ['⌘', 'K', '⌘', '4'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', '4'],
       description: 'Level 4 einklappen',
       category: 'Folding',
       difficulty: 'advanced',
@@ -846,6 +949,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v1',
       keys: ['⌘', 'B'],
+      keysLinux: ['Ctrl', 'B'],
       description: 'Seitenleiste umschalten',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -853,6 +957,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v2',
       keys: ['⌘', 'J'],
+      keysLinux: ['Ctrl', 'J'],
       description: 'Panel umschalten',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -860,6 +965,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v3',
       keys: ['⌘', '`'],
+      keysLinux: ['Ctrl', '`'],
       description: 'Terminal umschalten',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -867,6 +973,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v4',
       keys: ['⌘', '⇧', 'E'],
+      keysLinux: ['Ctrl', '⇧', 'E'],
       description: 'Explorer anzeigen',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -874,6 +981,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v5',
       keys: ['⌘', '⇧', 'F'],
+      keysLinux: ['Ctrl', '⇧', 'F'],
       description: 'Suche anzeigen',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -881,6 +989,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v6',
       keys: ['⌘', '⇧', 'G'],
+      keysLinux: ['Ctrl', '⇧', 'G'],
       description: 'Source Control anzeigen',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -888,6 +997,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v7',
       keys: ['⌘', '⇧', 'D'],
+      keysLinux: ['Ctrl', '⇧', 'D'],
       description: 'Debug-Ansicht anzeigen',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -895,6 +1005,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v8',
       keys: ['⌘', '⇧', 'X'],
+      keysLinux: ['Ctrl', '⇧', 'X'],
       description: 'Extensions anzeigen',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -902,6 +1013,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v9',
       keys: ['⌘', 'K', 'Z'],
+      keysLinux: ['Ctrl', 'K', 'Z'],
       description: 'Zen-Modus umschalten',
       category: 'Ansicht',
       difficulty: 'intermediate',
@@ -909,6 +1021,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v10',
       keys: ['⌘', '⌥', '1'],
+      keysLinux: ['Ctrl', 'Alt', '1'],
       description: 'Editor-Layout: Einzeln',
       category: 'Ansicht',
       difficulty: 'intermediate',
@@ -916,6 +1029,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v11',
       keys: ['⌘', '⌥', '2'],
+      keysLinux: ['Ctrl', 'Alt', '2'],
       description: 'Editor-Layout: Zwei Spalten',
       category: 'Ansicht',
       difficulty: 'intermediate',
@@ -923,6 +1037,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v12',
       keys: ['⌘', '⌥', '3'],
+      keysLinux: ['Ctrl', 'Alt', '3'],
       description: 'Editor-Layout: Drei Spalten',
       category: 'Ansicht',
       difficulty: 'intermediate',
@@ -930,6 +1045,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v13',
       keys: ['⌃', '⌘', 'F'],
+      keysLinux: ['Ctrl', 'Ctrl', 'F'],
       description: 'Vollbild umschalten',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -937,6 +1053,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v14',
       keys: ['⌘', '='],
+      keysLinux: ['Ctrl', '='],
       description: 'Zoom vergrößern',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -944,6 +1061,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v15',
       keys: ['⌘', '-'],
+      keysLinux: ['Ctrl', '-'],
       description: 'Zoom verkleinern',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -951,6 +1069,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v16',
       keys: ['⌘', '0'],
+      keysLinux: ['Ctrl', '0'],
       description: 'Zoom zurücksetzen',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -958,6 +1077,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v17',
       keys: ['⌘', '\\'],
+      keysLinux: ['Ctrl', '\\'],
       description: 'Editor teilen',
       category: 'Ansicht',
       difficulty: 'beginner',
@@ -965,6 +1085,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v18',
       keys: ['⌘', 'K', '⌘', '\\'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', '\\'],
       description: 'Editor orthogonal teilen',
       category: 'Ansicht',
       difficulty: 'intermediate',
@@ -972,6 +1093,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v19',
       keys: ['⌘', '⇧', 'V'],
+      keysLinux: ['Ctrl', '⇧', 'V'],
       description: 'Markdown-Vorschau',
       category: 'Ansicht',
       difficulty: 'intermediate',
@@ -979,6 +1101,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-v20',
       keys: ['⌘', 'K', 'V'],
+      keysLinux: ['Ctrl', 'K', 'V'],
       description: 'Markdown-Vorschau zur Seite',
       category: 'Ansicht',
       difficulty: 'intermediate',
@@ -988,6 +1111,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em1',
       keys: ['⌘', '1'],
+      keysLinux: ['Ctrl', '1'],
       description: 'Erste Editor-Gruppe fokussieren',
       category: 'Editor-Verwaltung',
       difficulty: 'beginner',
@@ -995,6 +1119,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em2',
       keys: ['⌘', '2'],
+      keysLinux: ['Ctrl', '2'],
       description: 'Zweite Editor-Gruppe fokussieren',
       category: 'Editor-Verwaltung',
       difficulty: 'beginner',
@@ -1002,6 +1127,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em3',
       keys: ['⌘', '3'],
+      keysLinux: ['Ctrl', '3'],
       description: 'Dritte Editor-Gruppe fokussieren',
       category: 'Editor-Verwaltung',
       difficulty: 'beginner',
@@ -1009,6 +1135,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em4',
       keys: ['⌘', 'K', '←'],
+      keysLinux: ['Ctrl', 'K', '←'],
       description: 'Fokus auf linke Gruppe',
       category: 'Editor-Verwaltung',
       difficulty: 'intermediate',
@@ -1016,6 +1143,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em5',
       keys: ['⌘', 'K', '→'],
+      keysLinux: ['Ctrl', 'K', '→'],
       description: 'Fokus auf rechte Gruppe',
       category: 'Editor-Verwaltung',
       difficulty: 'intermediate',
@@ -1023,6 +1151,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em6',
       keys: ['⌘', 'K', '↑'],
+      keysLinux: ['Ctrl', 'K', '↑'],
       description: 'Fokus auf obere Gruppe',
       category: 'Editor-Verwaltung',
       difficulty: 'intermediate',
@@ -1030,6 +1159,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em7',
       keys: ['⌘', 'K', '↓'],
+      keysLinux: ['Ctrl', 'K', '↓'],
       description: 'Fokus auf untere Gruppe',
       category: 'Editor-Verwaltung',
       difficulty: 'intermediate',
@@ -1037,6 +1167,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em8',
       keys: ['⌘', 'K', '⇧', '←'],
+      keysLinux: ['Ctrl', 'K', '⇧', '←'],
       description: 'Editor in linke Gruppe verschieben',
       category: 'Editor-Verwaltung',
       difficulty: 'intermediate',
@@ -1044,6 +1175,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em9',
       keys: ['⌘', 'K', '⇧', '→'],
+      keysLinux: ['Ctrl', 'K', '⇧', '→'],
       description: 'Editor in rechte Gruppe verschieben',
       category: 'Editor-Verwaltung',
       difficulty: 'intermediate',
@@ -1051,6 +1183,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em10',
       keys: ['⌃', 'PageDown'],
+      keysLinux: ['Ctrl', 'PageDown'],
       description: 'Nächsten Tab öffnen',
       category: 'Editor-Verwaltung',
       difficulty: 'beginner',
@@ -1058,6 +1191,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-em11',
       keys: ['⌃', 'PageUp'],
+      keysLinux: ['Ctrl', 'PageUp'],
       description: 'Vorherigen Tab öffnen',
       category: 'Editor-Verwaltung',
       difficulty: 'beginner',
@@ -1081,6 +1215,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-d3',
       keys: ['⌘', '⇧', 'F5'],
+      keysLinux: ['Ctrl', '⇧', 'F5'],
       description: 'Debugging neu starten',
       category: 'Debugging',
       difficulty: 'beginner',
@@ -1116,6 +1251,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-d8',
       keys: ['⌘', 'K', '⌘', 'I'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'I'],
       description: 'Debug Hover Info',
       category: 'Debugging',
       difficulty: 'intermediate',
@@ -1123,6 +1259,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-d9',
       keys: ['⌘', '⇧', 'F9'],
+      keysLinux: ['Ctrl', '⇧', 'F9'],
       description: 'Inline Breakpoint',
       category: 'Debugging',
       difficulty: 'intermediate',
@@ -1139,6 +1276,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t1',
       keys: ['⌃', '`'],
+      keysLinux: ['Ctrl', '`'],
       description: 'Terminal anzeigen/verbergen',
       category: 'Terminal',
       difficulty: 'beginner',
@@ -1146,6 +1284,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t2',
       keys: ['⌃', '⇧', '`'],
+      keysLinux: ['Ctrl', '⇧', '`'],
       description: 'Neues Terminal erstellen',
       category: 'Terminal',
       difficulty: 'beginner',
@@ -1153,6 +1292,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t3',
       keys: ['⌘', '\\'],
+      keysLinux: ['Ctrl', '\\'],
       description: 'Terminal teilen',
       category: 'Terminal',
       difficulty: 'intermediate',
@@ -1160,6 +1300,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t4',
       keys: ['⌘', '↑'],
+      keysLinux: ['Ctrl', '↑'],
       description: 'Im Terminal nach oben scrollen',
       category: 'Terminal',
       difficulty: 'beginner',
@@ -1167,6 +1308,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t5',
       keys: ['⌘', '↓'],
+      keysLinux: ['Ctrl', '↓'],
       description: 'Im Terminal nach unten scrollen',
       category: 'Terminal',
       difficulty: 'beginner',
@@ -1174,6 +1316,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t6',
       keys: ['⌘', 'K'],
+      keysLinux: ['Ctrl', 'K'],
       description: 'Terminal leeren',
       category: 'Terminal',
       difficulty: 'beginner',
@@ -1181,6 +1324,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t7',
       keys: ['⌃', '⌘', '↑'],
+      keysLinux: ['Ctrl', 'Ctrl', '↑'],
       description: 'Vorheriges Terminal',
       category: 'Terminal',
       difficulty: 'intermediate',
@@ -1188,6 +1332,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t8',
       keys: ['⌃', '⌘', '↓'],
+      keysLinux: ['Ctrl', 'Ctrl', '↓'],
       description: 'Nächstes Terminal',
       category: 'Terminal',
       difficulty: 'intermediate',
@@ -1195,6 +1340,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t9',
       keys: ['⌘', 'C'],
+      keysLinux: ['Ctrl', 'C'],
       description: 'Auswahl kopieren (Terminal)',
       category: 'Terminal',
       difficulty: 'beginner',
@@ -1202,6 +1348,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-t10',
       keys: ['⌘', 'V'],
+      keysLinux: ['Ctrl', 'V'],
       description: 'In Terminal einfügen',
       category: 'Terminal',
       difficulty: 'beginner',
@@ -1211,6 +1358,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-git1',
       keys: ['⌘', '⇧', 'G'],
+      keysLinux: ['Ctrl', '⇧', 'G'],
       description: 'Source Control öffnen',
       category: 'Git',
       difficulty: 'beginner',
@@ -1218,6 +1366,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-git2',
       keys: ['⌃', '⇧', 'G', 'G'],
+      keysLinux: ['Ctrl', '⇧', 'G', 'G'],
       description: 'Git: Diff anzeigen',
       category: 'Git',
       difficulty: 'intermediate',
@@ -1225,6 +1374,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-git3',
       keys: ['⌘', 'Enter'],
+      keysLinux: ['Ctrl', 'Enter'],
       description: 'Commit (in Source Control)',
       category: 'Git',
       difficulty: 'beginner',
@@ -1241,6 +1391,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-r2',
       keys: ['⌘', '.'],
+      keysLinux: ['Ctrl', '.'],
       description: 'Code-Aktionen / Quick Fix',
       category: 'Refactoring',
       difficulty: 'beginner',
@@ -1248,6 +1399,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-r3',
       keys: ['⌃', '⇧', 'R'],
+      keysLinux: ['Ctrl', '⇧', 'R'],
       description: 'Refactoring-Menü öffnen',
       category: 'Refactoring',
       difficulty: 'intermediate',
@@ -1255,6 +1407,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-r4',
       keys: ['⌘', '⇧', 'R'],
+      keysLinux: ['Ctrl', '⇧', 'R'],
       description: 'Alle Referenzen umbenennen',
       category: 'Refactoring',
       difficulty: 'intermediate',
@@ -1264,6 +1417,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-sn1',
       keys: ['⌃', 'Space'],
+      keysLinux: ['Ctrl', 'Space'],
       description: 'Snippet-Vorschläge anzeigen',
       category: 'Snippets',
       difficulty: 'beginner',
@@ -1287,6 +1441,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-i1',
       keys: ['⌃', 'Space'],
+      keysLinux: ['Ctrl', 'Space'],
       description: 'IntelliSense auslösen',
       category: 'IntelliSense',
       difficulty: 'beginner',
@@ -1294,6 +1449,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-i2',
       keys: ['⌘', '⇧', 'Space'],
+      keysLinux: ['Ctrl', '⇧', 'Space'],
       description: 'Parameter-Hinweise anzeigen',
       category: 'IntelliSense',
       difficulty: 'intermediate',
@@ -1301,6 +1457,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-i3',
       keys: ['⌘', 'I'],
+      keysLinux: ['Ctrl', 'I'],
       description: 'Quick Info anzeigen',
       category: 'IntelliSense',
       difficulty: 'intermediate',
@@ -1331,6 +1488,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-bc1',
       keys: ['⌘', '⇧', '.'],
+      keysLinux: ['Ctrl', '⇧', '.'],
       description: 'Breadcrumbs fokussieren',
       category: 'Breadcrumbs',
       difficulty: 'intermediate',
@@ -1338,6 +1496,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-bc2',
       keys: ['⌘', '⇧', ';'],
+      keysLinux: ['Ctrl', '⇧', ';'],
       description: 'Breadcrumb auswählen',
       category: 'Breadcrumbs',
       difficulty: 'intermediate',
@@ -1361,6 +1520,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-pp1',
       keys: ['⌘', '⇧', 'M'],
+      keysLinux: ['Ctrl', '⇧', 'M'],
       description: 'Problems-Panel umschalten',
       category: 'Problems',
       difficulty: 'beginner',
@@ -1384,6 +1544,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-o1',
       keys: ['⌘', '⇧', 'U'],
+      keysLinux: ['Ctrl', '⇧', 'U'],
       description: 'Output-Panel anzeigen',
       category: 'Output',
       difficulty: 'intermediate',
@@ -1391,6 +1552,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-o2',
       keys: ['⌘', '⇧', 'Y'],
+      keysLinux: ['Ctrl', '⇧', 'Y'],
       description: 'Debug Console anzeigen',
       category: 'Output',
       difficulty: 'intermediate',
@@ -1400,6 +1562,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ws1',
       keys: ['⌘', 'K', '⌘', 'O'],
+      keysLinux: ['Ctrl', 'K', 'Ctrl', 'O'],
       description: 'Ordner in neuem Fenster öffnen',
       category: 'Workspace',
       difficulty: 'intermediate',
@@ -1407,6 +1570,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ws2',
       keys: ['⌘', 'K', 'F'],
+      keysLinux: ['Ctrl', 'K', 'F'],
       description: 'Ordner aus Workspace entfernen',
       category: 'Workspace',
       difficulty: 'intermediate',
@@ -1414,6 +1578,7 @@ export const VS_CODE_SHORTCUTS: ShortcutCollection = {
     {
       id: 'vsc-ws3',
       keys: ['⌘', 'K', 'O'],
+      keysLinux: ['Ctrl', 'K', 'O'],
       description: 'Aktive Datei in neuem Fenster',
       category: 'Workspace',
       difficulty: 'intermediate',
